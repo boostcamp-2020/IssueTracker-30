@@ -134,7 +134,7 @@ const LoginForm = () => {
         userPw,
       }
 
-      fetch("http://localhost:3000/hello", {
+      fetch("http://localhost:3000/singIn", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
