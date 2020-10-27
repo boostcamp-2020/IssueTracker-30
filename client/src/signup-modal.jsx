@@ -28,16 +28,25 @@ const ModalSignupLayer = styled.div`
     z-index: -2;
     background-color: rgba(0, 0, 0, 0.4);
 `;
-const SignupModal = ({history}) => {
+
+const CloseBtn = styled.button`
+    position: relative;
+    left: -33%;
+`;
+
+const closeModal = history => {
+    history.goBack();
+}
+
+const SignupModal = ({ history }) => {
     return (
         <ModalSignup>
             <ModalSignupContent>
+                <CloseBtn onClick={() => closeModal(history)}>X</CloseBtn>
                 회원가입 폼
                 <SignUpForm />
             </ModalSignupContent>
-            <ModalSignupLayer onClick={() => {
-                history.goBack();
-            }} />
+            <ModalSignupLayer onClick={() => closeModal(history)} />
         </ModalSignup>
     );
 };
