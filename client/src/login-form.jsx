@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom"
+import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import SignUpModal from "./signup-modal.jsx";
 
 const StyledLoginForm = styled.div`
     display: flex;
@@ -129,21 +130,25 @@ const LoginForm = () => {
     };
 
     const logIn = () => {
-      const body = {
-        userId,
-        userPw,
-      }
+        const body = {
+            userId,
+            userPw,
+        };
 
-      fetch("http://localhost:3000/hello", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
-        .then((res) => res.json())
-        .then((data) => {console.log(data)});
-    }
+        fetch("http://localhost:3000/hello", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            });
+    };
+
+    const showModal = () => {};
 
     return (
         <StyledLoginForm>
@@ -164,17 +169,21 @@ const LoginForm = () => {
             />
             <VerifyPw>{verifyPwAlert}</VerifyPw>
             <StyledSignInAndUpDiv>
-              <StyledSignInAndUpButton onClick={logIn}>로그인</StyledSignInAndUpButton>
-              <Router>
-                <Link to='/signUp'>
-                  <StyledSignInAndUpButton>회원가입</StyledSignInAndUpButton>
-                </Link>
-                <Switch>
-                  <Route path='/signUp'>
-                    <h1>hello</h1>
-                  </Route>
-                </Switch>
-              </Router>
+                <StyledSignInAndUpButton onClick={logIn}>
+                    로그인
+                </StyledSignInAndUpButton>
+                <Router>
+                    <Link to="/signup">
+                        <StyledSignInAndUpButton>
+                            회원가입
+                        </StyledSignInAndUpButton>
+                    </Link>
+                    <Switch>
+                        <Route path="/signup">
+                            <SignUpModal />
+                        </Route>
+                    </Switch>
+                </Router>
             </StyledSignInAndUpDiv>
 
             <StyledGithubLoginButton>
