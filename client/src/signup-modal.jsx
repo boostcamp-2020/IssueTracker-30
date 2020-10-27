@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-
+import styled, { createGlobalStyle } from "styled-components";
+import React, { useState, useEffect } from 'react';
 import SignUpForm from "./signup-form.jsx";
+import { withRouter } from 'react-router-dom';
 
 const ModalSignup = styled.div`
     position: absolute;
@@ -28,17 +28,18 @@ const ModalSignupLayer = styled.div`
     z-index: -2;
     background-color: rgba(0, 0, 0, 0.4);
 `;
-const SignupModal = () => {
+const SignupModal = ({history}) => {
     return (
         <ModalSignup>
             <ModalSignupContent>
                 회원가입 폼
                 <SignUpForm />
             </ModalSignupContent>
-
-            <ModalSignupLayer />
+            <ModalSignupLayer onClick={() => {
+                history.goBack();
+            }} />
         </ModalSignup>
     );
 };
 
-export default SignupModal;
+export default withRouter(SignupModal);
