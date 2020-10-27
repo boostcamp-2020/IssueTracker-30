@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+
+import NavBar from "./nav-bar.jsx";
+import MainSection from "./main-section.jsx";
+import Footer from "./footer.jsx";
 
 const App = () => {
-    const [template, setTemplate] = useState([]);
-
-    useEffect(() => {
-        fetch("http://localhost:3000/hello")
-            .then((res) => res.json())
-            .then((data) => setTemplate(data.message));
-    }, [])
-
     return (
-        <div>
-            {template}
-        </div>
+        <>
+            <NavBar/>
+            <MainSection/>
+            <Footer/>
+        </>
     );
 };
 
