@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom"
 
 const StyledLoginForm = styled.div`
     display: flex;
@@ -79,7 +80,6 @@ const StyledImage = styled.img`
 
 const VerifyId = styled.div`
     height: 20px;
-
     font-size: 1em;
     color: red;
     text-align: center;
@@ -87,7 +87,6 @@ const VerifyId = styled.div`
 
 const VerifyPw = styled.div`
     height: 20px;
-
     font-size: 1em;
     color: red;
     text-align: center;
@@ -129,6 +128,23 @@ const LoginForm = () => {
         }
     };
 
+    const logIn = () => {
+      const body = {
+        userId,
+        userPw,
+      }
+
+      fetch("http://localhost:3000/hello", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => res.json())
+        .then((data) => {console.log(data)});
+    }
+
     return (
         <StyledLoginForm>
             <StyledParagraph>아이디</StyledParagraph>
@@ -147,10 +163,18 @@ const LoginForm = () => {
                 onChange={checkUserPw}
             />
             <VerifyPw>{verifyPwAlert}</VerifyPw>
-
             <StyledSignInAndUpDiv>
-                <StyledSignInAndUpButton>로그인</StyledSignInAndUpButton>
-                <StyledSignInAndUpButton>회원가입</StyledSignInAndUpButton>
+              <StyledSignInAndUpButton onClick={logIn}>로그인</StyledSignInAndUpButton>
+              <Router>
+                <Link to='/signUp'>
+                  <StyledSignInAndUpButton>회원가입</StyledSignInAndUpButton>
+                </Link>
+                <Switch>
+                  <Route path='/signUp'>
+                    <h1>hello</h1>
+                  </Route>
+                </Switch>
+              </Router>
             </StyledSignInAndUpDiv>
 
             <StyledGithubLoginButton>
