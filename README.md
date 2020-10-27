@@ -31,6 +31,7 @@ npm start
 ### [wiki](https://github.com/boostcamp-2020/IssueTracker-30/wiki/Group-30---Ground-Rules) 에서 확인 가능
 
 ## 스프린트 계획
-### [주간 목포 ( 마일스톤 )](https://github.com/boostcamp-2020/IssueTracker-30/wiki/Milestones)
+### [주간 목표 ( 마일스톤 )](https://github.com/boostcamp-2020/IssueTracker-30/wiki/Milestones)
 
-## 스크럼 현황
+## [스크럼 현황](https://github.com/boostcamp-2020/IssueTracker-30/wiki/%EC%8A%A4%ED%81%AC%EB%9F%BC-%ED%98%84%ED%99%A9)
+
