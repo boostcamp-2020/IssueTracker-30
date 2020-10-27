@@ -135,7 +135,7 @@ const LoginForm = () => {
             userPw,
         };
 
-        fetch("http://localhost:3000/hello", {
+        fetch("http://localhost:3000/singIn", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -147,8 +147,6 @@ const LoginForm = () => {
                 console.log(data);
             });
     };
-
-    const showModal = () => {};
 
     return (
         <StyledLoginForm>
