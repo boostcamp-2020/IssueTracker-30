@@ -1,15 +1,15 @@
 import React from "react";
 
-import NavBar from "./nav-bar.jsx";
+import NavBar from "./components/nav-bar.jsx";
 import MainSection from "./main-section.jsx";
-import Footer from "./footer.jsx";
+import Footer from "./components/footer.jsx";
 
 const App = () => {
     return (
         <>
-            <NavBar/>
-            <MainSection/>
-            <Footer/>
+            <NavBar />
+            <MainSection />
+            <Footer />
         </>
     );
 };
