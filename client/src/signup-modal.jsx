@@ -7,9 +7,8 @@ const ModalSignup = styled.div`
     position: absolute;
     display: flex;
     justify-content: center;
-
     width: 100%;
-    height: 100%;
+    left: 0;
     top: 20%;
     z-index: 1;
 `;
