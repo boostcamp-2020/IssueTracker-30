@@ -1,6 +1,24 @@
 # IssueTracker-30
 ### boostcamp Group Project - IssueTracker / Group 30 👍 <br>
 
+## 프로젝트 소개
+### Github Issue 관리 툴 클론 프로젝트
+
+## 설치 방법
+```
+git clone `codeURL`
+
+# client 설치
+cd client
+npm install
+npm start
+
+# server 설치
+cd server
+npm install
+npm start
+```
+
 ## 조원 소개
 |캠퍼 번호|이름|Gihub Profile|
 |---|---|---|
@@ -11,3 +29,9 @@
 
 ## Ground Rules
 ### [wiki](https://github.com/boostcamp-2020/IssueTracker-30/wiki/Group-30---Ground-Rules) 에서 확인 가능
+
+## 스프린트 계획
+### 주간 목포 ( 마일스톤 )
+### 세부 일정
+
+## 스크럼 현황
