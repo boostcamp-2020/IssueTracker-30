@@ -79,25 +79,9 @@ const StyledImage = styled.img`
     margin-left: 2%;
 `;
 
-const VerifyId = styled.div`
-    height: 20px;
-    font-size: 1em;
-    color: red;
-    text-align: center;
-`;
-
-const VerifyPw = styled.div`
-    height: 20px;
-    font-size: 1em;
-    color: red;
-    text-align: center;
-`;
-
 const LoginForm = () => {
     const [userId, setUserId] = useState("");
     const [userPw, setUserPw] = useState("");
-    const [verifyIdAlert, setVerifyIdAlert] = useState("");
-    const [verifyPwAlert, setVerifyPwAlert] = useState("");
 
     const checkUserId = (e) => {
         e.preventDefault();
@@ -106,11 +90,7 @@ const LoginForm = () => {
         } = e;
         const regUserId = /[\w._-]+/;
         if (regUserId.test(id) && id.length <= 16) {
-            setVerifyIdAlert("");
             setUserId(id);
-        }
-        if (id.length > 16 || id.length <= 6) {
-            setVerifyIdAlert("id 는 6자 이상 16자 이하 입니다.");
         }
     };
 
@@ -121,11 +101,7 @@ const LoginForm = () => {
         } = e;
         const regUserPw = /[\w._\-@!+]+/;
         if (regUserPw.test(pw) && pw.length <= 12) {
-            setVerifyPwAlert("");
             setUserPw(pw);
-        }
-        if (pw.length > 12 || pw.length <= 6) {
-            setVerifyPwAlert("pw 는 6자 이상 12자 이하 입니다.");
         }
     };
 
@@ -157,7 +133,6 @@ const LoginForm = () => {
                 onChange={checkUserId}
                 value={userId}
             />
-            <VerifyId>{verifyIdAlert}</VerifyId>
             <StyledParagraph>비밀번호</StyledParagraph>
             <StyledInput
                 type="password"
@@ -165,7 +140,6 @@ const LoginForm = () => {
                 value={userPw}
                 onChange={checkUserPw}
             />
-            <VerifyPw>{verifyPwAlert}</VerifyPw>
             <StyledSignInAndUpDiv>
                 <StyledSignInAndUpButton onClick={logIn}>
                     로그인
