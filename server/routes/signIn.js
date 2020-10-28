@@ -8,7 +8,7 @@ router.post("/", (req, res) => {
     passport.authenticate('local', (err, userId, info) => {
         if (!err) {
             const token = jwt.sign({userId}, 'hello', {expiresIn:3000});
-            res.cookie('user', token);
+            res.cookie('user', token, {maxAge:3000*1000});
             res.json({message: 'success'});
         }
     })(req, res);
