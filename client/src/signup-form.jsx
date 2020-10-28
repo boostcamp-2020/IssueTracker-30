@@ -40,24 +40,30 @@ const SignUpForm = () => {
     const [verifyIdAlert, setVerifyIdAlert] = useState("");
     const [verifyPw1Alert, setVerifyPw1Alert] = useState("");
     const [verifyPw2Alert, setVerifyPw2Alert] = useState("");
+    const [verifyJoinAlert, setVerifyJoinAlert] = useState("");
+    // let [statusId, statusPw1, statusPw2] = [false, false, false];
+    const [statusId, setStatusId] = useState(false);
+    const [statusPw1, setStatusPw1] = useState(false);
+    const [statusPw2, setStatusPw2] = useState(false);
 
     const isIdOK = (e) => {
         const {
             target: { value: id },
         } = e;
         const regUserId = /[\w._-]+/;
-        let status = false;
 
-        if (regUserId.test(id) && id.length <= 16) {
+        if (id.length <= 16) {
             setUserId(id);
-            setVerifyIdAlert("");
-            status = true;
         }
         if (id.length < 6 || id.length > 16) {
+            setStatusId(false);
             setVerifyIdAlert("id는 6자 이상 16자 이하 입니다.");
-            status = false;
+            return;
         }
-        return status;
+        if (regUserId.test(id)) {
+            setVerifyIdAlert("");
+            setStatusId(true);
+        }
     };
 
     const isPw1OK = (e) => {
@@ -65,35 +71,39 @@ const SignUpForm = () => {
             target: { value: pw },
         } = e;
         const regUserPw = /[\w._\-@!+]+/;
-        let status = false;
 
-        if (regUserPw.test(pw) && pw.length <= 12) {
+        if (pw.length <= 12) {
             setUserPw1(pw);
-            setVerifyPw1Alert("");
-            status = true;
         }
         if (pw.length < 6 || pw.length > 12) {
+            setStatusPw1(false);
             setVerifyPw1Alert("pw는 6자 이상 12자 이하 입니다.");
-            status = false;
+            return;
         }
-        return status;
+        if (regUserPw.test(pw)) {
+            setVerifyPw1Alert("");
+            setStatusPw1(true);
+        }
     };
 
     const isPw2OK = (e) => {
         const {
             target: { value: pw2 },
         } = e;
-        setUserPw2(pw2);
+        if (pw2.length <= 12) {
+            setUserPw2(pw2);
+        }
         if (pw2 !== userPw1) {
+            setStatusPw2(false);
             setVerifyPw2Alert("비밀번호가 일치하지 않습니다.");
-            return false;
+            return;
         }
         setVerifyPw2Alert("비밀번호가 서로 일치합니다!");
-        return true;
+        setStatusPw2(true);
     };
 
     const isAllFilled = () => {
-        if (userId && userPw1 && userPw2) {
+        if (statusId && statusPw1 && statusPw2) {
             return true;
         }
         return false;
@@ -101,10 +111,11 @@ const SignUpForm = () => {
 
     const onSubmitButtonClick = (e) => {
         e.preventDefault();
-        if (isAllFilled() && isIdOK() && isPw1OK() && isPw2OK()) {
+        if (isAllFilled() && statusId && statusPw1 && statusPw2) {
             //TODO
             return;
         }
+        setVerifyJoinAlert("요구사항이 만족되지 않았습니다!");
     };
 
     const StyledSubmitButton = styled.button.attrs({
@@ -129,6 +140,7 @@ const SignUpForm = () => {
             <StyledSubmitButton onClick={onSubmitButtonClick}>
                 회원가입
             </StyledSubmitButton>
+            <StyledAlertText>{verifyJoinAlert}</StyledAlertText>
         </StyledSignUpForm>
     );
 };
