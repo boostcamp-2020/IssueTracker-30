@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from 'react-router-dom';
 import styled from "styled-components";
+import axios from "axios";
 
 const StyledSignUpForm = styled.div`
     display: flex;
@@ -33,7 +35,7 @@ const StyledAlertText = styled.div`
     font-size: 0.75em;
 `;
 
-const SignUpForm = () => {
+const SignUpForm = ({history}) => {
     const [userId, setUserId] = useState("");
     const [userPw1, setUserPw1] = useState("");
     const [userPw2, setUserPw2] = useState("");
@@ -109,10 +111,29 @@ const SignUpForm = () => {
         return false;
     };
 
-    const onSubmitButtonClick = (e) => {
+    const onSubmitButtonClick = async (e) => {
         e.preventDefault();
         if (isAllFilled() && statusId && statusPw1 && statusPw2) {
-            //TODO
+            const data = {
+                userId,
+                userPw1,
+            };
+            axios({
+                method: "POST",
+                url: "http://localhost:3000/signUp",
+                data,
+                withCredentials: true,
+            })
+                .then((res) => {
+                    console.log(res.data.message);
+                    if (res.data.message === 'success') {
+                        alert('회원가입이 완료되었습니다.');
+                        history.push('/');
+                    } else {
+                        alert(res.data.message);
+                        console.log(res.data.message);
+                    }
+                });
             return;
         }
         setVerifyJoinAlert("요구사항이 만족되지 않았습니다!");
@@ -145,4 +166,4 @@ const SignUpForm = () => {
     );
 };
 
-export default SignUpForm;
+export default withRouter(SignUpForm);
