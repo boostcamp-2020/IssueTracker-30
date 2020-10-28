@@ -6,24 +6,25 @@ const StyledSignUpForm = styled.div`
     flex-direction: column;
 `;
 
-const StyledParagraph = styled.p``;
+const StyledParagraph = styled.p`
+    text-align: left;
+    font-weight: bold;
+`;
 
 const StyledInputId = styled.input.attrs({
     type: "text",
 })`
-    &:hover {
-        cursor: pointer;
-        background-color: #f5f5f5;
-    }
+    border: 0;
+    border-bottom: 1px solid #dbdbdb;
+    outline: 0;
 `;
 
 const StyledInputPw = styled.input.attrs({
     type: "password",
 })`
-    &:hover {
-        cursor: pointer;
-        background-color: #f5f5f5;
-    }
+    border: 0;
+    border-bottom: 1px solid #dbdbdb;
+    outline: 0;
 `;
 
 const StyledAlertText = styled.div`
@@ -122,23 +123,46 @@ const SignUpForm = () => {
         // onClick: onSubmitButtonClick,
     })`
         margin: 15px;
+        padding: 8px;
+        border: 1px solid black;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12pt;
+        width: 40%;
+        position: relative;
+        left: 25%;
+        background-color: #a0a0a0;
+        color: white;
+        font-weight: bold;
     `;
     return (
         <StyledSignUpForm>
             <StyledParagraph>아이디</StyledParagraph>
-            <StyledInputId value={userId} onChange={isIdOK} />
+            <StyledInputId
+                value={userId}
+                onChange={isIdOK}
+                placeholder="아이디"
+            />
             <StyledAlertText>{verifyIdAlert} </StyledAlertText>
 
             <StyledParagraph>비밀번호</StyledParagraph>
-            <StyledInputPw value={userPw1} onChange={isPw1OK} />
+            <StyledInputPw
+                value={userPw1}
+                onChange={isPw1OK}
+                placeholder="비밀번호"
+            />
             <StyledAlertText>{verifyPw1Alert} </StyledAlertText>
 
-            <StyledParagraph>비밀번호확인</StyledParagraph>
-            <StyledInputPw value={userPw2} onChange={isPw2OK} />
+            <StyledParagraph>비밀번호 확인</StyledParagraph>
+            <StyledInputPw
+                value={userPw2}
+                onChange={isPw2OK}
+                placeholder="비밀번호 확인"
+            />
             <StyledAlertText>{verifyPw2Alert} </StyledAlertText>
 
             <StyledSubmitButton onClick={onSubmitButtonClick}>
-                회원가입
+                가입하기
             </StyledSubmitButton>
             <StyledAlertText>{verifyJoinAlert}</StyledAlertText>
         </StyledSignUpForm>
