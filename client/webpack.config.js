@@ -4,7 +4,9 @@ const port = process.env.PORT || 3030;
 
 module.exports = {
     mode: "development",
-    entry: "./src/index.jsx",
+    entry: {
+        app: ['babel-polyfill', "./src/index.jsx"],
+    },
     output: {
         filename: "bundle.[hash].js",
     },

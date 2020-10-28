@@ -119,7 +119,10 @@ const LoginForm = () => {
             withCredentials: true,
         })
             .then((res) => {
-                console.log(res);
+                if (res.data && res.data.message === "success") {
+                    alert('로그인 성공!');
+                    window.location.reload();
+                }
             });
     };
 

@@ -20,7 +20,8 @@ const StyledTitle = styled.div`
   margin: 1%;
 `
 
-const MainSection = () => {
+const MainSection = ({mode}) => {
+  alert(mode);
     return (
         <StyledMainSection>
           <StyledTitle>
