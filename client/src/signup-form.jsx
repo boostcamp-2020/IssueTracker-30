@@ -128,7 +128,7 @@ const SignUpForm = ({history}) => {
                     console.log(res.data.message);
                     if (res.data.message === 'success') {
                         alert('회원가입이 완료되었습니다.');
-                        history.push('/');
+                        document.location = '/';
                     } else {
                         alert(res.data.message);
                         console.log(res.data.message);
