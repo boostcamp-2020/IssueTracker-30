@@ -36,7 +36,7 @@ const App = () => {
 
     return (
         <>
-            <NavBar />
+            <NavBar mode={mode} />
             <MainSection mode={mode}/>
             <Footer />
         </>

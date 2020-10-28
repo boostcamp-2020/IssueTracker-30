@@ -111,7 +111,6 @@ const LoginForm = () => {
             userId,
             userPw,
         };
-
         axios({
             method: "POST",
             url: "http://localhost:3000/signIn",
@@ -120,8 +119,10 @@ const LoginForm = () => {
         })
             .then((res) => {
                 if (res.data && res.data.message === "success") {
-                    alert('로그인 성공!');
+                    alert(`${res.data.id}님 로그인 되었습니다.`);
                     window.location.reload();
+                } else {
+                    alert(res.data.message);
                 }
             });
     };

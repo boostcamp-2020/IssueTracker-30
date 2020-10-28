@@ -10,7 +10,6 @@ module.exports = () => {
         usernameField: 'userId',
         passwordField: 'userPw1'
     }, async (id, pw, done) => {
-        console.log('pass');
         const connection = await pool.getConnection();
         const [rows] = await connection.query('select userId from user where userId=?;',
             [id]);
@@ -27,7 +26,7 @@ module.exports = () => {
             const [saveResult] = await connection.query(`INSERT INTO user (userId, userPw) VALUES (?, ?);`,
                 [newUser.userId, newUser.userPw]);
             if (saveResult.affectedRows) return done(null, newUser, { message: "success" });
-            else return done(null, flase, "삽입 실패" );
+            else return done(null, flase, "삽입 실패");
         });
 
         connection.release();
@@ -38,27 +37,32 @@ module.exports = () => {
         passwordField: 'userPw'
     }, async (id, pw, done) => {
         const connection = await pool.getConnection();
-        const [rows] = await connection.query('select * from user;');
-        console.log(rows);
+        const [[rows]] = await connection.query('select userId, userPw from user where userId=?;',
+            [id]);
+        if (!rows) return done(null, false, "존재하지 않는 사용자 아이디입니다.");
+        bcrypt.compare(pw, rows.userPw, (err, result) => {
+            if (result) {
+                const payload = {
+                    id: id
+                };
+                return done(null, payload);
+            } else {
+                return done(null, false, '아이디 또는 비밀번호를 다시 확인하세요.');
+            }
+        });
         connection.release();
-        if (id === DB.id && pw == DB.password) {
-            return done(null, id, { message: "success" });
-        }
-        else {
-            return done(new Error);
-        }
     }));
 
     const cookieExtractor = (req) => {
         let token = null;
 
         if (req && req.headers.cookie) {
-          token = req.headers.cookie.split('=')[1];
+            token = req.headers.cookie.split('=')[1];
         }
-    
+
         return token;
-      };
-    
+    };
+
     passport.use('jwt', new JwtStrategy({
         jwtFromRequest: cookieExtractor,
         secretOrKey: process.env.secret_key,
