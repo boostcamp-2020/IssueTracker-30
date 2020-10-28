@@ -14,4 +14,12 @@ router.post("/", (req, res) => {
     })(req, res);
 });
 
+router.post("/auth", (req, res) => {
+    passport.authenticate('jwt', (err, userId, info) => {
+        if (!err) {
+            res.json({message: 'success'});
+        }
+    })(req, res);
+});
+
 export default router;

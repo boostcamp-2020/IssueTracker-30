@@ -48,4 +48,21 @@ module.exports = () => {
             return done(new Error);
         }
     }));
+
+    const cookieExtractor = (req) => {
+        let token = null;
+
+        if (req && req.headers.cookie) {
+          token = req.headers.cookie.split('=')[1];
+        }
+    
+        return token;
+      };
+    
+    passport.use('jwt', new JwtStrategy({
+        jwtFromRequest: cookieExtractor,
+        secretOrKey: process.env.secret_key,
+    }, (jwtPayload, done) => {
+        done(null, jwtPayload.userId, { message: 'success' })
+    }));
 }
