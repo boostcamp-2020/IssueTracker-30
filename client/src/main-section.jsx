@@ -21,15 +21,25 @@ const StyledTitle = styled.div`
     margin: 1%;
 `;
 
-const MainSection = ({mode}) => {
-  alert(mode);
-    return (
-        <StyledMainSection>
-            <StyledTitle>이슈 트래커</StyledTitle>
-            <LoginForm />
-            <IssueList />
-        </StyledMainSection>
-    );
+const MainSection = ({ mode }) => {
+    // alert(mode);
+
+    switch (mode) {
+        case "login":
+            return (
+                <StyledMainSection>
+                    <StyledTitle>이슈 트래커</StyledTitle>
+                    <LoginForm />
+                </StyledMainSection>
+            );
+
+        case "main":
+            return (
+                <StyledMainSection>
+                    <IssueList />
+                </StyledMainSection>
+            );
+    }
 };
 
 export default MainSection;
