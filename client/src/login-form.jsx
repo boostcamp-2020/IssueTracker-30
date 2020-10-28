@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import SignUpModal from "./signup-modal.jsx";
+import axios from "axios";
 
 const StyledLoginForm = styled.div`
     display: flex;
@@ -130,21 +131,19 @@ const LoginForm = () => {
     };
 
     const logIn = () => {
-        const body = {
+        const data = {
             userId,
             userPw,
         };
 
-        fetch("http://localhost:3000/singIn", {
+        axios({
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
+            url: "http://localhost:3000/signIn",
+            data,
+            withCredentials: true,
         })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
+            .then((res) => {
+                console.log(res);
             });
     };
 
