@@ -36,7 +36,7 @@ const StyledAlertText = styled.div`
     font-size: 0.75em;
 `;
 
-const SignUpForm = ({history}) => {
+const SignUpForm = ({ history }) => {
     const [userId, setUserId] = useState("");
     const [userPw1, setUserPw1] = useState("");
     const [userPw2, setUserPw2] = useState("");
@@ -126,13 +126,11 @@ const SignUpForm = ({history}) => {
                 withCredentials: true,
             })
                 .then((res) => {
-                    console.log(res.data.message);
                     if (res.data.message === 'success') {
                         alert('회원가입이 완료되었습니다.');
                         document.location = '/';
                     } else {
                         alert(res.data.message);
-                        console.log(res.data.message);
                     }
                 });
             return;
