@@ -27,6 +27,7 @@ const StyledInputPw = styled.input.attrs({
 `;
 
 const StyledAlertText = styled.div`
+    height: 15px;
     color: red;
     text-align: center;
     font-size: 0.75em;
