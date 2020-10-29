@@ -8,7 +8,7 @@ const StyledLoginForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 20%;
-    height: 45%;
+    height: 47%;
     box-shadow: 0px 0px 2px 0px gray;
     border-radius: 8px;
     background-color: white;
