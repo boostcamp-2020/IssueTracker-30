@@ -8,7 +8,7 @@ const StyledLoginForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 20%;
-    height: 45%;
+    height: 47%;
     box-shadow: 0px 0px 2px 0px gray;
     border-radius: 8px;
     background-color: white;
@@ -127,6 +127,16 @@ const LoginForm = () => {
             });
     };
 
+    const githubLogin = () => {
+        axios({
+            method: "GET",
+            url: "http://localhost:3000/signIn/github",
+        })
+            .then((res) => {
+                window.location.href = res.data;
+            })
+    }
+
     return (
         <StyledLoginForm>
             <StyledParagraph>아이디</StyledParagraph>
@@ -161,7 +171,7 @@ const LoginForm = () => {
                 </Router>
             </StyledSignInAndUpDiv>
 
-            <StyledGithubLoginButton>
+            <StyledGithubLoginButton onClick={githubLogin}>
                 Sign Up with Github
                 <StyledImage src="../public/images/GithubIcon.png"></StyledImage>
             </StyledGithubLoginButton>

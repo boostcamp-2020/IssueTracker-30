@@ -13,11 +13,11 @@ const ModalSignup = styled.div`
     z-index: 1;
 `;
 const ModalSignupContent = styled.div`
-    width: 300px;
-    margin: 100px auto;
-    padding: 10px;
+    width: 22%;
+    margin: 2% 0%;
+    padding: 1%;
     background: #fff;
-    border: 2px solid #666;
+    box-shadow: 0 0 5px 0 gray;
     border-radius: 10px;
 `;
 const ModalSignupLayer = styled.div`
