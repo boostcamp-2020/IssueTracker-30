@@ -3,13 +3,28 @@ import styled from "styled-components";
 import axios from "axios";
 
 const StyledNavBar = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 10vh;
-  background-color: black;
+  background-color: #24292f;
 `
+
+const StyledP = styled.p`
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+`
+
 const LogoutBtn = styled.button`
-  outline: none;
+  position: absolute;
+  top: 3.5%;
+  right: 2%;
+  background-color: transparent;
   border: none;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
 `
 const NavBar = ({ mode }) => {
@@ -36,7 +51,12 @@ const NavBar = ({ mode }) => {
 
     case "main":
       return (
-        <StyledNavBar><LogoutBtn onClick={logoutOnclickHandler}>로그아웃</LogoutBtn></StyledNavBar>
+        <StyledNavBar>
+          <StyledP>
+            이슈 트래커
+          </StyledP>
+          <LogoutBtn onClick={logoutOnclickHandler}>로그아웃</LogoutBtn>
+        </StyledNavBar>
       );
   }
 };
