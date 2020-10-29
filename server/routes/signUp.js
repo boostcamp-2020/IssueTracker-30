@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
+require('dotenv').config();
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.post("/", (req, res) => {
         if (user === false) {
             res.json({ message: info });
         } else { //회원가입 성공
-            const token = jwt.sign({ userId: user.userId }, 'hello', { expiresIn: 3000 });
+            const token = jwt.sign({ userId: user.userId }, process.env.secret_key, { expiresIn: 3000 });
             res.cookie('user', token, { maxAge: 3000 * 1000 }).json({ message: 'success' });
         }
     })(req, res);

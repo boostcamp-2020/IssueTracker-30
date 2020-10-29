@@ -5,6 +5,8 @@ const { Strategy: LocalStrategy } = require("passport-local");
 const pool = require("../db/connection");
 const query = require("../db/query");
 
+require('dotenv').config();
+
 module.exports = () => {
     passport.use('localSignUp', new LocalStrategy({
         usernameField: 'userId',
