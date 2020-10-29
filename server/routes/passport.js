@@ -69,6 +69,6 @@ module.exports = () => {
         jwtFromRequest: cookieExtractor,
         secretOrKey: process.env.secret_key,
     }, (jwtPayload, done) => {
-        done(null, jwtPayload.userId, { message: 'success' })
+        done(null, jwtPayload.user.id, { message: 'success' })
     }));
 }

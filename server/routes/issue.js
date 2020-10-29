@@ -1,14 +1,16 @@
 import express from "express";
+import passport from "passport";
+
+import isLoggedIn from "./auth";
 import pool from "../db/connection";
 import query from "../db/query";
 
 const router = express.Router();
 
-router.post("/getIssue", async(req, res) => {
+router.post("/getIssue", isLoggedIn, async(req, res) => {
     const userId = req.body.userId;
     const connection = await pool.getConnection();
     const [rows] = await connection.query(query.getIssue, [userId]);
-    console.log(rows);
     res.json(rows);
 });
 
