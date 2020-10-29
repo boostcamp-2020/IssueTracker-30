@@ -1,20 +1,19 @@
 import express from "express";
-import passport from "passport";
-
 import isLoggedIn from "./auth";
 import pool from "../db/connection";
 import query from "../db/query";
 
 const router = express.Router();
 
-router.post("/getIssue", isLoggedIn, async(req, res) => {
+router.get("/", isLoggedIn, async(req, res) => {
     const userId = req.body.userId;
     const connection = await pool.getConnection();
     const [rows] = await connection.query(query.getIssue, [userId]);
     res.json(rows);
 });
 
-router.post("/insertIssue", async(req, res) => {
+router.post("/", isLoggedIn, async(req, res) => {
+    const userId = req.body.userId;
     const issue = {
         title: req.body.title,
         writingTime: req.body.writingTime,
@@ -25,7 +24,7 @@ router.post("/insertIssue", async(req, res) => {
     };
 
     const connection = await pool.getConnection();
-    const [rows1] = await connection.query(query.insertIssue, ["123123", issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.labelId]);
+    const [rows1] = await connection.query(query.insertIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.labelId]);
 
     if(issue.labelId != null) {
         const [rows2] = await connection.query(query.insertLabelIssueRelation, [rows1.insertId, issue.labelId]);
@@ -42,9 +41,9 @@ router.post("/insertIssue", async(req, res) => {
     }
 });
 
-router.put("/", async(req, res) => {
+router.put("/", isLoggedIn, async(req, res) => {
+    const userId = req.body.userId;
     const issue = {
-        //userId 필요
         issueId: req.body.issueId,
         title: req.body.title,
         writingTime: req.body.writingTime,
@@ -54,7 +53,7 @@ router.put("/", async(req, res) => {
     };
 
     const connection = await pool.getConnection();
-    const [rows] = await connection.query(query.updateIssue, [issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.issueId]);
+    const [rows] = await connection.query(query.updateIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.issueId]);
     if(rows.affectedRows > 0) {
         res.json({message: "success"});
     }
