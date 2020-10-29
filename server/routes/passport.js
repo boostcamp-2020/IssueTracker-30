@@ -4,6 +4,7 @@ const { Strategy: JwtStrategy } = require("passport-jwt");
 const { Strategy: LocalStrategy } = require("passport-local");
 const DB = require("./db.json");
 const pool = require("./connection");
+require('dotenv').config();
 
 module.exports = () => {
     passport.use('localSignUp', new LocalStrategy({
