@@ -10,7 +10,7 @@ const query = {
     where a1.commentId = C.ID;`,
     insertIssue: `INSERT INTO issue (userId, title, writingTime, status, milestoneId, content) values (?,?,?,?,?,?);`,
     insertLabelIssueRelation: `INSERT INTO labelIssueRelation (issueId, labelId) values (?,?);`,
-    updateIssue: `UPDATE issue SET title=?, writingTime=?, status=?, milestoneId=?, content=? WHERE ID = ?;`,
+    updateIssue: `UPDATE issue SET userId=?, title=?, writingTime=?, status=?, milestoneId=?, content=? WHERE ID = ?;`,
     insertComment: `INSERT INTO comment (writingTime, comment) values (?,?);`,
     insertIssueCommentRelation: `INSERT INTO issueCommentRelation (issueId, commentId) values (?,?);`,
 }
