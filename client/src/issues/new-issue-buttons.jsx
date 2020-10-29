@@ -12,10 +12,21 @@ const StyledButton = styled.button`
         cursor: pointer;
         background: rgba(56, 142, 60, 1);
     }
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 const NewIssueButton = () => {
-    return <StyledButton>New Issue</StyledButton>;
+    const onNewIssueButtonClick = (e) => {
+        // TODO issue create 페이지로 이동
+        alert("New Issue 페이지로 이동");
+    };
+
+    return (
+        <StyledButton onClick={onNewIssueButtonClick}>New Issue</StyledButton>
+    );
 };
 
 export default NewIssueButton;

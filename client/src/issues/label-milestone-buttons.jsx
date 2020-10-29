@@ -7,14 +7,19 @@ const StyledButtons = styled.div`
 `;
 const StyledLabelButton = styled.button`
     height: 100%;
-    width: 50%;
+    width: 45%;
     background-color: white;
     color: rgba(38, 50, 56, 1);
+    border-right: 0;
     border-radius: 5px 0 0 5px;
 
     &:hover {
         cursor: pointer;
         background-color: rgba(207, 216, 220, 1);
+    }
+
+    &:focus {
+        outline: none;
     }
 `;
 
@@ -26,7 +31,7 @@ const StyledLabelIcon = styled.i.attrs({
 
 const StyledMilestoneButton = styled.button`
     height: 100%;
-    width: 50%;
+    width: 55%;
     background-color: white;
     border-radius: 0 5px 5px 0;
     color: rgba(38, 50, 56, 1);
@@ -34,6 +39,10 @@ const StyledMilestoneButton = styled.button`
     &:hover {
         cursor: pointer;
         background-color: rgba(207, 216, 220, 1);
+    }
+
+    &:focus {
+        outline: none;
     }
 `;
 
@@ -44,13 +53,23 @@ const StyledMilestoneIcon = styled.i.attrs({
 `;
 
 const LabelMilestoneButtons = () => {
+    const onLabelButtonClick = (e) => {
+        // TODO 클릭 이벤트 -> label 만 나오는 페이지
+        alert("Label 만 보여주는 페이지로 이동");
+    };
+
+    const onMilestoneButtonClick = (e) => {
+        // TODO 클릭 이벤트 -> label 만 나오는 페이지
+        alert("Milestone 만 보여주는 페이지로 이동");
+    };
+
     return (
         <StyledButtons>
-            <StyledLabelButton>
+            <StyledLabelButton onClick={onLabelButtonClick}>
                 <StyledLabelIcon />
                 Label
             </StyledLabelButton>
-            <StyledMilestoneButton>
+            <StyledMilestoneButton onClick={onMilestoneButtonClick}>
                 <StyledMilestoneIcon />
                 MileStone
             </StyledMilestoneButton>

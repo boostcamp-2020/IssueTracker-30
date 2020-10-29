@@ -19,6 +19,7 @@ const StyledFilterOption = styled.option``;
 
 const StyledFilterTextInput = styled.input.attrs({
     type: "text",
+    placeholder: "Search All Issues",
 })`
     height: 100%;
     width: 79%;
@@ -28,35 +29,33 @@ const StyledFilterTextInput = styled.input.attrs({
 
 const Filter = () => {
     const [selected, setSelected] = useState("");
-    const [textInput, setTextInput] = useState("");
+    const [textInput, setTextInput] = useState("is:issue is:open");
     const [filterTypes, setFilterTypes] = useState([
         // TODO 타입별로 검색하는 방식??
-        [0, "is:issue is:open sort:updated-desc", "Filter"],
-        [1, "is:open sort:updated-desc", "Open issues and pull requests"],
-        [2, "is:open is:issue author:@me sort:updated-desc", "Your issues"],
+        /**
+         * 검색 type
+         * is:issue
+         * is:open / closed
+         * sort:updated-desc / updated-asc / created-desc / created-asc / comments-desc / comments-asc
+         * author:@me
+         * assignee:@me
+         * mentions:@me
+         */
+
+        [0, "is:issue is:open sort:updated-desc", "Filter Issues"],
+        [1, "is:issue is:open sort:updated-desc", "Open issues"],
+        [2, "is:issue is:open author:@me sort:updated-desc", "Your issues"],
         [
             3,
-            "is:open is:pr author:@me sort:updated-desc ",
-            "Your pull requests",
-        ],
-        [
-            4,
-            "is:open assignee:@me sort:updated-desc ",
+            "is:issue is:open assignee:@me sort:updated-desc",
             "Everything assigned to you",
         ],
         [
-            5,
-            "is:open mentions:@me sort:updated-desc ",
+            4,
+            "is:issue is:open mentions:@me sort:updated-desc",
             "Everything mentioning you",
         ],
-        // TODO: commenter에 User GitHub ID 입력
-        [
-            6,
-            "is:open commenter:gitgitWi sort:updated-desc ",
-            "Everything commented by you",
-        ],
-        // TODO: 실제 GitHub Issue에서는 검색 아닌 redirect
-        [7, "", "Everything you subscribed to"],
+        [5, "is:issue is:closed", "Closed issues"],
     ]);
 
     const onFilterSelectedChange = (e) => {

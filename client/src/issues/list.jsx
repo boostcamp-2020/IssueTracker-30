@@ -3,9 +3,12 @@ import styled from "styled-components";
 
 import Filter from "./filter.jsx";
 import HeaderButtons from "./header-buttons.jsx";
+import IssuesList from "./issues-list-section.jsx";
 
 const StyledListDiv = styled.div`
-    display: ${(props) => props.display};
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 `;
 
 const StyledListHeader = styled.div`
@@ -13,17 +16,18 @@ const StyledListHeader = styled.div`
     justify-content: space-between;
     height: 30px;
     width: 1200px;
+    margin-top: 20px;
 `;
 
-const IssueList = (props) => {
+const IssueList = () => {
     return (
         // TODO
         <StyledListDiv>
-            <div>이슈 리스트</div>
             <StyledListHeader>
                 <Filter />
                 <HeaderButtons />
             </StyledListHeader>
+            <IssuesList />
         </StyledListDiv>
     );
 };
