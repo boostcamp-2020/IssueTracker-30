@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledFilterDiv = styled.div`
-    height: 30px;
-    width: 600px;
+    height: 100%;
+    width: 70%;
 `;
 
 const StyledFilterSelect = styled.select.attrs({
