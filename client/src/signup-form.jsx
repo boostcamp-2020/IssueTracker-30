@@ -16,17 +16,31 @@ const StyledParagraph = styled.p`
 const StyledInputId = styled.input.attrs({
     type: "text",
 })`
-    border: 0;
-    border-bottom: 1px solid #dbdbdb;
-    outline: 0;
+    height: 4vh;
+    border: 1px solid transparent;
+    box-shadow: 0 0 3px 0 grey;
+    border-radius: 5px;
+    background-color: #fafbfc;
+    outline-color: rgb(179, 209, 243);
+
+    &:hover {
+        border-color: rgb(179, 209, 243);
+    }
 `;
 
 const StyledInputPw = styled.input.attrs({
     type: "password",
 })`
-    border: 0;
-    border-bottom: 1px solid #dbdbdb;
-    outline: 0;
+    height: 4vh;
+    border: 1px solid transparent;
+    box-shadow: 0 0 3px 0 grey;
+    border-radius: 5px;
+    background-color: #fafbfc;
+    outline-color: rgb(179, 209, 243);
+
+    &:hover {
+        border-color: rgb(179, 209, 243);
+    }
 `;
 
 const StyledAlertText = styled.div`
@@ -143,7 +157,7 @@ const SignUpForm = ({ history }) => {
     })`
         margin: 15px;
         padding: 8px;
-        border: 1px solid black;
+        border: none;
         border-radius: 5px;
         cursor: pointer;
         font-size: 12pt;
