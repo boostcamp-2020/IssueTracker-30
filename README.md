@@ -8,13 +8,13 @@
 
 ## 페이지 구성
 ### 로그인 페이지
-![it](https://user-images.githubusercontent.com/48575504/97440858-5f89e600-196b-11eb-96f5-d5334754d8b9.PNG)
+![main](https://user-images.githubusercontent.com/48575504/97555685-bf3fca00-1a1b-11eb-9b82-489ab3978854.PNG)
 
 ### 회원가입
-![singup](https://user-images.githubusercontent.com/48575504/97440860-60227c80-196b-11eb-8d76-8ab568bb9468.PNG)
+![main2](https://user-images.githubusercontent.com/48575504/97555690-c070f700-1a1b-11eb-9e2a-21a7da2d8327.PNG)
 
 ### 메인 페이지
-![main](https://user-images.githubusercontent.com/48575504/97440863-60bb1300-196b-11eb-8e7f-17b0fbf611b6.PNG)
+![signup](https://user-images.githubusercontent.com/48575504/97555692-c1098d80-1a1b-11eb-8b42-24e16032cea5.PNG)
 
 <br />
 
