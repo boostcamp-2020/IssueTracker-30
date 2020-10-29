@@ -83,15 +83,23 @@ const StyledImage = styled.img`
 const LoginForm = () => {
     const [userId, setUserId] = useState("");
     const [userPw, setUserPw] = useState("");
+    const [statusId, setStatusId] = useState(false);
+    const [statusPw, setStatusPw] = useState(false);
 
     const checkUserId = (e) => {
         e.preventDefault();
         let {
             target: { value: id },
         } = e;
-        const regUserId = /[\w._-]+/;
-        if (regUserId.test(id) && id.length <= 16) {
+
+        const regUserId = /[\w._-]{0,16}/;
+
+        if (id.length <= 16) {
             setUserId(id);
+        }
+
+        if (regUserId.test(id)) {
+            setStatusId(true);
         }
     };
 
@@ -100,13 +108,23 @@ const LoginForm = () => {
         let {
             target: { value: pw },
         } = e;
-        const regUserPw = /[\w._\-@!+]+/;
-        if (regUserPw.test(pw) && pw.length <= 12) {
+
+        const regUserPw = /[\w._\-@!+]{6,12}/;
+
+        if (pw.length <= 12) {
             setUserPw(pw);
+        }
+        if (regUserPw.test(pw)) {
+            setStatusPw(pw);
         }
     };
 
     const logIn = () => {
+        if (!statusId || !statusPw) {
+            alert("ID 또는 PW 입력이 잘못 되었습니다.");
+            return;
+        }
+
         const data = {
             userId,
             userPw,
@@ -116,26 +134,24 @@ const LoginForm = () => {
             url: "http://localhost:3000/signIn",
             data,
             withCredentials: true,
-        })
-            .then((res) => {
-                if (res.data && res.data.message === "success") {
-                    alert(`${res.data.id}님 로그인 되었습니다.`);
-                    window.location.reload();
-                } else {
-                    alert(res.data.message);
-                }
-            });
+        }).then((res) => {
+            if (res.data && res.data.message === "success") {
+                alert(`${res.data.id}님 로그인 되었습니다.`);
+                window.location.reload();
+            } else {
+                alert(res.data.message);
+            }
+        });
     };
 
     const githubLogin = () => {
         axios({
             method: "GET",
             url: "http://localhost:3000/signIn/github",
-        })
-            .then((res) => {
-                window.location.href = res.data;
-            })
-    }
+        }).then((res) => {
+            window.location.href = res.data;
+        });
+    };
 
     return (
         <StyledLoginForm>
