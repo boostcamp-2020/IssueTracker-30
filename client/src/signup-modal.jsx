@@ -1,24 +1,24 @@
-import React from "react";
-import styled from "styled-components";
-
+import styled, { createGlobalStyle } from "styled-components";
+import React, { useState, useEffect } from 'react';
 import SignUpForm from "./signup-form.jsx";
+import { withRouter } from 'react-router-dom';
 
 const ModalSignup = styled.div`
     position: absolute;
     display: flex;
     justify-content: center;
-
     width: 100%;
-    height: 100%;
+    left: 0;
     top: 20%;
     z-index: 1;
 `;
 const ModalSignupContent = styled.div`
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px 10px;
+    width: 22%;
+    margin: 2% 0%;
+    padding: 1%;
     background: #fff;
-    border: 2px solid #666;
+    box-shadow: 0 0 5px 0 gray;
+    border-radius: 10px;
 `;
 const ModalSignupLayer = styled.div`
     position: fixed;
@@ -29,17 +29,38 @@ const ModalSignupLayer = styled.div`
     z-index: -2;
     background-color: rgba(0, 0, 0, 0.4);
 `;
-const SignupModal = () => {
+
+const CloseBtn = styled.button`
+    position: relative;
+    right: -47%;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    font-size: 12pt;
+`;
+
+const StyledTitle = styled.p`
+    margin: 0;
+    font-size: 15pt;
+    font-weight: bold;
+`;
+
+const closeModal = history => {
+    history.goBack();
+}
+
+const SignupModal = ({ history }) => {
     return (
         <ModalSignup>
             <ModalSignupContent>
-                회원가입 폼
+                <CloseBtn onClick={() => closeModal(history)}>X</CloseBtn>
+                <StyledTitle>회원가입</StyledTitle>
                 <SignUpForm />
             </ModalSignupContent>
-
-            <ModalSignupLayer />
+            <ModalSignupLayer onClick={() => closeModal(history)} />
         </ModalSignup>
     );
 };
 
-export default SignupModal;
+export default withRouter(SignupModal);

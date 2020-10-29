@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import SignUpModal from "./signup-modal.jsx";
+import axios from "axios";
 
 const StyledLoginForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 20%;
-    height: 45%;
+    height: 47%;
     box-shadow: 0px 0px 2px 0px gray;
     border-radius: 8px;
     background-color: white;
@@ -79,38 +80,26 @@ const StyledImage = styled.img`
     margin-left: 2%;
 `;
 
-const VerifyId = styled.div`
-    height: 20px;
-    font-size: 1em;
-    color: red;
-    text-align: center;
-`;
-
-const VerifyPw = styled.div`
-    height: 20px;
-    font-size: 1em;
-    color: red;
-    text-align: center;
-`;
-
 const LoginForm = () => {
     const [userId, setUserId] = useState("");
     const [userPw, setUserPw] = useState("");
-    const [verifyIdAlert, setVerifyIdAlert] = useState("");
-    const [verifyPwAlert, setVerifyPwAlert] = useState("");
+    const [statusId, setStatusId] = useState(false);
+    const [statusPw, setStatusPw] = useState(false);
 
     const checkUserId = (e) => {
         e.preventDefault();
         let {
             target: { value: id },
         } = e;
-        const regUserId = /[\w._-]+/;
-        if (regUserId.test(id) && id.length <= 16) {
-            setVerifyIdAlert("");
+
+        const regUserId = /[\w._-]{0,16}/;
+
+        if (id.length <= 16) {
             setUserId(id);
         }
-        if (id.length > 16 || id.length <= 6) {
-            setVerifyIdAlert("id 는 6자 이상 16자 이하 입니다.");
+
+        if (regUserId.test(id)) {
+            setStatusId(true);
         }
     };
 
@@ -119,33 +108,49 @@ const LoginForm = () => {
         let {
             target: { value: pw },
         } = e;
-        const regUserPw = /[\w._\-@!+]+/;
-        if (regUserPw.test(pw) && pw.length <= 12) {
-            setVerifyPwAlert("");
+
+        const regUserPw = /[\w._\-@!+]{6,12}/;
+
+        if (pw.length <= 12) {
             setUserPw(pw);
         }
-        if (pw.length > 12 || pw.length <= 6) {
-            setVerifyPwAlert("pw 는 6자 이상 12자 이하 입니다.");
+        if (regUserPw.test(pw)) {
+            setStatusPw(pw);
         }
     };
 
     const logIn = () => {
-        const body = {
+        if (!statusId || !statusPw) {
+            alert("ID 또는 PW 입력이 잘못 되었습니다.");
+            return;
+        }
+
+        const data = {
             userId,
             userPw,
         };
-
-        fetch("http://localhost:3000/singIn", {
+        axios({
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-            });
+            url: "http://localhost:3000/signIn",
+            data,
+            withCredentials: true,
+        }).then((res) => {
+            if (res.data && res.data.message === "success") {
+                alert(`${res.data.id}님 로그인 되었습니다.`);
+                window.location.reload();
+            } else {
+                alert(res.data.message);
+            }
+        });
+    };
+
+    const githubLogin = () => {
+        axios({
+            method: "GET",
+            url: "http://localhost:3000/signIn/github",
+        }).then((res) => {
+            window.location.href = res.data;
+        });
     };
 
     return (
@@ -157,7 +162,6 @@ const LoginForm = () => {
                 onChange={checkUserId}
                 value={userId}
             />
-            <VerifyId>{verifyIdAlert}</VerifyId>
             <StyledParagraph>비밀번호</StyledParagraph>
             <StyledInput
                 type="password"
@@ -165,7 +169,6 @@ const LoginForm = () => {
                 value={userPw}
                 onChange={checkUserPw}
             />
-            <VerifyPw>{verifyPwAlert}</VerifyPw>
             <StyledSignInAndUpDiv>
                 <StyledSignInAndUpButton onClick={logIn}>
                     로그인
@@ -184,7 +187,7 @@ const LoginForm = () => {
                 </Router>
             </StyledSignInAndUpDiv>
 
-            <StyledGithubLoginButton>
+            <StyledGithubLoginButton onClick={githubLogin}>
                 Sign Up with Github
                 <StyledImage src="../public/images/GithubIcon.png"></StyledImage>
             </StyledGithubLoginButton>
