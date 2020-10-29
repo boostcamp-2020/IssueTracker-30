@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import DropdownMenu from "./issue-sort-dropdown.jsx";
+import ItemBanner from "./issue-item-banner.jsx";
 
 const StyledListSection = styled.section`
     width: 1200px;
@@ -69,6 +70,14 @@ const StyledSortedList = styled.div`
 `;
 
 const IssuesListSection = () => {
+    const [openClosedRadio, setOpenClosedRadio] = useState("open");
+
+    const onOpenClosedRadioChange = (e) => {
+        setOpenClosedRadio(e.target.id);
+    };
+
+    const issueData = JSON.parse(localStorage.getItem("issueData"));
+
     return (
         <StyledListSection>
             <StyledListSortMenu>
@@ -79,7 +88,7 @@ const IssuesListSection = () => {
                     <StyledListSortOpenClosedCheckBoxLabel>
                         Open
                         <StyledListSortOpenClosedCheckBox
-                            checked="checked"
+                            onChange={onOpenClosedRadioChange}
                             id="open"
                         />
                     </StyledListSortOpenClosedCheckBoxLabel>
@@ -95,7 +104,20 @@ const IssuesListSection = () => {
                     <DropdownMenu name={"Assignee"} />
                 </StyledListSortOptions>
             </StyledListSortMenu>
-            <StyledSortedList></StyledSortedList>
+            <StyledSortedList>
+                {issueData.map(
+                    ({ issueId, userId, issueTitle, status, writingTime }) => (
+                        <ItemBanner
+                            key={issueId}
+                            issueTitle={issueTitle}
+                            issueId={issueId}
+                            userId={userId}
+                            status={status}
+                            writingTime={writingTime}
+                        />
+                    ),
+                )}
+            </StyledSortedList>
         </StyledListSection>
     );
 };
