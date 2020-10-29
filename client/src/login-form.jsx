@@ -127,6 +127,16 @@ const LoginForm = () => {
             });
     };
 
+    const githubLogin = () => {
+        axios({
+            method: "GET",
+            url: "http://localhost:3000/signIn/github",
+        })
+            .then((res) => {
+                window.location.href = res.data;
+            })
+    }
+
     return (
         <StyledLoginForm>
             <StyledParagraph>아이디</StyledParagraph>
@@ -161,7 +171,7 @@ const LoginForm = () => {
                 </Router>
             </StyledSignInAndUpDiv>
 
-            <StyledGithubLoginButton>
+            <StyledGithubLoginButton onClick={githubLogin}>
                 Sign Up with Github
                 <StyledImage src="../public/images/GithubIcon.png"></StyledImage>
             </StyledGithubLoginButton>
