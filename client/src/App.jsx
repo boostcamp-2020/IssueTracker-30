@@ -29,8 +29,18 @@ const App = () => {
     const [mode, setMode] = useState("login");
 
     useEffect(() => {
-        loginCheck().then((res) => {
-            setMode(res);
+        loginCheck().then(async (res) => {
+            if (res === 'main') {
+                await axios({
+                    method: "POST",
+                    url: "http://localhost:3000/issue/getIssue",
+                    withCredentials: true,
+                })
+                .then((issueData) => {
+                    localStorage.setItem('issueData', JSON.stringify(issueData.data));
+                    setMode(res);
+                });
+            }
         });
     }, []);
 

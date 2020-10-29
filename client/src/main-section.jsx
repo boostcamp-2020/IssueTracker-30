@@ -11,7 +11,7 @@ const StyledMainSection = styled.div`
     align-items: center;
     width: 100%;
     height: 80vh;
-    background-color: #f9f9f9;
+    background-color: ${props => props.loginColor};
 `;
 
 const StyledTitle = styled.div`
@@ -23,11 +23,10 @@ const StyledTitle = styled.div`
 
 const MainSection = ({ mode }) => {
     // alert(mode);
-
     switch (mode) {
         case "login":
             return (
-                <StyledMainSection>
+                <StyledMainSection loginColor='#f9f9f9'>
                     <StyledTitle>이슈 트래커</StyledTitle>
                     <LoginForm />
                 </StyledMainSection>
@@ -35,7 +34,7 @@ const MainSection = ({ mode }) => {
 
         case "main":
             return (
-                <StyledMainSection>
+                <StyledMainSection loginColor='white'>
                     <IssueList />
                 </StyledMainSection>
             );
