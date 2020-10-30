@@ -62,3 +62,5 @@ npm start
 ## 스크럼 현황
 ### [데일리 스크럼](https://github.com/boostcamp-2020/IssueTracker-30/wiki/%EC%8A%A4%ED%81%AC%EB%9F%BC-%ED%98%84%ED%99%A9)
 
+## 피어세션
+### [1주차 피어세션](https://github.com/boostcamp-2020/IssueTracker-30/wiki/1%EC%A3%BC%EC%B0%A8-%ED%94%BC%EC%96%B4%EC%84%B8%EC%85%98)
