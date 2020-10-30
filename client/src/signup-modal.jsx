@@ -13,11 +13,12 @@ const ModalSignup = styled.div`
     z-index: 1;
 `;
 const ModalSignupContent = styled.div`
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px 10px;
+    width: 22%;
+    margin: 2% 0%;
+    padding: 1%;
     background: #fff;
-    border: 2px solid #666;
+    box-shadow: 0 0 5px 0 gray;
+    border-radius: 10px;
 `;
 const ModalSignupLayer = styled.div`
     position: fixed;
@@ -31,7 +32,18 @@ const ModalSignupLayer = styled.div`
 
 const CloseBtn = styled.button`
     position: relative;
-    left: -33%;
+    right: -47%;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    font-size: 12pt;
+`;
+
+const StyledTitle = styled.p`
+    margin: 0;
+    font-size: 15pt;
+    font-weight: bold;
 `;
 
 const closeModal = history => {
@@ -43,7 +55,7 @@ const SignupModal = ({ history }) => {
         <ModalSignup>
             <ModalSignupContent>
                 <CloseBtn onClick={() => closeModal(history)}>X</CloseBtn>
-                회원가입 폼
+                <StyledTitle>회원가입</StyledTitle>
                 <SignUpForm />
             </ModalSignupContent>
             <ModalSignupLayer onClick={() => closeModal(history)} />

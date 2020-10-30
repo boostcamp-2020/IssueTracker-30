@@ -6,6 +6,16 @@
 
 ### Github Issue 관리 툴 클론 프로젝트
 
+## 페이지 구성
+### 로그인 페이지
+![it](https://user-images.githubusercontent.com/48575504/97440858-5f89e600-196b-11eb-96f5-d5334754d8b9.PNG)
+
+### 회원가입
+![singup](https://user-images.githubusercontent.com/48575504/97440860-60227c80-196b-11eb-8d76-8ab568bb9468.PNG)
+
+### 메인 페이지
+![main](https://user-images.githubusercontent.com/48575504/97440863-60bb1300-196b-11eb-8e7f-17b0fbf611b6.PNG)
+
 <br />
 
 ## 설치 방법
@@ -49,5 +59,11 @@ npm start
 
 <br />
 
-## [스크럼 현황](https://github.com/boostcamp-2020/IssueTracker-30/wiki/%EC%8A%A4%ED%81%AC%EB%9F%BC-%ED%98%84%ED%99%A9)
+## 스크럼 현황
+### [데일리 스크럼](https://github.com/boostcamp-2020/IssueTracker-30/wiki/%EC%8A%A4%ED%81%AC%EB%9F%BC-%ED%98%84%ED%99%A9)
+
+<br />
+
+## 인터페이스 정의서
+### https://docs.google.com/spreadsheets/d/1pl2vvTmJSDuonQS76f9BkLfjo0SOLZIdGAeG17SMBck/edit#gid=1017584322
 
