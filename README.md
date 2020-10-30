@@ -6,6 +6,11 @@
 
 ### Github Issue 관리 툴 클론 프로젝트
 
+### 시스템 구성도
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/48575504/97673993-143d1800-1ad0-11eb-824c-b9a5a6d7ab53.png">
+</p>
+
 ## 페이지 구성
 ### 로그인 페이지
 ![main](https://user-images.githubusercontent.com/48575504/97555685-bf3fca00-1a1b-11eb-9b82-489ab3978854.PNG)
