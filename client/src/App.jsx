@@ -11,33 +11,34 @@ const loginCheck = async () => {
             method: "POST",
             url: "http://localhost:3000/signIn/auth",
             withCredentials: true,
-        })
-            .then((res) => {
-                if(res.data.message === "success"){
-                    return "main";
-                } else {
-                    return "login";
-                }
-            });
+        }).then((res) => {
+            if (res.data.message === "success") {
+                return "main";
+            } else {
+                return "login";
+            }
+        });
         return mode;
     } else {
         return "login";
     }
-}
+};
 
 const App = () => {
     const [mode, setMode] = useState("login");
 
     useEffect(() => {
         loginCheck().then(async (res) => {
-            if (res === 'main') {
+            if (res === "main") {
                 await axios({
-                    method: "POST",
-                    url: "http://localhost:3000/issue/getIssue",
+                    method: "GET",
+                    url: "http://localhost:3000/issue/",
                     withCredentials: true,
-                })
-                .then((issueData) => {
-                    localStorage.setItem('issueData', JSON.stringify(issueData.data));
+                }).then((issueData) => {
+                    localStorage.setItem(
+                        "issueData",
+                        JSON.stringify(issueData.data),
+                    );
                     setMode(res);
                 });
             }
@@ -47,7 +48,7 @@ const App = () => {
     return (
         <>
             <NavBar mode={mode} />
-            <MainSection mode={mode}/>
+            <MainSection mode={mode} />
             <Footer />
         </>
     );
