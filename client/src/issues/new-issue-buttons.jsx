@@ -3,10 +3,13 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
     width: 30%;
-    border-color: rgba(56, 142, 60, 1);
+    height: 32px;
+    border: none;
+    box-shadow: 0 0 2px 0 grey;
     border-radius: 5px;
-    background-color: rgba(76, 175, 80, 1);
-    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(76,175,80,1);
+    color: white;
+    font-weight: bold;
 
     &:hover {
         cursor: pointer;

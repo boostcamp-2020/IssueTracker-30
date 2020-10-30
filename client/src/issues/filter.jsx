@@ -9,8 +9,13 @@ const StyledFilterDiv = styled.div`
 const StyledFilterSelect = styled.select.attrs({
     id: "issue-list-filter",
 })`
-    height: 100%;
+    height: 32px;
     width: 19%;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 0 2px 0 grey;
+    background-color: #fafbfc;
 `;
 
 // TODO: Option은 CSS 적용 불가
@@ -23,8 +28,12 @@ const StyledFilterTextInput = styled.input.attrs({
 })`
     height: 100%;
     width: 79%;
-
-    color: rgba(97, 97, 97, 1);
+    color: rgba(97,97,97,1);
+    box-shadow: 0 0 2px 0 grey;
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #fafbfc;
 `;
 
 const Filter = () => {
