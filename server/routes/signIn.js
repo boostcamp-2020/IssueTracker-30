@@ -60,7 +60,7 @@ router.get("/github/callback", (req, res) => {
         }
         axios.get('https://api.github.com/user', config)
         .then((loginData) => {
-            const token = jwt.sign({ user: loginData.data.login }, process.env.secret_key, { expiresIn: 3000 });
+            const token = jwt.sign({ user: {id: loginData.data.login}}, process.env.secret_key, { expiresIn: 3000 });
             res.cookie('user', token, { maxAge: 3000 * 1000 });
             res.redirect("http://localhost:3030")
         })
