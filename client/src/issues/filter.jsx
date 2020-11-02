@@ -8,22 +8,6 @@ const StyledFilterDiv = styled.div`
     display: flex;
 `;
 
-const StyledFilterSelect = styled.select.attrs({
-    id: "issue-list-filter",
-})`
-    height: 32px;
-    width: 19%;
-    border: none;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    box-shadow: 0 0 2px 0 grey;
-    background-color: #fafbfc;
-`;
-
-// TODO: Option은 CSS 적용 불가
-// Select-Option 모두 별도 div로 변경해야 함
-const StyledFilterOption = styled.option``;
-
 const StyledFilterTextInput = styled.input.attrs({
     type: "text",
     placeholder: "Search All Issues",
@@ -42,7 +26,7 @@ const StyledFilterButton = styled.button.attrs({
     
 })`
     height: 32px;
-    width: 19%;
+    width: 10%;
     border: none;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -73,64 +57,39 @@ const StyledFilterModalOverlay = styled.div`
 const StyledFilterList = styled.ul`
     list-style: none;
     margin: 0;
-    padding: 4% 0%;
+    padding: 2% 0% 0% 0%;
+    font-size: 14px;
 `
 const StyledFilterTitle = styled.li`
     border-bottom: 1px solid lightgray;
-    padding-bottom: 2%;
+    padding: 0 0 2% 3%;
+    font-weight: bold;
 `
 
 const StyledFilterContent = styled.li`
     border-bottom: 1px solid lightgray;
-    padding: 2% 0%;
+    padding: 2% 3%;
 
     &:hover {
-        background-color: #fafbfc;
+        background-color: #f6f8fa;
     }
 `
 
 const StyledFilterFooter = styled.li`
-    padding-top: 2%;
+    padding: 2% 3%;
+    font-weight: bold;
 
     &:hover {
-        background-color: #fafbfc;
+        background-color: #f6f8fa;
     }
 `
 
-
 const Filter = () => {
-    const [selected, setSelected] = useState("");
     const [textInput, setTextInput] = useState("is:issue is:open");
-    const [filterTypes, setFilterTypes] = useState([
-        // TODO 타입별로 검색하는 방식??
-        /**
-         * 검색 type
-         * is:issue
-         * is:open / closed
-         * sort:updated-desc / updated-asc / created-desc / created-asc / comments-desc / comments-asc
-         * author:@me
-         * assignee:@me
-         * mentions:@me
-         */
-
-        [0, "is:issue is:open sort:updated-desc", "Filter Issues"],
-        [1, "is:issue is:open sort:updated-desc", "Open issues"],
-        [2, "is:issue is:open author:@me sort:updated-desc", "Your issues"],
-        [
-            3,
-            "is:issue is:open assignee:@me sort:updated-desc",
-            "Everything assigned to you",
-        ],
-        [
-            4,
-            "is:issue is:open mentions:@me sort:updated-desc",
-            "Everything mentioning you",
-        ],
-        [5, "is:issue is:closed", "Closed issues"],
-    ]);
 
     const onFilterSelectedChange = (e) => {
-        setTextInput(e.target.value);
+        setTextInput(e.target.getAttribute('value'));
+        setModalVisible(!modalVisble);
     };
 
     const onFilterTextChange = (e) => {
@@ -161,31 +120,33 @@ const Filter = () => {
     }
 
     const [filter, setFilter] = useState([
-        { id: 1, text: 1},
-        { id: 2, text: 2},
-        { id: 3, text: 3},
-        { id: 4, text: 4},
-        { id: 5, text: 5}
+        { id: 1, value: "is:issue is:open sort:updated-desc", text: "Open issues"},
+        { id: 2, value: "is:issue is:open author:@me sort:updated-desc", text: "Your issues"},
+        { id: 3, value: "is:issue is:open assignee:@me sort:updated-desc", text: "Everything assigned to you"},
+        { id: 4, value: "is:issue is:open mentions:@me sort:updated-desc", text: "Everything mentioning you"},
+        { id: 5, value: "is:issue is:closed", text: "Closed issues"}
     ]);
 
     return (
         <StyledFilterDiv>
-            <StyledFilterButton onClick={onFilterClick}>Filter</StyledFilterButton>
+            <StyledFilterButton onClick={onFilterClick}>Filter ▼</StyledFilterButton>
             <StyledFilterModal visible={modalVisble}>
                 <StyledFilterModalOverlay onClick={onFilterClick}></StyledFilterModalOverlay>
                 <StyledFilterList>
-                    <StyledFilterTitle>title</StyledFilterTitle>
-                    {filter.map(fil => <StyledFilterContent key={fil.id}>{fil.text}</StyledFilterContent>)}
-                    <StyledFilterFooter>title</StyledFilterFooter>
+                    <StyledFilterTitle>Filter Issues</StyledFilterTitle>
+                    {filter.map(filterOption =>
+                        <StyledFilterContent onClick={onFilterSelectedChange}
+                        key={filterOption.id} value={filterOption.value}>
+                            {filterOption.text}
+                        </StyledFilterContent>)}
+                    <StyledFilterFooter>
+                        <svg viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+                            <path d="M10.604 1h4.146a.25.25 0 01.25.25v4.146a.25.25 0 01-.427.177L13.03 4.03 9.28 7.78a.75.75 0 01-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0110.604 1zM3.75 2A1.75 1.75 0 002 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 12.25v-3.5a.75.75 0 00-1.5 0v3.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-8.5a.25.25 0 01.25-.25h3.5a.75.75 0 000-1.5h-3.5z"></path>
+                        </svg>
+                        {" "}View advanced search syntax
+                    </StyledFilterFooter>
                 </StyledFilterList>
             </StyledFilterModal>
-            {/* <StyledFilterSelect onChange={onFilterSelectedChange}>
-                {filterTypes.map(([typeId, typeValue, typeLabel]) => (
-                    <StyledFilterOption key={typeId} value={typeValue}>
-                        {typeLabel}
-                    </StyledFilterOption>
-                ))}
-            </StyledFilterSelect> */}
 
             <StyledFilterTextInput
                 value={textInput}
