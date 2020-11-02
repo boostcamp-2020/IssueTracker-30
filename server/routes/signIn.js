@@ -60,9 +60,21 @@ router.get("/github/callback", (req, res) => {
         }
         axios.get('https://api.github.com/user', config)
         .then((loginData) => {
-            const token = jwt.sign({ user: loginData.data.login }, process.env.secret_key, { expiresIn: 3000 });
-            res.cookie('user', token, { maxAge: 3000 * 1000 });
-            res.redirect("http://localhost:3030")
+            const token = jwt.sign({ user: {id: loginData.data.login}}, process.env.secret_key, { expiresIn: 3000 });
+
+            axios({
+                method: "POST",
+                url: "http://localhost:3000/signUp",
+                data: {
+                    userId : `${loginData.data.login}_Github`,
+                    userPw1 : 'Github',
+                },
+                withCredentials: true,
+            })
+                .then(() => {
+                    res.cookie('user', token, { maxAge: 3000 * 1000 });
+                    res.redirect("http://localhost:3030")
+                });
         })
         .catch(function(err) {
             console.log(err)

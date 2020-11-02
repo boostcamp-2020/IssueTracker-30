@@ -6,6 +6,11 @@ const StyledBannersListDiv = styled.div`
     width: 1200px;
     height: 100%;
     overflow: auto;
+    border-top: 1px solid #eaecef;
+
+    &:hover {
+        background-color: rgba(236,239,241,1);
+    }
 `;
 
 const StyledBannerCheckBoxDiv = styled.div`
