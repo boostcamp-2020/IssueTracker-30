@@ -7,6 +7,7 @@ import issue from "./issue";
 import comment from "./comment";
 import label from "./label";
 import milestone from "./milestone";
+import user from "./user";
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.use("/issue", issue);
 router.use("/comment", comment);
 router.use("/label", label);
 router.use("/milestone", milestone);
+router.use("/user", user);
 
 export default router;
