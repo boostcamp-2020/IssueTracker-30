@@ -6,9 +6,30 @@ import query from "../db/query";
 const router = express.Router();
 
 router.get("/", isLoggedIn, async(req, res) => {
-    const userId = req.body.userId;
     const connection = await pool.getConnection();
-    const [rows] = await connection.query(query.getIssue, [userId]);
+    const [rows] = await connection.query(query.getIssue);
+    const [labelIssue] = await connection.query(query.getlabelIssue);
+    const [assignIssue] = await connection.query(query.getassignIssue);
+    
+    rows.forEach((v, i) => {
+        v.labelId = [];
+        v.labelContent = [];
+        v.labelColor = [];
+        v.assignId = [];
+        labelIssue.filter((e) =>{
+            return e.issueId == v.issueId;
+        }).forEach((k, i) => {
+            v.labelId.push(k.labelId);
+            v.labelContent.push(k.content);
+            v.labelColor.push(k.color); 
+        });
+        assignIssue.filter((e) =>{
+            return e.issueId == v.issueId;
+        }).forEach((k, i) => {
+            v.assignId.push(k.assignId);
+        });
+    });
+
     res.json(rows);
 });
 
