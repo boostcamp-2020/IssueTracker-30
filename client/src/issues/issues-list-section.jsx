@@ -98,10 +98,42 @@ const IssuesListSection = () => {
                     </StyledListSortOpenClosedCheckBoxLabel>
                 </StyledListSortOpenClosedDiv>
                 <StyledListSortOptions>
-                    <DropdownMenu name={"Author"} />
-                    <DropdownMenu name={"Label"} />
-                    <DropdownMenu name={"Milestones"} />
-                    <DropdownMenu name={"Assignee"} />
+                    <DropdownMenu
+                        name={"Author"}
+                        options={[
+                            [1, "author1"],
+                            [2, "author2"],
+                            [3, "author3"],
+                            [4, "author4"],
+                        ]}
+                    />
+                    <DropdownMenu
+                        name={"Label"}
+                        options={[
+                            [1, "labe1"],
+                            [2, "labe2"],
+                            [3, "labe3"],
+                            [4, "labe4"],
+                        ]}
+                    />
+                    <DropdownMenu
+                        name={"Milestones"}
+                        options={[
+                            [1, "Milestone1"],
+                            [2, "Milestone2"],
+                            [3, "Milestone3"],
+                            [4, "Milestone4"],
+                        ]}
+                    />
+                    <DropdownMenu
+                        name={"Assignee"}
+                        options={[
+                            [1, "Assignee1"],
+                            [2, "Assignee2"],
+                            [3, "Assignee3"],
+                            [4, "Assignee4"],
+                        ]}
+                    />
                 </StyledListSortOptions>
             </StyledListSortMenu>
             <StyledSortedList>
