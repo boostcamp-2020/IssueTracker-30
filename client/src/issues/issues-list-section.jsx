@@ -109,6 +109,7 @@ const IssuesListSection = () => {
                     />
                     <DropdownMenu
                         name={"Label"}
+                        notUseTitle="Unlabeled"
                         options={[
                             [1, "labe1"],
                             [2, "labe2"],
@@ -118,6 +119,7 @@ const IssuesListSection = () => {
                     />
                     <DropdownMenu
                         name={"Milestones"}
+                        notUseTitle="Issues with no milestones"
                         options={[
                             [1, "Milestone1"],
                             [2, "Milestone2"],
@@ -127,6 +129,7 @@ const IssuesListSection = () => {
                     />
                     <DropdownMenu
                         name={"Assignee"}
+                        notUseTitle="Assigned to nobody"
                         options={[
                             [1, "Assignee1"],
                             [2, "Assignee2"],
