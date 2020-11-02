@@ -4,6 +4,8 @@ import styled from "styled-components";
 const StyledFilterDiv = styled.div`
     height: 100%;
     width: 70%;
+    z-index: 1;
+    display: flex;
 `;
 
 const StyledFilterSelect = styled.select.attrs({
@@ -35,6 +37,57 @@ const StyledFilterTextInput = styled.input.attrs({
     border-bottom-right-radius: 5px;
     background-color: #fafbfc;
 `;
+
+const StyledFilterButton = styled.button.attrs({
+    
+})`
+    height: 32px;
+    width: 19%;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 0 2px 0 grey;
+    background-color: #fafbfc;
+`;
+
+const StyledFilterModal = styled.div`
+    position: absolute;
+    top: 34%;
+    display: block;
+    width: 15%;
+    background-color: white;
+    box-shadow: 0 0 2px 0 grey;
+    border-radius: 3px;
+    display: ${props => (props.visible? 'block' : 'none')};
+`
+
+const StyledFilterList = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 4% 0%;
+`
+const StyledFilterTitle = styled.li`
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 2%;
+`
+
+const StyledFilterContent = styled.li`
+    border-bottom: 1px solid lightgray;
+    padding: 2% 0%;
+
+    &:hover {
+        background-color: #fafbfc;
+    }
+`
+
+const StyledFilterFooter = styled.li`
+    padding-top: 2%;
+
+    &:hover {
+        background-color: #fafbfc;
+    }
+`
+
 
 const Filter = () => {
     const [selected, setSelected] = useState("");
@@ -92,15 +145,37 @@ const Filter = () => {
         }
     };
 
+    const [modalVisble, setModalVisible] = useState(false);
+
+    const onFilterClick = () => {
+        setModalVisible(!modalVisble);
+    }
+
+    const [filter, setFilter] = useState([
+        { id: 1, text: 1},
+        { id: 2, text: 2},
+        { id: 3, text: 3},
+        { id: 4, text: 4},
+        { id: 5, text: 5}
+    ]);
+
     return (
         <StyledFilterDiv>
-            <StyledFilterSelect onChange={onFilterSelectedChange}>
+            <StyledFilterButton onClick={onFilterClick}>Filter</StyledFilterButton>
+            <StyledFilterModal visible={modalVisble}>
+                <StyledFilterList>
+                    <StyledFilterTitle>title</StyledFilterTitle>
+                    {filter.map(fil => <StyledFilterContent key={fil.id}>{fil.text}</StyledFilterContent>)}
+                    <StyledFilterFooter>title</StyledFilterFooter>
+                </StyledFilterList>
+            </StyledFilterModal>
+            {/* <StyledFilterSelect onChange={onFilterSelectedChange}>
                 {filterTypes.map(([typeId, typeValue, typeLabel]) => (
                     <StyledFilterOption key={typeId} value={typeValue}>
                         {typeLabel}
                     </StyledFilterOption>
                 ))}
-            </StyledFilterSelect>
+            </StyledFilterSelect> */}
 
             <StyledFilterTextInput
                 value={textInput}
