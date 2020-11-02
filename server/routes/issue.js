@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", isLoggedIn, async(req, res) => {
     const userId = req.body.userId;
     const connection = await pool.getConnection();
-    const [rows] = await connection.query(query.getIssue, [userId]);
+    const [rows] = await connection.query(query.getIssue);
     res.json(rows);
 });
 
