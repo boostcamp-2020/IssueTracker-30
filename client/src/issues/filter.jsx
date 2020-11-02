@@ -61,6 +61,15 @@ const StyledFilterModal = styled.div`
     display: ${props => (props.visible? 'block' : 'none')};
 `
 
+const StyledFilterModalOverlay = styled.div`
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+`
+
 const StyledFilterList = styled.ul`
     list-style: none;
     margin: 0;
@@ -163,6 +172,7 @@ const Filter = () => {
         <StyledFilterDiv>
             <StyledFilterButton onClick={onFilterClick}>Filter</StyledFilterButton>
             <StyledFilterModal visible={modalVisble}>
+                <StyledFilterModalOverlay onClick={onFilterClick}></StyledFilterModalOverlay>
                 <StyledFilterList>
                     <StyledFilterTitle>title</StyledFilterTitle>
                     {filter.map(fil => <StyledFilterContent key={fil.id}>{fil.text}</StyledFilterContent>)}
