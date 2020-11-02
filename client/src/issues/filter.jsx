@@ -36,7 +36,7 @@ const StyledFilterButton = styled.button.attrs({
 
 const StyledFilterModal = styled.div`
     position: absolute;
-    top: 34%;
+    top: 36%;
     display: block;
     width: 15%;
     background-color: white;
@@ -119,6 +119,11 @@ const Filter = () => {
         setModalVisible(!modalVisble);
     }
 
+    const onFilterFooterClick = () => {
+        window.open("https://docs.github.com/en/free-pro-team@latest/github/searching-for-information-on-github/searching-issues-and-pull-requests");
+        setModalVisible(!modalVisble);
+    }
+
     const [filter, setFilter] = useState([
         { id: 1, value: "is:issue is:open sort:updated-desc", text: "Open issues"},
         { id: 2, value: "is:issue is:open author:@me sort:updated-desc", text: "Your issues"},
@@ -139,7 +144,7 @@ const Filter = () => {
                         key={filterOption.id} value={filterOption.value}>
                             {filterOption.text}
                         </StyledFilterContent>)}
-                    <StyledFilterFooter>
+                    <StyledFilterFooter onClick={onFilterFooterClick}>
                         <svg viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
                             <path d="M10.604 1h4.146a.25.25 0 01.25.25v4.146a.25.25 0 01-.427.177L13.03 4.03 9.28 7.78a.75.75 0 01-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0110.604 1zM3.75 2A1.75 1.75 0 002 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 12.25v-3.5a.75.75 0 00-1.5 0v3.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-8.5a.25.25 0 01.25-.25h3.5a.75.75 0 000-1.5h-3.5z"></path>
                         </svg>
