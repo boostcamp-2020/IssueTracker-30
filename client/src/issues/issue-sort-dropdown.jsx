@@ -2,13 +2,22 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledDropDownMenu = styled.div`
-    position: relative;
     display: inline-block;
     width: 150px;
 
     &:hover {
         cursor: pointer;
     }
+`;
+
+const StyledModalBackground = styled.div`
+    display: ${(props) => props.isVisible};
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
 `;
 
 const StyledMenuTitle = styled.div`
@@ -21,7 +30,8 @@ const StyledMenuTitle = styled.div`
 const StyledMenuContent = styled.div`
     display: ${(props) => props.isVisible};
     position: absolute;
-    width: 150px;
+    top: 30px;
+    width: 200px;
     height: fit-content;
     max-height: 300px;
     z-index: 3;
@@ -37,9 +47,16 @@ const StyledMenuUl = styled.ul`
     padding: 4% 0%;
 `;
 
+const StyledMenuUlHead = styled.div`
+    border-bottom: 1px solid lightgray;
+    font-weight: bold;
+    text-align: left;
+`;
+
 const StyledMenuLi = styled.li`
     border-bottom: 1px solid lightgray;
     padding: 2% 0%;
+    text-align: center;
 
     &:hover {
         background-color: #fafbfc;
@@ -49,8 +66,7 @@ const StyledMenuLi = styled.li`
 const DropDownMenu = (props) => {
     const [menuVisibility, setMenuVisibility] = useState("none");
 
-    const onTitleClicked = (e) => {
-        e.preventDefault();
+    const handleMenuVisibility = () => {
         if (menuVisibility === "none") {
             setMenuVisibility("block");
         } else {
@@ -59,15 +75,24 @@ const DropDownMenu = (props) => {
     };
 
     return (
-        <StyledDropDownMenu onClick={onTitleClicked}>
-            <StyledMenuTitle title={props.name} />
-            <StyledMenuContent isVisible={menuVisibility}>
-                <StyledMenuUl>
-                    {props.options.map(([key, option]) => (
-                        <StyledMenuLi key={key}>{option}</StyledMenuLi>
-                    ))}
-                </StyledMenuUl>
-            </StyledMenuContent>
+        <StyledDropDownMenu onClick={handleMenuVisibility}>
+            <StyledModalBackground
+                isVisible={menuVisibility}
+                onClick={handleMenuVisibility}
+            ></StyledModalBackground>
+            <StyledMenuTitle title={props.name}>
+                <StyledMenuContent isVisible={menuVisibility}>
+                    <StyledMenuUl>
+                        <StyledMenuUlHead>
+                            Filter by {props.name}
+                        </StyledMenuUlHead>
+                        <StyledMenuLi>{props.notUseTitle}</StyledMenuLi>
+                        {props.options.map(([key, option]) => (
+                            <StyledMenuLi key={key}>{option}</StyledMenuLi>
+                        ))}
+                    </StyledMenuUl>
+                </StyledMenuContent>
+            </StyledMenuTitle>
         </StyledDropDownMenu>
     );
 };
