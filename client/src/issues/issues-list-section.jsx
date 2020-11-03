@@ -118,7 +118,7 @@ const IssuesListSection = () => {
     const usersData = JSON.parse(localStorage.getItem("usersData"));
     const usersLiData = [];
     usersData.forEach((ele) => {
-        usersLiData.push({ key: ele.userId });
+        usersLiData.push({ key: ele.userId, value: ele.userId, media: ele.userId});
     });
 
     const labelsData = JSON.parse(localStorage.getItem("labelsData"));
@@ -126,8 +126,8 @@ const IssuesListSection = () => {
     labelsData.forEach((ele) => {
         labelsLiData.push({
             key: ele.ID,
-            color: ele.color,
-            content: ele.content,
+            value: ele.content,
+            media: ele.color,
         });
     });
 
