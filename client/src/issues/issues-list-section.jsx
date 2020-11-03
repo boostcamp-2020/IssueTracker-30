@@ -44,21 +44,20 @@ const StyledListSortOpenClosedCheckBox = styled.input.attrs({
     type: "radio",
     name: "open-closed",
     hidden: true,
-})`
-`;
+})``;
 
 const StyledListSortOpenClosedCheckBoxLabel = styled.label`
-    color: ${props => {
-        let radioToString
+    color: ${(props) => {
+        let radioToString;
         if (props.openClosedRadio === 1) {
-            radioToString="closed";
+            radioToString = "closed";
         } else {
-            radioToString="open";
+            radioToString = "open";
         }
 
-        return props.htmlFor === radioToString ? "lightgray" : "black"
+        return props.htmlFor === radioToString ? "lightgray" : "black";
     }};
-    margin-left:${props => props.htmlFor === 'closed' ? "3%" : "0%"} ;
+    margin-left: ${(props) => (props.htmlFor === "closed" ? "3%" : "0%")};
 `;
 
 const StyledListSortOptions = styled.div`
@@ -86,7 +85,7 @@ const IssuesListSection = () => {
 
     const issueData = JSON.parse(localStorage.getItem("issueData"));
 
-    const filteredIssueData = []
+    const filteredIssueData = [];
 
     issueData.sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
 
@@ -96,6 +95,28 @@ const IssuesListSection = () => {
         }
     });
 
+    const usersData = JSON.parse(localStorage.getItem("usersData"));
+    const usersLiData = [];
+    usersData.forEach((ele) => {
+        usersLiData.push({ key: ele.userId });
+    });
+
+    const labelsData = JSON.parse(localStorage.getItem("labelsData"));
+    const labelsLiData = [];
+    labelsData.forEach((ele) => {
+        labelsLiData.push({
+            key: ele.ID,
+            color: ele.color,
+            content: ele.content,
+        });
+    });
+
+    const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
+    const milestonesLiData = [];
+    milestonesData.forEach((ele) => {
+        milestonesLiData.push({ key: ele.ID, value: ele.title });
+    });
+
     return (
         <StyledListSection>
             <StyledListSortMenu>
@@ -103,52 +124,43 @@ const IssuesListSection = () => {
                     <StyledListSortCheckBoxInput />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
-                        <StyledListSortOpenClosedCheckBox onChange={onOpenClosedRadioChange} id="open"/>
-                        <StyledListSortOpenClosedCheckBoxLabel htmlFor="open" openClosedRadio={openClosedRadio}>
-                            ⓘ Open
-                        </StyledListSortOpenClosedCheckBoxLabel>
-                        <StyledListSortOpenClosedCheckBox onChange={onOpenClosedRadioChange}  id="closed" />
-                        <StyledListSortOpenClosedCheckBoxLabel htmlFor="closed" openClosedRadio={openClosedRadio}>✔ Closed</StyledListSortOpenClosedCheckBoxLabel>
+                    <StyledListSortOpenClosedCheckBox
+                        onChange={onOpenClosedRadioChange}
+                        id="open"
+                    />
+                    <StyledListSortOpenClosedCheckBoxLabel
+                        htmlFor="open"
+                        openClosedRadio={openClosedRadio}
+                    >
+                        ⓘ Open
+                    </StyledListSortOpenClosedCheckBoxLabel>
+                    <StyledListSortOpenClosedCheckBox
+                        onChange={onOpenClosedRadioChange}
+                        id="closed"
+                    />
+                    <StyledListSortOpenClosedCheckBoxLabel
+                        htmlFor="closed"
+                        openClosedRadio={openClosedRadio}
+                    >
+                        ✔ Closed
+                    </StyledListSortOpenClosedCheckBoxLabel>
                 </StyledListSortOpenClosedDiv>
                 <StyledListSortOptions>
-                    <DropdownMenu
-                        name={"Author"}
-                        options={[
-                            [1, "author1"],
-                            [2, "author2"],
-                            [3, "author3"],
-                            [4, "author4"],
-                        ]}
-                    />
+                    <DropdownMenu name={"Author"} dataArray={usersLiData} />
                     <DropdownMenu
                         name={"Label"}
                         notUseTitle="Unlabeled"
-                        options={[
-                            [1, "labe1"],
-                            [2, "labe2"],
-                            [3, "labe3"],
-                            [4, "labe4"],
-                        ]}
+                        dataArray={labelsLiData}
                     />
                     <DropdownMenu
                         name={"Milestones"}
                         notUseTitle="Issues with no milestones"
-                        options={[
-                            [1, "Milestone1"],
-                            [2, "Milestone2"],
-                            [3, "Milestone3"],
-                            [4, "Milestone4"],
-                        ]}
+                        dataArray={milestonesLiData}
                     />
                     <DropdownMenu
                         name={"Assignee"}
                         notUseTitle="Assigned to nobody"
-                        options={[
-                            [1, "Assignee1"],
-                            [2, "Assignee2"],
-                            [3, "Assignee3"],
-                            [4, "Assignee4"],
-                        ]}
+                        dataArray={usersLiData}
                     />
                 </StyledListSortOptions>
             </StyledListSortMenu>

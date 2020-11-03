@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledDropDownMenu = styled.div`
-    display: inline-block;
     width: 150px;
 
     &:hover {
@@ -12,12 +11,16 @@ const StyledDropDownMenu = styled.div`
 
 const StyledModalBackground = styled.div`
     display: ${(props) => props.isVisible};
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 1;
+
+    &:hover {
+        cursor: default;
+    }
 `;
 
 const StyledMenuTitle = styled.div`
@@ -87,9 +90,12 @@ const DropDownMenu = (props) => {
                             Filter by {props.name}
                         </StyledMenuUlHead>
                         <StyledMenuLi>{props.notUseTitle}</StyledMenuLi>
-                        {props.options.map(([key, option]) => (
-                            <StyledMenuLi key={key}>{option}</StyledMenuLi>
-                        ))}
+                        {/* {props.dataArray.reduce(
+                            (acc, cur) => (
+                                <StyledMenuLi key={key}>{option}</StyledMenuLi>
+                            ),
+                            0,
+                        )} */}
                     </StyledMenuUl>
                 </StyledMenuContent>
             </StyledMenuTitle>
