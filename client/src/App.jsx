@@ -28,9 +28,9 @@ const App = () => {
     const [mode, setMode] = useState("login");
 
     useEffect(() => {
-        loginCheck().then(async (res) => {
+        loginCheck().then((res) => {
             if (res === "main") {
-                await axios({
+                axios({
                     method: "GET",
                     url: "http://localhost:3000/issue/",
                     withCredentials: true,
@@ -40,6 +40,39 @@ const App = () => {
                         JSON.stringify(issueData.data),
                     );
                     setMode(res);
+                });
+
+                axios({
+                    method: "GET",
+                    url: "http://localhost:3000/user/",
+                    withCredentials: true,
+                }).then((users) => {
+                    localStorage.setItem(
+                        "usersData",
+                        JSON.stringify(users.data),
+                    );
+                });
+
+                axios({
+                    method: "GET",
+                    url: "http://localhost:3000/label/",
+                    withCredentials: true,
+                }).then((labels) => {
+                    localStorage.setItem(
+                        "labelsData",
+                        JSON.stringify(labels.data),
+                    );
+                });
+
+                axios({
+                    method: "GET",
+                    url: "http://localhost:3000/milestone/",
+                    withCredentials: true,
+                }).then((milestones) => {
+                    localStorage.setItem(
+                        "milestonesData",
+                        JSON.stringify(milestones.data),
+                    );
                 });
             }
         });
