@@ -38,18 +38,21 @@ const IssueService = {
             status: req.body.status,
             milestoneId: req.body.milestoneId,
             content: req.body.content,
-            labelId: req.body.labelId
+            labelId: req.body.labelId,
+            assignId: req.body.assignId
         };
 
         const connection = await pool.getConnection();
-        const [rows1] = await connection.query(query.insertIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.labelId]);
+        const [rows1] = await connection.query(query.insertIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content]);
 
-        if (issue.labelId != null) {
-            const [rows2] = await connection.query(query.insertLabelIssueRelation, [rows1.insertId, issue.labelId]);
-            if (rows2.affectedRows <= 0) {
-                res.json({ messages: "Error" });
-            }
-        }
+        issue.labelId.forEach(async v => {
+            await connection.query(query.insertLabelIssueRelation, [rows1.insertId, v]);
+        });
+
+        issue.assignId.forEach(async v => {
+            await connection.query(query.insertassignIssueRelation, [v, rows1.insertId]);
+        });
+
 
         if (rows1.affectedRows > 0) {
             res.json({ message: "success" });
@@ -59,24 +62,52 @@ const IssueService = {
         }
     },
 
-    updateIssue : async(req, res) => {
-        const userId = req.body.userId;
+    updateIssue: async (req, res) => {
         const issue = {
+            mode: req.body.mode,
             issueId: req.body.issueId,
             title: req.body.title,
-            writingTime: req.body.writingTime,
             status: req.body.status,
             milestoneId: req.body.milestoneId,
-            content: req.body.content
+            content: req.body.content,
+            labelId: req.body.labelId,
+            assignId: req.body.assignId
         };
-    
+
         const connection = await pool.getConnection();
-        const [rows] = await connection.query(query.updateIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.issueId]);
-        if(rows.affectedRows > 0) {
+
+        try {
+            switch (issue.mode) {
+                case 1:
+                    await connection.query(query.updateIssueTitle, [issue.title, issue.issueId]);
+                    break;
+                case 2:
+                    await connection.query(query.updateIssueContent, [issue.content, issue.issueId]);
+                    break;
+                case 3:
+                    await connection.query(query.updateIssueMilestone, [issue.milestoneId, issue.issueId]);
+                    break;
+                case 4:``
+                    await connection.query(query.updateIssueStatus, [issue.status, issue.issueId]);
+                    break;
+                case 5:
+                    await connection.query(query.deleteAssignIssueRelation, [issue.issueId]);
+                    issue.assignId.forEach(async v => {
+                        await connection.query(query.updateAssignIssueRelation, [v, issue.issueId]);
+                    });
+                    break;
+                case 6:
+                    await connection.query(query.deleteLabelIssueRelation, [issue.issueId]);
+                    issue.labelId.forEach(async v => {
+                        await connection.query(query.updateLabelIssueRelation, [issue.issueId, v]);
+                    });
+                    break;
+                default:
+                    break;
+            }
             res.json({message: "success"});
-        }
-        else {
-            res.json({messages: "Error"});
+        } catch (error) {
+            res.json({message: "fail"});
         }
     }
 }
