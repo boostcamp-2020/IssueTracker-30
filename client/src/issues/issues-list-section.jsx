@@ -23,9 +23,11 @@ const StyledListSortMenu = styled.div`
 `;
 
 const StyledListSortCheckBoxDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 50px;
     height: 100%;
-    text-align: center;
 `;
 const StyledListSortCheckBoxInput = styled.input.attrs({
     type: "checkbox",
@@ -112,7 +114,7 @@ const IssuesListSection = () => {
     if (filteredIssueData.length === 0) {
         noContent = false;
     }
-    
+
     const usersData = JSON.parse(localStorage.getItem("usersData"));
     const usersLiData = [];
     usersData.forEach((ele) => {

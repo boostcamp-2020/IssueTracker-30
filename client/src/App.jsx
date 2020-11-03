@@ -39,9 +39,8 @@ const App = () => {
                         "issueData",
                         JSON.stringify(issueData.data),
                     );
-                    setMode(res);
                 });
-
+                
                 axios({
                     method: "GET",
                     url: "http://localhost:3000/user/",
@@ -52,7 +51,7 @@ const App = () => {
                         JSON.stringify(users.data),
                     );
                 });
-
+                    
                 axios({
                     method: "GET",
                     url: "http://localhost:3000/label/",
@@ -73,6 +72,7 @@ const App = () => {
                         "milestonesData",
                         JSON.stringify(milestones.data),
                     );
+                    setMode(res);
                 });
             }
         });
