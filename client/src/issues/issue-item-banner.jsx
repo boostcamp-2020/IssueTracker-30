@@ -9,7 +9,7 @@ const StyledBannersListDiv = styled.div`
     border-top: 1px solid #eaecef;
 
     &:hover {
-        background-color: rgba(236,239,241,1);
+        background-color: rgba(236, 239, 241, 1);
     }
 `;
 
@@ -51,7 +51,7 @@ const StyledBannerInfo = styled.p`
 // userId: "123123"
 // writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
-    const openOrClosed = status === 1 ? "opened" : "closed";
+    const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
@@ -73,7 +73,7 @@ const IssueTitle = (props) => {
                 <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
                 <StyledBannerInfo>
                     #{props.issueId} by {props.userId} was {openOrClosed}{" "}
-                    {updatedTimeBefore} ago
+                    {updatedTimeBefore} days ago
                 </StyledBannerInfo>
             </StyledBannerTextDiv>
         </StyledBannersListDiv>
