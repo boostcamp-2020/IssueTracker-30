@@ -9,6 +9,8 @@ const StyledListDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    position: absolute;
+    top: 180px;
 `;
 
 const StyledListHeader = styled.div`
