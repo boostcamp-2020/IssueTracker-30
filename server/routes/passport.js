@@ -2,7 +2,7 @@ const passport = require("passport");
 const bcrypt = require('bcrypt');
 const { Strategy: JwtStrategy } = require("passport-jwt");
 const { Strategy: LocalStrategy } = require("passport-local");
-const pool = require("../db/connection");
+const connection = require("../db/connection");
 const query = require("../db/query");
 
 require('dotenv').config();
@@ -12,7 +12,6 @@ module.exports = () => {
         usernameField: 'userId',
         passwordField: 'userPw1'
     }, async (id, pw, done) => {
-        const connection = await pool.getConnection();
         const [rows] = await connection.query(query.getUserId,
             [id]);
         if (rows.length) {
@@ -38,7 +37,6 @@ module.exports = () => {
         usernameField: 'userId',
         passwordField: 'userPw'
     }, async (id, pw, done) => {
-        const connection = await pool.getConnection();
         const [[rows]] = await connection.query(query.loginCheck,
             [id]);
         if (!rows) return done(null, false, "존재하지 않는 사용자 아이디입니다.");

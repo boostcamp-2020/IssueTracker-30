@@ -1,13 +1,12 @@
 import passport from "passport";
 import jwt from "jsonwebtoken";
 
-import pool from "../db/connection";
+import connection from "../db/connection";
 import query from "../db/query";
 require('dotenv').config();
 
 const UserService = {
     getUser: async (req, res) => {
-        const connection = await pool.getConnection();
         const [rows] = await connection.query(query.getUser);
         res.json(rows);
     },
