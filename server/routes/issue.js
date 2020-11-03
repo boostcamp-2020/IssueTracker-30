@@ -1,65 +1,14 @@
 import express from "express";
-import isLoggedIn from "./auth";
-import pool from "../db/connection";
-import query from "../db/query";
+
+import isLoggedIn from "../middleware/auth";
+import IssueService from "../service/issue-service";
 
 const router = express.Router();
 
-router.get("/", isLoggedIn, async(req, res) => {
-    const userId = req.body.userId;
-    const connection = await pool.getConnection();
-    const [rows] = await connection.query(query.getIssue, [userId]);
-    res.json(rows);
-});
+router.get("/", isLoggedIn, IssueService.getIssue);
 
-router.post("/", isLoggedIn, async(req, res) => {
-    const userId = req.body.userId;
-    const issue = {
-        title: req.body.title,
-        writingTime: req.body.writingTime,
-        status: req.body.status,
-        milestoneId: req.body.milestoneId,
-        content: req.body.content,
-        labelId: req.body.labelId
-    };
+router.post("/", isLoggedIn, IssueService.insertIssue);
 
-    const connection = await pool.getConnection();
-    const [rows1] = await connection.query(query.insertIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.labelId]);
-
-    if(issue.labelId != null) {
-        const [rows2] = await connection.query(query.insertLabelIssueRelation, [rows1.insertId, issue.labelId]);
-        if(rows2.affectedRows <= 0) {
-            res.json({messages: "Error"});
-        }
-    }
-
-    if(rows1.affectedRows > 0) {
-        res.json({message: "success"});
-    }
-    else {
-        res.json({messages: "Error"});
-    }
-});
-
-router.put("/", isLoggedIn, async(req, res) => {
-    const userId = req.body.userId;
-    const issue = {
-        issueId: req.body.issueId,
-        title: req.body.title,
-        writingTime: req.body.writingTime,
-        status: req.body.status,
-        milestoneId: req.body.milestoneId,
-        content: req.body.content
-    };
-
-    const connection = await pool.getConnection();
-    const [rows] = await connection.query(query.updateIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content, issue.issueId]);
-    if(rows.affectedRows > 0) {
-        res.json({message: "success"});
-    }
-    else {
-        res.json({messages: "Error"});
-    }
-});
+router.put("/", isLoggedIn, IssueService.updateIssue);
 
 export default router;

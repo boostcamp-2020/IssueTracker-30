@@ -1,11 +1,10 @@
 import express from "express";
-import pool from "../db/connection";
-import query from "../db/query";
+
+import isLoggedIn from "../middleware/auth";
+import LabelService from "../service/label-service";
 
 const router = express.Router();
 
-router.get("/", async(req, res) => {
-    res.json({message: "label page"});
-});
+router.get("/", isLoggedIn, LabelService.getLabel);
 
 export default router;

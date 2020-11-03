@@ -1,11 +1,10 @@
 import express from "express";
-import pool from "../db/connection";
-import query from "../db/query";
+
+import isLoggedIn from "../middleware/auth";
+import MilestoneService from "../service/milestone-service";
 
 const router = express.Router();
 
-router.get("/", async(req, res) => {
-    res.json({message: "milestone page"});
-});
+router.get("/", isLoggedIn, MilestoneService.getMilestone);
 
 export default router;

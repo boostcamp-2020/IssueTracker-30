@@ -6,3 +6,6 @@ client/dist
 package-lock.json
 
 *env*
+
+client/nohup.out
+server/nohup.out
