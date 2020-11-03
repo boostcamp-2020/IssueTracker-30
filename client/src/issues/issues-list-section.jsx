@@ -73,8 +73,22 @@ const StyledSortedList = styled.div`
     height: fit-content;
 `;
 
+const StyledNoContent = styled.div`
+    display: ${props => props.noContent ? 'none' : 'flex'};
+    height: 27vh;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 28px;
+        font-weight: bold;
+    }
+`;
+
 const IssuesListSection = () => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
+
+    let noContent = true;
 
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
@@ -95,6 +109,10 @@ const IssuesListSection = () => {
             filteredIssueData.push(element);
         }
     });
+
+    if (filteredIssueData.length === 0) {
+        noContent = false;
+    }
 
     return (
         <StyledListSection>
@@ -165,6 +183,7 @@ const IssuesListSection = () => {
                         />
                     ),
                 )}
+                <StyledNoContent noContent={noContent}><p>No result matched your search.</p></StyledNoContent>
             </StyledSortedList>
         </StyledListSection>
     );
