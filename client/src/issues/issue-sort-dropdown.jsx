@@ -26,7 +26,7 @@ const StyledModalBackground = styled.div`
 const StyledMenuTitle = styled.div`
     position: relative;
     &:before {
-        content: "${(props) => props.title} 🔽";
+        content: "${(props) => props.title} ▼";
     }
 `;
 
@@ -34,37 +34,87 @@ const StyledMenuContent = styled.div`
     display: ${(props) => props.isVisible};
     position: absolute;
     top: 30px;
-    width: 200px;
+    width: 250px;
     height: fit-content;
     max-height: 300px;
     z-index: 3;
     background-color: white;
     overflow: auto;
-    border: 1px solid rgba(97, 97, 97, 1);
+    box-shadow: 0 0 2px 0 grey;
     border-radius: 5px;
 `;
 
 const StyledMenuUl = styled.ul`
     list-style: none;
     margin: 0;
-    padding: 4% 0%;
+    padding: 2% 0%;
+    font-size: 14px;
 `;
 
 const StyledMenuUlHead = styled.div`
-    border-bottom: 1px solid lightgray;
+    padding: 2% 0 3% 5%;
     font-weight: bold;
     text-align: left;
 `;
 
-const StyledMenuLi = styled.li`
-    border-bottom: 1px solid lightgray;
-    padding: 2% 0%;
-    text-align: center;
+const StyledMenuLiNotUse = styled.div`
+    border-top: 1px solid lightgray;
+    padding: 3% 5%;
+    display: ${props => props.type !== "Author"? "block" : "none"};
 
     &:hover {
-        background-color: #fafbfc;
+        background-color: #eceff1;
+    }
+`
+
+const StyledMenuLi = styled.li`
+    border-top: 1px solid lightgray;
+    padding: 3% 0%;
+    text-align: center;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    &:hover {
+        background-color: #eceff1;
+    }
+
+    p {
+        margin: 0 0 0 5%;
     }
 `;
+
+const StyledMediaSection = styled.div`
+    display: ${props => props.mediaSection? "block" : "none"};
+
+    ${props => {
+        switch (props.mediaType) {
+            case "Author" :
+            case "Assignee" : 
+                const base = Math.floor(Math.random() * 3);
+                const pool = ['https://i.ibb.co/x6Q07jp/1.png', 'https://i.ibb.co/5YjKFzJ/2.png', 'https://i.ibb.co/yQchVjL/3.png'];
+                return {
+                    backgroundImage: `url(${pool[base]})`,
+                    width: "20px",
+                    height: "20px",
+                    borderRadius: "65%",
+                    marginLeft: "5%",
+                }
+            case "Label":
+                return {
+                    backgroundColor: props.media,
+                    width: "20px",
+                    height: "20px",
+                    borderRadius: "65%",
+                    marginLeft: "5%",
+                }
+            case "Milestone" :
+                return {
+
+                }
+        }
+    }}
+`
 
 const DropDownMenu = (props) => {
     const [menuVisibility, setMenuVisibility] = useState("none");
@@ -76,6 +126,13 @@ const DropDownMenu = (props) => {
             setMenuVisibility("none");
         }
     };
+
+    // console.log(props.dataArray);
+    let mediaSection = true;
+
+    if (props.name === "Milestones") {
+        mediaSection = false;
+    }
 
     return (
         <StyledDropDownMenu onClick={handleMenuVisibility}>
@@ -89,13 +146,15 @@ const DropDownMenu = (props) => {
                         <StyledMenuUlHead>
                             Filter by {props.name}
                         </StyledMenuUlHead>
-                        <StyledMenuLi>{props.notUseTitle}</StyledMenuLi>
-                        {/* {props.dataArray.reduce(
-                            (acc, cur) => (
-                                <StyledMenuLi key={key}>{option}</StyledMenuLi>
-                            ),
-                            0,
-                        )} */}
+                        <StyledMenuLiNotUse type={props.name}>{props.notUseTitle}</StyledMenuLiNotUse>
+                        {props.dataArray.map((element) => 
+                        <>
+                            <StyledMenuLi key={element.key}>
+                                <StyledMediaSection mediaSection={mediaSection} mediaType={props.name} media={element.media}>
+                                </StyledMediaSection>
+                                <p>{element.value}</p>
+                            </StyledMenuLi>
+                        </>)}
                     </StyledMenuUl>
                 </StyledMenuContent>
             </StyledMenuTitle>
