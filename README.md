@@ -2,19 +2,28 @@
 
 ### boostcamp Group Project - IssueTracker / Group 30 👍 <br>
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/48575504/97677729-130ee980-1ad6-11eb-95b4-8b211d41dabf.png">
+</p>
+
 ## 프로젝트 소개
 
 ### Github Issue 관리 툴 클론 프로젝트
 
+### 시스템 구성도
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/48575504/97673993-143d1800-1ad0-11eb-824c-b9a5a6d7ab53.png">
+</p>
+
 ## 페이지 구성
 ### 로그인 페이지
-![it](https://user-images.githubusercontent.com/48575504/97440858-5f89e600-196b-11eb-96f5-d5334754d8b9.PNG)
+![main](https://user-images.githubusercontent.com/48575504/97555685-bf3fca00-1a1b-11eb-9b82-489ab3978854.PNG)
 
 ### 회원가입
-![singup](https://user-images.githubusercontent.com/48575504/97440860-60227c80-196b-11eb-8d76-8ab568bb9468.PNG)
+![main2](https://user-images.githubusercontent.com/48575504/97555690-c070f700-1a1b-11eb-9e2a-21a7da2d8327.PNG)
 
 ### 메인 페이지
-![main](https://user-images.githubusercontent.com/48575504/97440863-60bb1300-196b-11eb-8e7f-17b0fbf611b6.PNG)
+![signup](https://user-images.githubusercontent.com/48575504/97555692-c1098d80-1a1b-11eb-8b42-24e16032cea5.PNG)
 
 <br />
 
@@ -67,3 +76,6 @@ npm start
 ## 인터페이스 정의서
 ### https://docs.google.com/spreadsheets/d/1pl2vvTmJSDuonQS76f9BkLfjo0SOLZIdGAeG17SMBck/edit#gid=1017584322
 
+=======
+## 피어세션
+### [1주차 피어세션](https://github.com/boostcamp-2020/IssueTracker-30/wiki/1%EC%A3%BC%EC%B0%A8-%ED%94%BC%EC%96%B4%EC%84%B8%EC%85%98)
