@@ -131,7 +131,7 @@ const LoginForm = () => {
         };
         axios({
             method: "POST",
-            url: "http://localhost:3000/signIn",
+            url: "http://localhost:3000/user/signIn",
             data,
             withCredentials: true,
         }).then((res) => {
@@ -147,7 +147,7 @@ const LoginForm = () => {
     const githubLogin = () => {
         axios({
             method: "GET",
-            url: "http://localhost:3000/signIn/github",
+            url: "http://localhost:3000/oAuth/github",
         }).then((res) => {
             window.location.href = res.data;
         });

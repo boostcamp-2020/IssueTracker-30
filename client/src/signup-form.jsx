@@ -135,7 +135,7 @@ const SignUpForm = ({ history }) => {
             };
             axios({
                 method: "POST",
-                url: "http://localhost:3000/signUp",
+                url: "http://localhost:3000/user/signUp",
                 data,
                 withCredentials: true,
             })
