@@ -44,7 +44,7 @@ const NavBar = ({ mode }) => {
   const logoutOnclickHandler = () => {
     axios({
       method: "GET",
-      url: "http://localhost:3000/signOut",
+      url: "http://localhost:3000/user/signOut",
       withCredentials: true,
     })
       .then((res) => {

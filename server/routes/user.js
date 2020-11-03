@@ -1,14 +1,19 @@
 import express from "express";
-import isLoggedIn from "./auth";
-import pool from "../db/connection";
-import query from "../db/query";
+
+import isLoggedIn from "../middleware/auth";
+import UserService from "../service/user-service";
+require('dotenv').config();
 
 const router = express.Router();
 
-router.get("/", isLoggedIn, async(req, res) => {
-    const connection = await pool.getConnection();
-    const [rows] = await connection.query(query.getUser);
-    res.json(rows);
-});
+router.get("/", isLoggedIn, UserService.getUser);
+
+router.post("/signUp", UserService.signUp);
+
+router.post("/signIn", UserService.signIn);
+
+router.post("/signIn/auth", UserService.signInAuth);
+
+router.get("/signOut", UserService.signOut);
 
 export default router;

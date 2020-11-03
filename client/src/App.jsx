@@ -9,7 +9,7 @@ const loginCheck = async () => {
     if (document.cookie.split("=")[0] === "user") {
         const mode = await axios({
             method: "POST",
-            url: "http://localhost:3000/signIn/auth",
+            url: "http://localhost:3000/user/signIn/auth",
             withCredentials: true,
         }).then((res) => {
             if (res.data.message === "success") {
