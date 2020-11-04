@@ -122,7 +122,7 @@ const DropDownMenu = (props) => {
     const [menuVisibility, setMenuVisibility] = useState("none");
 
     const addOptionToTextInput = (e) => {
-        const currentOption = e.target.dataset.name;
+        const currentOption = e.currentTarget.dataset.name;
         const addOption = props.addOptionToTextInput;
         addOption(`${props.name.toLowerCase()}:${currentOption}`);
     };
