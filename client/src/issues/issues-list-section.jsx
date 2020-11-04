@@ -202,9 +202,12 @@ const IssuesListSection = (props) => {
         milestonesLiData.push({ key: ele.ID, value: ele.title });
     });
 
+    const numOfOpenIssue = issueData.filter((v) => v.status).length;
+
     const checkClick = () => {
         setChecked(!checked);
         setCheckedFrom(!checked);
+        const numOfOpenIssue = issueData.filter((v) => v.status).length;
 
         checked ? setSelectedCount(0) : setSelectedCount(numOfOpenIssue);
     };
