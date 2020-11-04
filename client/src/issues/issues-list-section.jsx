@@ -99,6 +99,7 @@ const DefaultDiv = styled.div`
 const DropdownMenuDiv = styled.div`
     display: flex;
 `;
+
 const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
     const copiedOptionsArr = optionsArr.slice();
     for (let ele of optionsArr) {
@@ -122,11 +123,30 @@ const IssuesListSection = (props) => {
     const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
     const milestonesLiData = [];
 
+    const [checkedIssue, setCheckedIssue] = useState([]);
+    const [addIssue, setAddIssue] = useState(0);
+    const [excludeIssue, setExcludeIssue] = useState(0);
+
+    const numOfOpenIssue = issueData.filter(v => v.status).length;
+    const numOfClosedIssue = issueData.length - numOfOpenIssue;
+
     let noContent = true;
 
     useEffect(() => {
         setChecked(checkedFromChild);
     }, [checkedFromChild, selectedCount]);
+
+
+    useEffect(() => {
+        setCheckedIssue([...checkedIssue, addIssue]);
+    }, [addIssue]);
+
+    useEffect(() => {
+        const tempCheckedIssue = [...checkedIssue];
+        const idx = tempCheckedIssue.indexOf(excludeIssue);
+        if (idx > -1) tempCheckedIssue.splice(idx, 1);
+        setCheckedIssue(tempCheckedIssue);
+    }, [excludeIssue]);
 
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
@@ -136,11 +156,6 @@ const IssuesListSection = (props) => {
         }
     };
 
-    const issueData = JSON.parse(localStorage.getItem("issueData"));
-    const filteredIssueData = [];
-
-    const numOfOpenIssue = issueData.filter(v => v.status).length;
-    const numOfClosedIssue = issueData.length - numOfOpenIssue;
     const checkClick = () => {
         checked
             ? setSelectedCount(0)
@@ -152,6 +167,8 @@ const IssuesListSection = (props) => {
     const checkedFunc = () => {
         return checked;
     };
+
+    const markAsData = [{ key: 1, value: "Open" }, { key: 0, value: "Closed" }];
 
     const filterOptions = {};
     const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
@@ -233,7 +250,7 @@ const IssuesListSection = (props) => {
                     />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
-                    {selectedCount == 0 && (
+                    {selectedCount == 0 && 
                         <DefaultDiv>
                             <StyledListSortOpenClosedCheckBox
                                 onChange={onOpenClosedRadioChange}
@@ -307,8 +324,8 @@ const IssuesListSection = (props) => {
                             func2={setCheckedFrom}
                             count={filteredIssueData.length}
                             selectedFunc={setSelectedCount}
-                            addIssueFunc={setAddIssue}
                             excludeIssueFunc={setExcludeIssue}
+                            addIssueFunc={setAddIssue}
                         />
                     )
                 )}
