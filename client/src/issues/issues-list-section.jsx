@@ -31,7 +31,6 @@ const StyledListSortCheckBoxDiv = styled.div`
 `;
 const StyledListSortCheckBoxInput = styled.input.attrs({
     type: "checkbox",
-    checked: false
 })`
     height: 15px;
     width: 15px;
@@ -89,26 +88,32 @@ const StyledNoContent = styled.div`
     }
 `;
 
-const selectedDiv = styled.div`
+const SelectedDiv = styled.div`
 
 `;
 
-const defaultDiv =styled.div`
-    display: flex;
-    justify-content: space-between;
+const DefaultDiv =styled.div`
+    width: 40%;
 `;
 
 const IssuesListSection = (props) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(true);
+
     const [checkedFromChild, setCheckedFrom] = useState(false);
     useEffect(() => {
-        setCheckedFrom(-1);
+        console.log(checkedFromChild);
+        setChecked(checkedFromChild);
+    
+        //setCheckedFrom(-1);
+
+        /*
         if (checkedFromChild === true){
             StyledListSortCheckBoxInput.attrs[0].checked = checkedFromChild;   
         } else if (checkedFromChild === false){
             StyledListSortCheckBoxInput.attrs[0].checked = checkedFromChild;   
         }
+        */
     }, [checkedFromChild, selectedCount]);
 
     const [selectedCount, setSelectedCount] = useState(0);
@@ -165,20 +170,26 @@ const IssuesListSection = (props) => {
     });
 
     const checkClick = () => {
-        StyledListSortCheckBoxInput.attrs[0].checked = !checked;
         setChecked(!checked);
-        !checked ? setSelectedCount(numOfOpenIssue) : setSelectedCount(0);
+        setCheckedFrom(!checked);
+
+
+        checked ? setSelectedCount(0) : setSelectedCount(numOfOpenIssue);
+    }
+
+    const checkedFunc = () => {
+        return checked;
     }
 
     return (
         <StyledListSection>
             <StyledListSortMenu>
                 <StyledListSortCheckBoxDiv>
-                    <StyledListSortCheckBoxInput onClick={checkClick} />
+                    <StyledListSortCheckBoxInput checked={checkedFunc()} onClick={checkClick} />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
-                 { selectedCount == 0 && !StyledListSortCheckBoxInput.attrs[0].checked &&
-                  <defaultDiv><StyledListSortOpenClosedCheckBox
+                 { selectedCount == 0 &&
+                  <DefaultDiv><StyledListSortOpenClosedCheckBox
                         onChange={onOpenClosedRadioChange}
                         id="open"
                     />
@@ -197,9 +208,9 @@ const IssuesListSection = (props) => {
                         openClosedRadio={openClosedRadio}
                     >
                         ✔ Closed
-                    </StyledListSortOpenClosedCheckBoxLabel></defaultDiv> }
-                    { (selectedCount > 0 || StyledListSortCheckBoxInput.attrs[0].checked)
-                         && <selectedDiv>{selectedCount} selected</selectedDiv> }
+                    </StyledListSortOpenClosedCheckBoxLabel></DefaultDiv> }
+                    { (selectedCount > 0)
+                         && <SelectedDiv>{selectedCount} selected</SelectedDiv> }
                 </StyledListSortOpenClosedDiv>
                 <StyledListSortOptions>
                     <DropdownMenu

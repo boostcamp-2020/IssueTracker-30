@@ -53,13 +53,25 @@ let count = 0;
 // userId: "123123"
 // writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
+    const [checked, setChecked] = useState(false);
+    
     useEffect(() => {
-        setChecked(props.checked);
-        props.checked ? count = props.count : count = 0;
+        if(props.checked) {
+            setChecked(props.checked);
+            count = props.count;
+        }
+        else {
+            if(count == props.count || count == 0) {
+                setChecked(props.checked);
+                count = 0;
+            }
+            else {
+
+            }
+        }
+        //props.checked ? count = props.count : count = 0;
     }, [props.checked]);
 
-    const [checked, setChecked] = useState(false);
-    const preProps = props.checked;
     const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
@@ -72,19 +84,20 @@ const IssueTitle = (props) => {
     }
 
     const setCheckFunc = () => {
-        setChecked(!checked);
         if (checked) {
             //취소를 누르면
             props.func2(false);
             count--;
-            props.selectedFunc(count);
-        } else if (!checked) {
+        }
+        else {
             count++;
-            props.selectedFunc(count);
             if (count == props.count) {
                 props.func2(true);
             }
         }
+        props.selectedFunc(count);
+
+        setChecked(!checked);
     }
 
     return (
