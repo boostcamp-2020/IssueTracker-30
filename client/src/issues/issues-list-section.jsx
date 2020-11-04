@@ -134,14 +134,16 @@ const IssuesListSection = (props) => {
     };
 
     const checkClick = () => {
-        checked ? setSelectedCount(0) : setSelectedCount(filteredIssueData.length);
+        checked
+            ? setSelectedCount(0)
+            : setSelectedCount(filteredIssueData.length);
         setChecked(!checked);
         setCheckedFrom(!checked);
-    }
+    };
 
     const checkedFunc = () => {
         return checked;
-    }
+    };
 
     const filterOptions = {};
     const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
@@ -179,7 +181,7 @@ const IssuesListSection = (props) => {
         )
         .filter((ele) =>
             filterOptions.title
-                ? ele.issueTitle.includes(filterOptions.title)
+                ? isOptionsInIssue(filterOptions.title, ele.issueTitle)
                 : ele
         );
     if (filteredIssueData.length === 0) {
