@@ -22,16 +22,26 @@ const StyledListHeader = styled.div`
 `;
 
 const IssueList = () => {
+    const [textInput, setTextInput] = useState("is:open");
     const [isOpen, setIsOpen] = useState(true);
+
+    const getTextInput = () => textInput;
+    const addOptionToTextInput = (option) => {
+        setTextInput(`${getTextInput()} ${option}`);
+    };
 
     return (
         // TODO
         <StyledListDiv>
             <StyledListHeader>
-                <Filter setIsOpen={setIsOpen}/>
+                <Filter
+                    setIsOpen={setIsOpen}
+                    setTextInput={setTextInput}
+                    getTextInput={getTextInput}
+                />
                 <HeaderButtons />
             </StyledListHeader>
-            <IssuesList />
+            <IssuesList addOptionToTextInput={addOptionToTextInput} />
         </StyledListDiv>
     );
 };
