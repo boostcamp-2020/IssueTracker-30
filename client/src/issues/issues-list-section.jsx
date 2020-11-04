@@ -109,25 +109,21 @@ const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
 const IssuesListSection = (props) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(true);
-
     const [checkedFromChild, setCheckedFrom] = useState(false);
-    useEffect(() => {
-        console.log(checkedFromChild);
-        setChecked(checkedFromChild);
-
-        //setCheckedFrom(-1);
-
-        /*
-        if (checkedFromChild === true){
-            StyledListSortCheckBoxInput.attrs[0].checked = checkedFromChild;   
-        } else if (checkedFromChild === false){
-            StyledListSortCheckBoxInput.attrs[0].checked = checkedFromChild;   
-        }
-        */
-    }, [checkedFromChild, selectedCount]);
-
     const [selectedCount, setSelectedCount] = useState(0);
+    const issueData = JSON.parse(localStorage.getItem("issueData"));
+    const usersData = JSON.parse(localStorage.getItem("usersData"));
+    const usersLiData = [];
+    const labelsData = JSON.parse(localStorage.getItem("labelsData"));
+    const labelsLiData = [];
+    const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
+    const milestonesLiData = [];
+
     let noContent = true;
+
+    useEffect(() => {
+        setChecked(checkedFromChild);
+    }, [checkedFromChild, selectedCount]);
 
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
@@ -136,6 +132,16 @@ const IssuesListSection = (props) => {
             setOpenClosedRadio(0);
         }
     };
+
+    const checkClick = () => {
+        checked ? setSelectedCount(0) : setSelectedCount(filteredIssueData.length);
+        setChecked(!checked);
+        setCheckedFrom(!checked);
+    }
+
+    const checkedFunc = () => {
+        return checked;
+    }
 
     const filterOptions = {};
     const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
@@ -148,7 +154,6 @@ const IssuesListSection = (props) => {
         }
     });
 
-    const issueData = JSON.parse(localStorage.getItem("issueData"));
     const filteredIssueData = issueData
         .sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId))
         .filter((ele) => ele.status === openClosedRadio)
@@ -181,8 +186,6 @@ const IssuesListSection = (props) => {
         noContent = false;
     }
 
-    const usersData = JSON.parse(localStorage.getItem("usersData"));
-    const usersLiData = [];
     usersData.forEach((ele) => {
         usersLiData.push({
             key: ele.userId,
@@ -191,8 +194,6 @@ const IssuesListSection = (props) => {
         });
     });
 
-    const labelsData = JSON.parse(localStorage.getItem("labelsData"));
-    const labelsLiData = [];
     labelsData.forEach((ele) => {
         labelsLiData.push({
             key: ele.ID,
@@ -201,25 +202,9 @@ const IssuesListSection = (props) => {
         });
     });
 
-    const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
-    const milestonesLiData = [];
     milestonesData.forEach((ele) => {
         milestonesLiData.push({ key: ele.ID, value: ele.title });
     });
-
-    const numOfOpenIssue = issueData.filter((v) => v.status).length;
-
-    const checkClick = () => {
-        setChecked(!checked);
-        setCheckedFrom(!checked);
-        const numOfOpenIssue = issueData.filter((v) => v.status).length;
-
-        checked ? setSelectedCount(0) : setSelectedCount(numOfOpenIssue);
-    };
-
-    const checkedFunc = () => {
-        return checked;
-    };
 
     return (
         <StyledListSection>
@@ -227,7 +212,7 @@ const IssuesListSection = (props) => {
                 <StyledListSortCheckBoxDiv>
                     <StyledListSortCheckBoxInput
                         checked={checkedFunc()}
-                        onClick={checkClick}
+                        onChange={checkClick}
                     />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
@@ -298,8 +283,7 @@ const IssuesListSection = (props) => {
                             checked={checked}
                             func={setChecked}
                             func2={setCheckedFrom}
-                            // count={filteredIssueData.length}
-                            count={numOfOpenIssue}
+                            count={filteredIssueData.length}
                             selectedFunc={setSelectedCount}
                         />
                     )
