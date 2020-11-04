@@ -77,8 +77,10 @@ const IssueTitle = (props) => {
             //취소를 누르면
             props.func2(false);
             count--;
+            props.selectedFunc(count);
         } else if (!checked) {
             count++;
+            props.selectedFunc(count);
             if (count == props.count) {
                 props.func2(true);
             }
