@@ -122,7 +122,7 @@ const DropDownMenu = (props) => {
     const [menuVisibility, setMenuVisibility] = useState("none");
 
     const addOptionToTextInput = (e) => {
-        const currentOption = e.target.innerText;
+        const currentOption = e.target.dataset.name;
         const addOption = props.addOptionToTextInput;
         addOption(`${props.name.toLowerCase()}:${currentOption}`);
     };
@@ -154,6 +154,7 @@ const DropDownMenu = (props) => {
                             Filter by {props.name}
                         </StyledMenuUlHead>
                         <StyledMenuLiNotUse
+                            data-name="notUse"
                             type={props.name}
                             onClick={addOptionToTextInput}
                         >
@@ -161,6 +162,7 @@ const DropDownMenu = (props) => {
                         </StyledMenuLiNotUse>
                         {props.dataArray.map((element) => (
                             <StyledMenuLi
+                                data-name={element.value}
                                 key={element.key}
                                 onClick={addOptionToTextInput}
                             >
