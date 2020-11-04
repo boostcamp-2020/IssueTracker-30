@@ -19,11 +19,14 @@
 ### 로그인 페이지
 ![main](https://user-images.githubusercontent.com/48575504/97555685-bf3fca00-1a1b-11eb-9b82-489ab3978854.PNG)
 
-### 회원가입
-![main2](https://user-images.githubusercontent.com/48575504/97555690-c070f700-1a1b-11eb-9e2a-21a7da2d8327.PNG)
+### 회원 가입
+![signup](https://user-images.githubusercontent.com/48575504/97555692-c1098d80-1a1b-11eb-8b42-24e16032cea5.PNG)
 
 ### 메인 페이지
-![signup](https://user-images.githubusercontent.com/48575504/97555692-c1098d80-1a1b-11eb-8b42-24e16032cea5.PNG)
+![issue](https://user-images.githubusercontent.com/48575504/98094641-e6d7dc00-1ecc-11eb-8aed-40bb8aa23388.PNG)
+
+### 이슈 생성 페이지
+![new issue](https://user-images.githubusercontent.com/48575504/98094647-e8a19f80-1ecc-11eb-9c9f-ba038175883f.PNG)
 
 <br />
 
