@@ -62,6 +62,7 @@ const StyledListSortOpenClosedCheckBoxLabel = styled.label`
 
         return props.htmlFor === radioToString ? "lightgray" : "black";
     }};
+    cursor: pointer;
     margin-left: ${(props) => (props.htmlFor === "closed" ? "3%" : "0%")};
 `;
 
