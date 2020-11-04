@@ -1,9 +1,8 @@
-import pool from "../db/connection";
+import connection from "../db/connection";
 import query from "../db/query";
 
 const IssueService = {
     getIssue: async (req, res) => {
-        const connection = await pool.getConnection();
         const [rows] = await connection.query(query.getIssue);
         const [labelIssue] = await connection.query(query.getlabelIssue);
         const [assignIssue] = await connection.query(query.getassignIssue);
@@ -42,7 +41,6 @@ const IssueService = {
             assignId: req.body.assignId
         };
 
-        const connection = await pool.getConnection();
         const [rows1] = await connection.query(query.insertIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content]);
 
         issue.labelId.forEach(async v => {
@@ -73,8 +71,6 @@ const IssueService = {
             labelId: req.body.labelId,
             assignId: req.body.assignId
         };
-
-        const connection = await pool.getConnection();
 
         try {
             switch (issue.mode) {

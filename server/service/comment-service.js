@@ -1,11 +1,9 @@
-import pool from "../db/connection";
+import connection from "../db/connection";
 import query from "../db/query";
 
 const IssueService = {
     getComment: async (req, res) => {
         const issueId = req.body.issueId;
-
-        const connection = await pool.getConnection();
         const [rows] = await connection.query(query.getComment, [issueId]);
         console.log(rows);
         res.json(rows);
@@ -21,7 +19,6 @@ const IssueService = {
 
         console.log(comment);
 
-        const connection = await pool.getConnection();
         const [rows1] = await connection.query(query.insertComment, [userId, comment.writingTime, comment.comment]);
         const [rows2] = await connection.query(query.insertIssueCommentRelation, [comment.issueId, rows1.insertId]);
 
@@ -41,7 +38,6 @@ const IssueService = {
             writingTime: req.body.writingTime,
         };
 
-        const connection = await pool.getConnection();
         const [rows] = await connection.query(query.updateComment, [comment.comment, comment.writingTime, comment.ID]);
         if (rows.affectedRows > 0) {
             res.json({ message: "success" });
@@ -53,8 +49,6 @@ const IssueService = {
 
     deleteComment: async (req, res) => {
         const ID = req.body.ID;
-
-        const connection = await pool.getConnection();
         const [rows] = await connection.query(query.deleteComment, [ID]);
 
         if (rows.affectedRows > 0) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Filter from "./filter.jsx";
@@ -22,14 +22,26 @@ const StyledListHeader = styled.div`
 `;
 
 const IssueList = () => {
+    const [textInput, setTextInput] = useState("is:open");
+    const [isOpen, setIsOpen] = useState(true);
+
+    const getTextInput = () => textInput;
+    const addOptionToTextInput = (option) => {
+        setTextInput(`${getTextInput()} ${option}`);
+    };
+
     return (
         // TODO
         <StyledListDiv>
             <StyledListHeader>
-                <Filter />
+                <Filter
+                    setIsOpen={setIsOpen}
+                    setTextInput={setTextInput}
+                    getTextInput={getTextInput}
+                />
                 <HeaderButtons />
             </StyledListHeader>
-            <IssuesList />
+            <IssuesList addOptionToTextInput={addOptionToTextInput} />
         </StyledListDiv>
     );
 };

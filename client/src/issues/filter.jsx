@@ -82,10 +82,15 @@ const StyledFilterFooter = styled.li`
     }
 `;
 
-const Filter = () => {
-    const [textInput, setTextInput] = useState("is:issue is:open");
+const Filter = (props) => {
+    // const [textInput, setTextInput] = useState("is:open");
+    const setTextInput = props.setTextInput;
+    const getTextInput = props.getTextInput;
 
     const onFilterSelectedChange = (e) => {
+        console.log(e.target);
+        if (e.target) {
+        }
         setTextInput(e.target.getAttribute("value"));
         setModalVisible(!modalVisble);
     };
@@ -127,25 +132,26 @@ const Filter = () => {
     const [filter, setFilter] = useState([
         {
             id: 1,
-            value: "is:issue is:open sort:updated-desc",
+            value: "is:open sort:updated-desc",
             text: "Open issues",
+            data: "",
         },
         {
             id: 2,
-            value: "is:issue is:open author:@me sort:updated-desc",
+            value: "is:open author:@me sort:updated-desc",
             text: "Your issues",
         },
         {
             id: 3,
-            value: "is:issue is:open assignee:@me sort:updated-desc",
+            value: "is:open assignee:@me sort:updated-desc",
             text: "Everything assigned to you",
         },
         {
             id: 4,
-            value: "is:issue is:open mentions:@me sort:updated-desc",
+            value: "is:open mentions:@me sort:updated-desc",
             text: "Everything mentioning you",
         },
-        { id: 5, value: "is:issue is:closed", text: "Closed issues" },
+        { id: 5, value: "is:closed", text: "Closed issues" },
     ]);
 
     return (
@@ -184,7 +190,7 @@ const Filter = () => {
             </StyledFilterModal>
 
             <StyledFilterTextInput
-                value={textInput}
+                value={getTextInput()}
                 onChange={onFilterTextChange}
                 onKeyPress={onFilterKeyPress}
             />

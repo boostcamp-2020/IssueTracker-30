@@ -42,6 +42,7 @@ const StyledListSortOpenClosedDiv = styled.div`
     align-items: center;
     width: 500px;
     height: auto;
+    font-size: 14px;
 `;
 const StyledListSortOpenClosedCheckBox = styled.input.attrs({
     type: "radio",
@@ -68,6 +69,7 @@ const StyledListSortOptions = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 700px;
+    font-size: 14px;
 `;
 
 const StyledSortedList = styled.div`
@@ -76,7 +78,7 @@ const StyledSortedList = styled.div`
 `;
 
 const StyledNoContent = styled.div`
-    display: ${props => props.noContent ? 'none' : 'flex'};
+    display: ${(props) => (props.noContent ? "none" : "flex")};
     height: 27vh;
     justify-content: center;
     align-items: center;
@@ -87,7 +89,7 @@ const StyledNoContent = styled.div`
     }
 `;
 
-const IssuesListSection = () => {
+const IssuesListSection = (props) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(false);
 
@@ -126,15 +128,19 @@ const IssuesListSection = () => {
     const usersData = JSON.parse(localStorage.getItem("usersData"));
     const usersLiData = [];
     usersData.forEach((ele) => {
-        usersLiData.push({ key: ele.userId });
+        usersLiData.push({
+            key: ele.userId,
+            value: ele.userId,
+            media: ele.userId,
+        });
     });
     const labelsData = JSON.parse(localStorage.getItem("labelsData"));
     const labelsLiData = [];
     labelsData.forEach((ele) => {
         labelsLiData.push({
             key: ele.ID,
-            color: ele.color,
-            content: ele.content,
+            value: ele.content,
+            media: ele.color,
         });
     });
 
@@ -179,21 +185,28 @@ const IssuesListSection = () => {
                     </StyledListSortOpenClosedCheckBoxLabel>
                 </StyledListSortOpenClosedDiv>
                 <StyledListSortOptions>
-                    <DropdownMenu name={"Author"} dataArray={usersLiData} />
+                    <DropdownMenu
+                        name={"Author"}
+                        dataArray={usersLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
+                    />
                     <DropdownMenu
                         name={"Label"}
                         notUseTitle="Unlabeled"
                         dataArray={labelsLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
                     />
                     <DropdownMenu
                         name={"Milestones"}
                         notUseTitle="Issues with no milestones"
                         dataArray={milestonesLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
                     />
                     <DropdownMenu
                         name={"Assignee"}
                         notUseTitle="Assigned to nobody"
                         dataArray={usersLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
                     />
                 </StyledListSortOptions>
             </StyledListSortMenu>
@@ -214,7 +227,9 @@ const IssuesListSection = () => {
                         />
                     ),
                 )}
-                <StyledNoContent noContent={noContent}><p>No result matched your search.</p></StyledNoContent>
+                <StyledNoContent noContent={noContent}>
+                    <p>No result matched your search.</p>
+                </StyledNoContent>
             </StyledSortedList>
         </StyledListSection>
     );
