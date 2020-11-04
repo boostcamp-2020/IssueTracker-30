@@ -6,54 +6,60 @@ import HeaderButtons from "./header-buttons.jsx";
 import IssuesList from "./issues-list-section.jsx";
 
 const StyledListDiv = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	position: absolute;
-	top: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    top: 180px;
 `;
 
 const StyledListHeader = styled.div`
-	display: flex;
-	justify-content: space-between;
-	height: 30px;
-	width: 1200px;
-	margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+    width: 1200px;
+    margin-top: 20px;
 `;
 
 const IssueList = () => {
-	const [textInput, setTextInput] = useState("is:open");
-	const [isOpen, setIsOpen] = useState(true);
-	const curUserOption = [];
+    const [textInput, setTextInput] = useState("is:open");
+    const [isOpen, setIsOpen] = useState(true);
 
-	const getTextInput = () => textInput;
-	const addOptionToTextInput = (option) => {
-		const authorRegex = /author:\w+/;
-		const assigneeRegex = /assignee:\w+/;
+    const getTextInput = () => textInput;
+    const addOptionToTextInput = (option) => {
+        const authorRegex = /author:\w+/;
+        const assigneeRegex = /assignee:\w+/;
 
-		if (authorRegex.test(option)) {
-			setTextInput(`${textInput.replace(authorRegex, "").trim()} ${option}`);
-		} else if (assigneeRegex.test(option)) {
-			setTextInput(`${textInput.replace(assigneeRegex, "").trim()} ${option}`);
-		} else {
-			setTextInput(`${textInput.trim()} ${option}`);
-		}
-	};
+        if (authorRegex.test(option)) {
+            setTextInput(
+                `${textInput.replace(authorRegex, "").trim()} ${option}`
+            );
+        } else if (assigneeRegex.test(option)) {
+            setTextInput(
+                `${textInput.replace(assigneeRegex, "").trim()} ${option}`
+            );
+        } else {
+            setTextInput(`${textInput.trim()} ${option}`);
+        }
+    };
 
-	return (
-		// TODO
-		<StyledListDiv>
-			<StyledListHeader>
-				<Filter
-					setIsOpen={setIsOpen}
-					setTextInput={setTextInput}
-					getTextInput={getTextInput}
-				/>
-				<HeaderButtons />
-			</StyledListHeader>
-			<IssuesList addOptionToTextInput={addOptionToTextInput} />
-		</StyledListDiv>
-	);
+    return (
+        // TODO
+        <StyledListDiv>
+            <StyledListHeader>
+                <Filter
+                    setIsOpen={setIsOpen}
+                    setTextInput={setTextInput}
+                    getTextInput={getTextInput}
+                />
+                <HeaderButtons />
+            </StyledListHeader>
+            <IssuesList
+                filterOptions={textInput}
+                addOptionToTextInput={addOptionToTextInput}
+            />
+        </StyledListDiv>
+    );
 };
 
 export default IssueList;
