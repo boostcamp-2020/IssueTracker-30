@@ -41,6 +41,7 @@ const StyledBannerInfo = styled.p`
 `;
 
 let count = 0;
+let total;
 
 // color: "#FF0000"
 // content: "bug"
@@ -54,24 +55,6 @@ let count = 0;
 // writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
     const [checked, setChecked] = useState(false);
-    
-    useEffect(() => {
-        if(props.checked) {
-            setChecked(props.checked);
-            count = props.count;
-        }
-        else {
-            if(count == props.count || count == 0) {
-                setChecked(props.checked);
-                count = 0;
-            }
-            else {
-
-            }
-        }
-        //props.checked ? count = props.count : count = 0;
-    }, [props.checked]);
-
     const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
@@ -79,19 +62,36 @@ const IssueTitle = (props) => {
         timeNow - new Date(props.writingTime),
     ).getDate();
 
+    useEffect(() => {
+        if (props.checked) {
+            setChecked(props.checked);
+            count = total;
+        }
+        else {
+            if (count == total || count == 0) {
+                setChecked(props.checked);
+                count = 0;
+            }
+        }
+    }, [props.checked]);
+
+    useEffect(() => {
+        total = props.status === 1 ? props.openCount : props.closeCount;
+        props.selectedNum(total);
+    }, [openOrClosed])
+
     const checkedFunc = () => {
         return checked;
     }
 
     const setCheckFunc = () => {
         if (checked) {
-            //취소를 누르면
             props.func2(false);
             count--;
         }
         else {
             count++;
-            if (count == props.count) {
+            if (count == total) {
                 props.func2(true);
             }
         }
@@ -103,7 +103,7 @@ const IssueTitle = (props) => {
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
-                <StyledBannerCheckBoxInput checked={checkedFunc()} onClick={setCheckFunc} />
+                <StyledBannerCheckBoxInput checked={checkedFunc()} onChange={setCheckFunc} />
             </StyledBannerCheckBoxDiv>
 
             <StyledBannerOpenClosedDiv>
