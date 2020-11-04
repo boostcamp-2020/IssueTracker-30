@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import DropdownMenu from "./issue-sort-dropdown.jsx";
@@ -31,6 +31,7 @@ const StyledListSortCheckBoxDiv = styled.div`
 `;
 const StyledListSortCheckBoxInput = styled.input.attrs({
     type: "checkbox",
+    checked: false
 })`
     height: 15px;
     width: 15px;
@@ -90,7 +91,15 @@ const StyledNoContent = styled.div`
 
 const IssuesListSection = (props) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
+    const [checked, setChecked] = useState(false);
 
+    const [checkedFromChild, setCheckedFrom] = useState(false);
+
+    useEffect(() => {
+        setCheckedFrom(true);
+        StyledListSortCheckBoxInput.attrs[0].checked = checkedFromChild;
+    }, [checkedFromChild]);
+    
     let noContent = true;
 
     const onOpenClosedRadioChange = (e) => {
@@ -102,7 +111,6 @@ const IssuesListSection = (props) => {
     };
 
     const issueData = JSON.parse(localStorage.getItem("issueData"));
-
     const filteredIssueData = [];
 
     issueData.sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
@@ -126,7 +134,6 @@ const IssuesListSection = (props) => {
             media: ele.userId,
         });
     });
-
     const labelsData = JSON.parse(localStorage.getItem("labelsData"));
     const labelsLiData = [];
     labelsData.forEach((ele) => {
@@ -143,11 +150,17 @@ const IssuesListSection = (props) => {
         milestonesLiData.push({ key: ele.ID, value: ele.title });
     });
 
+    const checkClick = () => {
+        StyledListSortCheckBoxInput.attrs[0].checked = !StyledListSortCheckBoxInput.attrs[0].checked;
+        console.log(StyledListSortCheckBoxInput.attrs[0].checked);
+        // setChecked(!checked);
+    }
+
     return (
         <StyledListSection>
             <StyledListSortMenu>
                 <StyledListSortCheckBoxDiv>
-                    <StyledListSortCheckBoxInput />
+                    <StyledListSortCheckBoxInput onClick={checkClick} />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
                     <StyledListSortOpenClosedCheckBox
@@ -207,6 +220,10 @@ const IssuesListSection = (props) => {
                             userId={userId}
                             status={status}
                             writingTime={writingTime}
+                            checked={checked}
+                            func={setChecked}
+                            func2={setCheckedFrom}
+                            count={issueData.length}
                         />
                     ),
                 )}
