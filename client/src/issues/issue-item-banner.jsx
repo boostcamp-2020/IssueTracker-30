@@ -65,20 +65,15 @@ const IssueTitle = (props) => {
     useEffect(() => {
         if (props.checked) {
             setChecked(props.checked);
-            count = total;
+            count = props.count;
         }
         else {
-            if (count == total || count == 0) {
+            if (count == props.count || count == 0) {
                 setChecked(props.checked);
                 count = 0;
             }
         }
     }, [props.checked]);
-
-    useEffect(() => {
-        total = props.status === 1 ? props.openCount : props.closeCount;
-        props.selectedNum(total);
-    }, [openOrClosed])
 
     const checkedFunc = () => {
         return checked;
@@ -91,7 +86,7 @@ const IssueTitle = (props) => {
         }
         else {
             count++;
-            if (count == total) {
+            if (count == props.count) {
                 props.func2(true);
             }
         }

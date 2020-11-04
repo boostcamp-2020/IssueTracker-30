@@ -29,6 +29,7 @@ const StyledListSortCheckBoxDiv = styled.div`
     width: 50px;
     height: 100%;
 `;
+
 const StyledListSortCheckBoxInput = styled.input.attrs({
     type: "checkbox",
 })`
@@ -43,6 +44,7 @@ const StyledListSortOpenClosedDiv = styled.div`
     height: auto;
     font-size: 14px;
 `;
+
 const StyledListSortOpenClosedCheckBox = styled.input.attrs({
     type: "radio",
     name: "open-closed",
@@ -94,27 +96,30 @@ const DefaultDiv = styled.div`
     width: 40%;
 `;
 
+const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
+    const copiedOptionsArr = optionsArr.slice();
+    for (let ele of optionsArr) {
+        if (issueAttrsArr.includes(ele)) {
+            copiedOptionsArr.splice(copiedOptionsArr.indexOf(ele), 1);
+        }
+    }
+    return copiedOptionsArr.length === 0 ? true : false;
+};
+
 const IssuesListSection = (props) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(true);
     const [checkedFromChild, setCheckedFrom] = useState(false);
     const [selectedCount, setSelectedCount] = useState(0);
-    const [numOfCurIssue, setNumOfCurIssue] = useState(0);
     const issueData = JSON.parse(localStorage.getItem("issueData"));
-    const filteredIssueData = [];
     const usersData = JSON.parse(localStorage.getItem("usersData"));
     const usersLiData = [];
     const labelsData = JSON.parse(localStorage.getItem("labelsData"));
     const labelsLiData = [];
     const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
     const milestonesLiData = [];
-    const numOfOpenIssue = issueData.filter(v => v.status).length;
-    const numOfCloseIssue = issueData.length - numOfOpenIssue;
 
     let noContent = true;
-    if (filteredIssueData.length === 0) {
-        noContent = false;
-    }
 
     useEffect(() => {
         setChecked(checkedFromChild);
@@ -129,7 +134,7 @@ const IssuesListSection = (props) => {
     };
 
     const checkClick = () => {
-        checked ? setSelectedCount(0) : setSelectedCount(numOfCurIssue);
+        checked ? setSelectedCount(0) : setSelectedCount(filteredIssueData.length);
         setChecked(!checked);
         setCheckedFrom(!checked);
     }
@@ -138,13 +143,48 @@ const IssuesListSection = (props) => {
         return checked;
     }
 
-    issueData.sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
-
-    issueData.forEach((element) => {
-        if (element.status === openClosedRadio) {
-            filteredIssueData.push(element);
+    const filterOptions = {};
+    const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
+        let [key, value] = ele.split(":");
+        if (!value) [key, value] = ["title", key];
+        if (Object.keys(filterOptions).includes(key)) {
+            filterOptions[key].push(value);
+        } else {
+            filterOptions[key] = [value];
         }
     });
+
+    const filteredIssueData = issueData
+        .sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId))
+        .filter((ele) => ele.status === openClosedRadio)
+        .filter((ele) => {
+            return filterOptions.assignee
+                ? ele.assignId.includes(filterOptions.assignee[0])
+                : ele;
+        })
+        .filter((ele) =>
+            filterOptions.author
+                ? filterOptions.author.includes(ele.userId)
+                : ele
+        )
+        .filter((ele) =>
+            filterOptions.label
+                ? isOptionsInIssue(filterOptions.label, ele.labelContent)
+                : ele
+        )
+        .filter((ele) =>
+            filterOptions.milestones
+                ? filterOptions.milestones.includes(ele.milestoneTitle)
+                : ele
+        )
+        .filter((ele) =>
+            filterOptions.title
+                ? ele.issueTitle.includes(filterOptions.title)
+                : ele
+        );
+    if (filteredIssueData.length === 0) {
+        noContent = false;
+    }
 
     usersData.forEach((ele) => {
         usersLiData.push({
@@ -170,20 +210,24 @@ const IssuesListSection = (props) => {
         <StyledListSection>
             <StyledListSortMenu>
                 <StyledListSortCheckBoxDiv>
-                    <StyledListSortCheckBoxInput checked={checkedFunc()} onChange={checkClick} />
+                    <StyledListSortCheckBoxInput
+                        checked={checkedFunc()}
+                        onChange={checkClick}
+                    />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
-                    {selectedCount == 0 &&
-                        <DefaultDiv><StyledListSortOpenClosedCheckBox
-                            onChange={onOpenClosedRadioChange}
-                            id="open"
-                        />
+                    {selectedCount == 0 && (
+                        <DefaultDiv>
+                            <StyledListSortOpenClosedCheckBox
+                                onChange={onOpenClosedRadioChange}
+                                id="open"
+                            />
                             <StyledListSortOpenClosedCheckBoxLabel
                                 htmlFor="open"
                                 openClosedRadio={openClosedRadio}
                             >
                                 ⓘ Open
-                    </StyledListSortOpenClosedCheckBoxLabel>
+                            </StyledListSortOpenClosedCheckBoxLabel>
                             <StyledListSortOpenClosedCheckBox
                                 onChange={onOpenClosedRadioChange}
                                 id="closed"
@@ -193,9 +237,12 @@ const IssuesListSection = (props) => {
                                 openClosedRadio={openClosedRadio}
                             >
                                 ✔ Closed
-                    </StyledListSortOpenClosedCheckBoxLabel></DefaultDiv>}
-                    {(selectedCount > 0)
-                        && <SelectedDiv>{selectedCount} selected</SelectedDiv>}
+                            </StyledListSortOpenClosedCheckBoxLabel>
+                        </DefaultDiv>
+                    )}
+                    {selectedCount > 0 && (
+                        <SelectedDiv>{selectedCount} selected</SelectedDiv>
+                    )}
                 </StyledListSortOpenClosedDiv>
                 <StyledListSortOptions>
                     <DropdownMenu
@@ -236,12 +283,10 @@ const IssuesListSection = (props) => {
                             checked={checked}
                             func={setChecked}
                             func2={setCheckedFrom}
-                            openCount={numOfOpenIssue}
-                            closeCount={numOfCloseIssue}
+                            count={filteredIssueData.length}
                             selectedFunc={setSelectedCount}
-                            selectedNum={setNumOfCurIssue}
                         />
-                    ),
+                    )
                 )}
                 <StyledNoContent noContent={noContent}>
                     <p>No result matched your search.</p>
