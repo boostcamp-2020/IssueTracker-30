@@ -30,7 +30,9 @@ const IssueList = () => {
         const authorRegex = /author:\w+/;
         const assigneeRegex = /assignee:\w+/;
 
-        if (authorRegex.test(option)) {
+        if (textInput.includes(option)) {
+            setTextInput(textInput.replace(option, ""));
+        } else if (authorRegex.test(option)) {
             setTextInput(
                 `${textInput.replace(authorRegex, "").trim()} ${option}`
             );
