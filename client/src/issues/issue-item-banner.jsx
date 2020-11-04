@@ -91,10 +91,12 @@ const IssueTitle = (props) => {
         }
         else {
             count++;
-            if(count == props.count) {
+            if (count == props.count) {
                 props.func2(true);
             }
         }
+        props.selectedFunc(count);
+
         setChecked(!checked);
     }
 
