@@ -65,11 +65,7 @@ const IssueTitle = (props) => {
                 setChecked(props.checked);
                 count = 0;
             }
-            else {
-
-            }
         }
-        //props.checked ? count = props.count : count = 0;
     }, [props.checked]);
 
     const openOrClosed = props.status === 1 ? "opened" : "closed";
@@ -86,17 +82,18 @@ const IssueTitle = (props) => {
     const setCheckFunc = () => {
         if (checked) {
             //취소를 누르면
+            props.excludeIssueFunc(props.issueId);
             props.func2(false);
             count--;
         }
         else {
             count++;
+            props.addIssueFunc(props.issueId);
             if (count == props.count) {
                 props.func2(true);
             }
         }
         props.selectedFunc(count);
-
         setChecked(!checked);
     }
 

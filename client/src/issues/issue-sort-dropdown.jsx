@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const StyledDropDownMenu = styled.div`
 	width: 150px;
@@ -114,14 +115,32 @@ const StyledMediaSection = styled.div`
 				};
 			case "Milestone":
 				return {};
+			case "MarkAs":
+				return {};
 		}
 	}}
 `;
 
 const DropDownMenu = (props) => {
 	const [menuVisibility, setMenuVisibility] = useState("none");
-
 	const addOptionToTextInput = (e) => {
+		if (props.name === "MarkAs") {
+			const axiosFuncArr = [];
+			props.checkedIssue.forEach(v => {
+				axiosFuncArr.push(axios.put('http://localhost:3000/issue', {
+					mode: 4,
+					issueId: v,
+					status: e.target.innerText === "Open" ? 1 : 0,
+				}, { withCredentials: true } ))
+			})
+			axios.all(axiosFuncArr)
+				.then(axios.spread((...responses) => {
+					document.location = "/";
+				})).catch(errors => {
+					// errors
+				})
+			return;
+		}
 		const currentOption = e.target.innerText;
 		const addOption = props.addOptionToTextInput;
 		addOption(`${props.name.toLowerCase()}:${currentOption}`);
@@ -150,7 +169,9 @@ const DropDownMenu = (props) => {
 			<StyledMenuTitle title={props.name}>
 				<StyledMenuContent isVisible={menuVisibility}>
 					<StyledMenuUl>
-						<StyledMenuUlHead>Filter by {props.name}</StyledMenuUlHead>
+						{props.name === 'MarkAs' ? <StyledMenuUlHead>Actions</StyledMenuUlHead> :
+							<StyledMenuUlHead>Filter by {props.name}</StyledMenuUlHead>}
+						{/* <StyledMenuUlHead>Filter by {props.name}</StyledMenuUlHead> */}
 						<StyledMenuLiNotUse
 							type={props.name}
 							onClick={addOptionToTextInput}
