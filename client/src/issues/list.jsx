@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Filter from "./filter.jsx";
@@ -22,11 +22,13 @@ const StyledListHeader = styled.div`
 `;
 
 const IssueList = () => {
+    const [isOpen, setIsOpen] = useState(true);
+
     return (
         // TODO
         <StyledListDiv>
             <StyledListHeader>
-                <Filter />
+                <Filter setIsOpen={setIsOpen}/>
                 <HeaderButtons />
             </StyledListHeader>
             <IssuesList />
