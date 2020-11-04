@@ -139,7 +139,8 @@ const IssuesListSection = (props) => {
 
     const filterOptions = {};
     const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
-        const [key, value] = ele.split(":");
+        let [key, value] = ele.split(":");
+        if (!value) [key, value] = ["title", key];
         if (Object.keys(filterOptions).includes(key)) {
             filterOptions[key].push(value);
         } else {
@@ -170,8 +171,12 @@ const IssuesListSection = (props) => {
             filterOptions.milestones
                 ? filterOptions.milestones.includes(ele.milestoneTitle)
                 : ele
+        )
+        .filter((ele) =>
+            filterOptions.title
+                ? ele.issueTitle.includes(filterOptions.title)
+                : ele
         );
-
     if (filteredIssueData.length === 0) {
         noContent = false;
     }
