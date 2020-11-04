@@ -60,7 +60,7 @@ const StyledMenuUlHead = styled.div`
 const StyledMenuLiNotUse = styled.div`
     border-top: 1px solid lightgray;
     padding: 3% 5%;
-    display: ${props => props.type !== "Author"? "block" : "none"};
+    display: ${props => props.type !== "Author" ? "block" : "none"};
 
     &:hover {
         background-color: #eceff1;
@@ -85,12 +85,12 @@ const StyledMenuLi = styled.li`
 `;
 
 const StyledMediaSection = styled.div`
-    display: ${props => props.mediaSection? "block" : "none"};
+    display: ${props => props.mediaSection ? "block" : "none"};
 
     ${props => {
         switch (props.mediaType) {
-            case "Author" :
-            case "Assignee" : 
+            case "Author":
+            case "Assignee":
                 const base = Math.floor(Math.random() * 3);
                 const pool = ['https://i.ibb.co/x6Q07jp/1.png', 'https://i.ibb.co/5YjKFzJ/2.png', 'https://i.ibb.co/yQchVjL/3.png'];
                 return {
@@ -108,7 +108,7 @@ const StyledMediaSection = styled.div`
                     borderRadius: "65%",
                     marginLeft: "5%",
                 }
-            case "Milestone" :
+            case "Milestone":
                 return {
 
                 }
@@ -118,6 +118,13 @@ const StyledMediaSection = styled.div`
 
 const DropDownMenu = (props) => {
     const [menuVisibility, setMenuVisibility] = useState("none");
+
+    const addOptionToTextInput = (e) => {
+        const currentOption = e.target.innerText;
+        const addOption = props.addOptionToTextInput;
+        addOption(currentOption);
+        // debugger
+    };
 
     const handleMenuVisibility = () => {
         if (menuVisibility === "none") {
@@ -146,15 +153,15 @@ const DropDownMenu = (props) => {
                         <StyledMenuUlHead>
                             Filter by {props.name}
                         </StyledMenuUlHead>
-                        <StyledMenuLiNotUse type={props.name}>{props.notUseTitle}</StyledMenuLiNotUse>
-                        {props.dataArray.map((element) => 
-                        <>
-                            <StyledMenuLi key={element.key}>
-                                <StyledMediaSection mediaSection={mediaSection} mediaType={props.name} media={element.media}>
-                                </StyledMediaSection>
-                                <p>{element.value}</p>
-                            </StyledMenuLi>
-                        </>)}
+                        <StyledMenuLiNotUse type={props.name} onClick={addOptionToTextInput}>{props.notUseTitle}</StyledMenuLiNotUse>
+                        {props.dataArray.map((element) =>
+                            <>
+                                <StyledMenuLi key={element.key} onClick={addOptionToTextInput}>
+                                    <StyledMediaSection mediaSection={mediaSection} mediaType={props.name} media={element.media}>
+                                    </StyledMediaSection>
+                                    <p>{element.value}</p>
+                                </StyledMenuLi>
+                            </>)}
                     </StyledMenuUl>
                 </StyledMenuContent>
             </StyledMenuTitle>
