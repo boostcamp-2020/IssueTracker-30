@@ -41,6 +41,7 @@ const StyledListSortOpenClosedDiv = styled.div`
     align-items: center;
     width: 500px;
     height: auto;
+    font-size: 14px;
 `;
 const StyledListSortOpenClosedCheckBox = styled.input.attrs({
     type: "radio",
@@ -67,6 +68,7 @@ const StyledListSortOptions = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 700px;
+    font-size: 14px;
 `;
 
 const StyledSortedList = styled.div`
