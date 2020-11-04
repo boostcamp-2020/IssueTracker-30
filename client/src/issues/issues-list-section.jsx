@@ -29,6 +29,7 @@ const StyledListSortCheckBoxDiv = styled.div`
     width: 50px;
     height: 100%;
 `;
+
 const StyledListSortCheckBoxInput = styled.input.attrs({
     type: "checkbox",
 })`
@@ -43,6 +44,7 @@ const StyledListSortOpenClosedDiv = styled.div`
     height: auto;
     font-size: 14px;
 `;
+
 const StyledListSortOpenClosedCheckBox = styled.input.attrs({
     type: "radio",
     name: "open-closed",
@@ -88,9 +90,7 @@ const StyledNoContent = styled.div`
     }
 `;
 
-const SelectedDiv = styled.div`
-
-`;
+const SelectedDiv = styled.div``;
 
 const DefaultDiv = styled.div`
     width: 40%;
@@ -99,34 +99,35 @@ const DefaultDiv = styled.div`
 const DropdownMenuDiv = styled.div`
     display: flex;
 `;
+const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
+    const copiedOptionsArr = optionsArr.slice();
+    for (let ele of optionsArr) {
+        if (issueAttrsArr.includes(ele)) {
+            copiedOptionsArr.splice(copiedOptionsArr.indexOf(ele), 1);
+        }
+    }
+    return copiedOptionsArr.length === 0 ? true : false;
+};
 
 const IssuesListSection = (props) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(true);
     const [checkedFromChild, setCheckedFrom] = useState(false);
+    const [selectedCount, setSelectedCount] = useState(0);
+    const issueData = JSON.parse(localStorage.getItem("issueData"));
+    const usersData = JSON.parse(localStorage.getItem("usersData"));
+    const usersLiData = [];
+    const labelsData = JSON.parse(localStorage.getItem("labelsData"));
+    const labelsLiData = [];
+    const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
+    const milestonesLiData = [];
 
-    const [checkedIssue, setCheckedIssue] = useState([]);
-    const [addIssue, setAddIssue] = useState(0);
-    const [excludeIssue, setExcludeIssue] = useState(0);
+    let noContent = true;
 
     useEffect(() => {
         setChecked(checkedFromChild);
     }, [checkedFromChild, selectedCount]);
 
-    const [selectedCount, setSelectedCount] = useState(0);
-    let noContent = true;
-
-    useEffect(() => {
-        setCheckedIssue([...checkedIssue, addIssue]);
-    }, [addIssue]);
-
-    useEffect(() => {
-        const tempCheckedIssue = [...checkedIssue];
-        const idx = tempCheckedIssue.indexOf(excludeIssue);
-        if (idx > -1) tempCheckedIssue.splice(idx, 1);
-        setCheckedIssue(tempCheckedIssue);
-    }, [excludeIssue]);
-    
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
             setOpenClosedRadio(1);
@@ -140,21 +141,68 @@ const IssuesListSection = (props) => {
 
     const numOfOpenIssue = issueData.filter(v => v.status).length;
     const numOfClosedIssue = issueData.length - numOfOpenIssue;
+    const checkClick = () => {
+        checked
+            ? setSelectedCount(0)
+            : setSelectedCount(filteredIssueData.length);
+        setChecked(!checked);
+        setCheckedFrom(!checked);
+    };
 
-    issueData.sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
+    const checkedFunc = () => {
+        return checked;
+    };
 
-    issueData.forEach((element) => {
-        if (element.status === openClosedRadio) {
-            filteredIssueData.push(element);
+    const filterOptions = {};
+    const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
+        let [key, value] = ele.split(":");
+        if (!value) [key, value] = ["title", key];
+        if (Object.keys(filterOptions).includes(key)) {
+            filterOptions[key].push(value);
+        } else {
+            filterOptions[key] = [value];
         }
     });
+
+    const filteredIssueData = issueData
+        .filter((ele) => ele.status === openClosedRadio)
+        .filter((ele) =>
+            filterOptions.author
+                ? filterOptions.author.includes(ele.userId)
+                : ele
+        )
+        .filter((ele) => {
+            return filterOptions.assignee
+                ? filterOptions.assignee[0] === "notUse"
+                    ? ele.assignId.length === 0
+                    : ele.assignId.includes(filterOptions.assignee[0])
+                : ele;
+        })
+        .filter((ele) =>
+            filterOptions.label
+                ? filterOptions.label[0] === "notUse"
+                    ? ele.labelId.length === 0
+                    : isOptionsInIssue(filterOptions.label, ele.labelContent)
+                : ele
+        )
+        .filter((ele) =>
+            filterOptions.milestones
+                ? filterOptions.milestones[0] === "notUse"
+                    ? !ele.milestoneId
+                    : filterOptions.milestones.includes(ele.milestoneTitle)
+                : ele
+        )
+        .filter((ele) =>
+            filterOptions.title
+                ? isOptionsInIssue(filterOptions.title, ele.issueTitle)
+                : ele
+        )
+        .sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
 
     if (filteredIssueData.length === 0) {
         noContent = false;
     }
 
-    const usersData = JSON.parse(localStorage.getItem("usersData"));
-    const usersLiData = [];
     usersData.forEach((ele) => {
         usersLiData.push({
             key: ele.userId,
@@ -162,8 +210,7 @@ const IssuesListSection = (props) => {
             media: ele.userId,
         });
     });
-    const labelsData = JSON.parse(localStorage.getItem("labelsData"));
-    const labelsLiData = [];
+
     labelsData.forEach((ele) => {
         labelsLiData.push({
             key: ele.ID,
@@ -172,36 +219,26 @@ const IssuesListSection = (props) => {
         });
     });
 
-    const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
-    const milestonesLiData = [];
     milestonesData.forEach((ele) => {
         milestonesLiData.push({ key: ele.ID, value: ele.title });
     });
-
-    const markAsData = [{ key: 1, value: "Open" }, { key: 0, value: "Closed" }];
-
-    const checkClick = () => {
-        setChecked(!checked);
-        setCheckedFrom(!checked);
-        checked ? setSelectedCount(0) : setSelectedCount(numOfOpenIssue);
-    }
-
-    const checkedFunc = () => {
-        return checked;
-    }
 
     return (
         <StyledListSection>
             <StyledListSortMenu>
                 <StyledListSortCheckBoxDiv>
-                    <StyledListSortCheckBoxInput checked={checkedFunc()} onClick={checkClick} />
+                    <StyledListSortCheckBoxInput
+                        checked={checkedFunc()}
+                        onChange={checkClick}
+                    />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
-                    {selectedCount == 0 &&
-                        <DefaultDiv><StyledListSortOpenClosedCheckBox
-                            onChange={onOpenClosedRadioChange}
-                            id="open"
-                        />
+                    {selectedCount == 0 && (
+                        <DefaultDiv>
+                            <StyledListSortOpenClosedCheckBox
+                                onChange={onOpenClosedRadioChange}
+                                id="open"
+                            />
                             <StyledListSortOpenClosedCheckBoxLabel
                                 htmlFor="open"
                                 openClosedRadio={openClosedRadio}
@@ -268,12 +305,12 @@ const IssuesListSection = (props) => {
                             checked={checked}
                             func={setChecked}
                             func2={setCheckedFrom}
-                            count={numOfOpenIssue}
+                            count={filteredIssueData.length}
                             selectedFunc={setSelectedCount}
                             addIssueFunc={setAddIssue}
                             excludeIssueFunc={setExcludeIssue}
                         />
-                    ),
+                    )
                 )}
                 <StyledNoContent noContent={noContent}>
                     <p>No result matched your search.</p>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import LoginForm from "./login-form.jsx";
 import IssueList from "./issues/list.jsx";
+import NewIssue from "./newIssue/new-issue.jsx";
 
 const StyledMainSection = styled.div`
     display: flex;
@@ -22,7 +23,6 @@ const StyledTitle = styled.div`
 `;
 
 const MainSection = ({ mode }) => {
-    // alert(mode);
     switch (mode) {
         case "login":
             return (
@@ -36,6 +36,13 @@ const MainSection = ({ mode }) => {
             return (
                 <StyledMainSection loginColor='white'>
                     <IssueList />
+                </StyledMainSection>
+            );
+        
+        case "newIssue":
+            return (
+                <StyledMainSection loginColor='white'>
+                    <NewIssue />
                 </StyledMainSection>
             );
     }

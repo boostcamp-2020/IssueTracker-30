@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-    width: 30%;
     height: 32px;
     border: none;
     box-shadow: 0 0 2px 0 grey;
@@ -22,13 +22,10 @@ const StyledButton = styled.button`
 `;
 
 const NewIssueButton = () => {
-    const onNewIssueButtonClick = (e) => {
-        // TODO issue create 페이지로 이동
-        alert("New Issue 페이지로 이동");
-    };
-
     return (
-        <StyledButton onClick={onNewIssueButtonClick}>New Issue</StyledButton>
+        <Link to="/new">
+            <StyledButton>New Issue</StyledButton>
+        </Link>
     );
 };
 

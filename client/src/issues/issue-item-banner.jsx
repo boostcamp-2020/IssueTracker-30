@@ -41,6 +41,7 @@ const StyledBannerInfo = styled.p`
 `;
 
 let count = 0;
+let total;
 
 // color: "#FF0000"
 // content: "bug"
@@ -54,26 +55,25 @@ let count = 0;
 // writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
     const [checked, setChecked] = useState(false);
-    
-    useEffect(() => {
-        if(props.checked) {
-            setChecked(props.checked);
-            count = props.count;
-        }
-        else {
-            if(count == props.count || count == 0) {
-                setChecked(props.checked);
-                count = 0;
-            }
-        }
-    }, [props.checked]);
-
     const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
         timeNow - new Date(props.writingTime),
     ).getDate();
+
+    useEffect(() => {
+        if (props.checked) {
+            setChecked(props.checked);
+            count = props.count;
+        }
+        else {
+            if (count == props.count || count == 0) {
+                setChecked(props.checked);
+                count = 0;
+            }
+        }
+    }, [props.checked]);
 
     const checkedFunc = () => {
         return checked;
@@ -100,7 +100,7 @@ const IssueTitle = (props) => {
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
-                <StyledBannerCheckBoxInput checked={checkedFunc()} onClick={setCheckFunc} />
+                <StyledBannerCheckBoxInput checked={checkedFunc()} onChange={setCheckFunc} />
             </StyledBannerCheckBoxDiv>
 
             <StyledBannerOpenClosedDiv>
