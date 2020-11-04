@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledBannersListDiv = styled.div`
@@ -9,7 +9,7 @@ const StyledBannersListDiv = styled.div`
     border-top: 1px solid #eaecef;
 
     &:hover {
-        background-color: rgba(236,239,241,1);
+        background-color: rgba(236, 239, 241, 1);
     }
 `;
 
@@ -40,6 +40,9 @@ const StyledBannerInfo = styled.p`
     margin: 0;
 `;
 
+let count = 0;
+let total;
+
 // color: "#FF0000"
 // content: "bug"
 // issueId: 1
@@ -51,18 +54,51 @@ const StyledBannerInfo = styled.p`
 // userId: "123123"
 // writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
-    const openOrClosed = status === 1 ? "opened" : "closed";
+    const [checked, setChecked] = useState(false);
+    const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
         timeNow - new Date(props.writingTime),
     ).getDate();
 
-    //
+    useEffect(() => {
+        if (props.checked) {
+            setChecked(props.checked);
+            count = props.count;
+        }
+        else {
+            if (count == props.count || count == 0) {
+                setChecked(props.checked);
+                count = 0;
+            }
+        }
+    }, [props.checked]);
+
+    const checkedFunc = () => {
+        return checked;
+    }
+
+    const setCheckFunc = () => {
+        if (checked) {
+            props.func2(false);
+            count--;
+        }
+        else {
+            count++;
+            if (count == props.count) {
+                props.func2(true);
+            }
+        }
+        props.selectedFunc(count);
+
+        setChecked(!checked);
+    }
+
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
-                <StyledBannerCheckBoxInput />
+                <StyledBannerCheckBoxInput checked={checkedFunc()} onChange={setCheckFunc} />
             </StyledBannerCheckBoxDiv>
 
             <StyledBannerOpenClosedDiv>
@@ -73,7 +109,7 @@ const IssueTitle = (props) => {
                 <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
                 <StyledBannerInfo>
                     #{props.issueId} by {props.userId} was {openOrClosed}{" "}
-                    {updatedTimeBefore} ago
+                    {updatedTimeBefore} days ago
                 </StyledBannerInfo>
             </StyledBannerTextDiv>
         </StyledBannersListDiv>

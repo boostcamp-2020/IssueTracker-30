@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Filter from "./filter.jsx";
@@ -9,6 +9,8 @@ const StyledListDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    position: absolute;
+    top: 180px;
 `;
 
 const StyledListHeader = styled.div`
@@ -20,14 +22,44 @@ const StyledListHeader = styled.div`
 `;
 
 const IssueList = () => {
+    const [textInput, setTextInput] = useState("is:open");
+    const [isOpen, setIsOpen] = useState(true);
+
+    const getTextInput = () => textInput;
+    const addOptionToTextInput = (option) => {
+        const authorRegex = /author:\w+/;
+        const assigneeRegex = /assignee:\w+/;
+
+        if (textInput.includes(option)) {
+            setTextInput(textInput.replace(option, ""));
+        } else if (authorRegex.test(option)) {
+            setTextInput(
+                `${textInput.replace(authorRegex, "").trim()} ${option}`
+            );
+        } else if (assigneeRegex.test(option)) {
+            setTextInput(
+                `${textInput.replace(assigneeRegex, "").trim()} ${option}`
+            );
+        } else {
+            setTextInput(`${textInput.trim()} ${option}`);
+        }
+    };
+
     return (
         // TODO
         <StyledListDiv>
             <StyledListHeader>
-                <Filter />
+                <Filter
+                    setIsOpen={setIsOpen}
+                    setTextInput={setTextInput}
+                    getTextInput={getTextInput}
+                />
                 <HeaderButtons />
             </StyledListHeader>
-            <IssuesList />
+            <IssuesList
+                filterOptions={textInput}
+                addOptionToTextInput={addOptionToTextInput}
+            />
         </StyledListDiv>
     );
 };

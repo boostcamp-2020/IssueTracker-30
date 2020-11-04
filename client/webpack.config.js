@@ -9,6 +9,7 @@ module.exports = {
     },
     output: {
         filename: "bundle.[hash].js",
+        publicPath: '/',
     },
     module: {
         rules: [
@@ -41,5 +42,6 @@ module.exports = {
         host: "localhost",
         port: port,
         open: true,
+        historyApiFallback: true,
     },
 };
