@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledBannersListDiv = styled.div`
@@ -40,6 +40,8 @@ const StyledBannerInfo = styled.p`
     margin: 0;
 `;
 
+let count = 0;
+
 // color: "#FF0000"
 // content: "bug"
 // issueId: 1
@@ -51,6 +53,13 @@ const StyledBannerInfo = styled.p`
 // userId: "123123"
 // writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
+    useEffect(() => {
+        setChecked(props.checked);
+        props.checked ? count = props.count : count = 0;
+    }, [props.checked]);
+
+    const [checked, setChecked] = useState(false);
+    const preProps = props.checked;
     const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
@@ -58,11 +67,28 @@ const IssueTitle = (props) => {
         timeNow - new Date(props.writingTime),
     ).getDate();
 
-    //
+    const checkedFunc = () => {
+        return checked;
+    }
+
+    const setCheckFunc = () => {
+        setChecked(!checked);
+        if (checked) {
+            //취소를 누르면
+            props.func2(false);
+            count--;
+        } else if (!checked) {
+            count++;
+            if (count == props.count) {
+                props.func2(true);
+            }
+        }
+    }
+
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
-                <StyledBannerCheckBoxInput />
+                <StyledBannerCheckBoxInput checked={checkedFunc()} onClick={setCheckFunc} />
             </StyledBannerCheckBoxDiv>
 
             <StyledBannerOpenClosedDiv>
