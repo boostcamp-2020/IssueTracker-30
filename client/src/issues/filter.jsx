@@ -83,12 +83,13 @@ const StyledFilterFooter = styled.li`
 `;
 
 const Filter = (props) => {
-    const [textInput, setTextInput] = useState("is:open");
+    // const [textInput, setTextInput] = useState("is:open");
+    const setTextInput = props.setTextInput;
+    const getTextInput = props.getTextInput;
 
     const onFilterSelectedChange = (e) => {
-        console.log(e.target)
+        console.log(e.target);
         if (e.target) {
-
         }
         setTextInput(e.target.getAttribute("value"));
         setModalVisible(!modalVisble);
@@ -189,7 +190,7 @@ const Filter = (props) => {
             </StyledFilterModal>
 
             <StyledFilterTextInput
-                value={textInput}
+                value={getTextInput()}
                 onChange={onFilterTextChange}
                 onKeyPress={onFilterKeyPress}
             />

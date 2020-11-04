@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import DropdownMenu from "./issue-sort-dropdown.jsx";
@@ -31,6 +31,7 @@ const StyledListSortCheckBoxDiv = styled.div`
 `;
 const StyledListSortCheckBoxInput = styled.input.attrs({
     type: "checkbox",
+    checked: false
 })`
     height: 15px;
     width: 15px;
@@ -77,7 +78,7 @@ const StyledSortedList = styled.div`
 `;
 
 const StyledNoContent = styled.div`
-    display: ${props => props.noContent ? 'none' : 'flex'};
+    display: ${(props) => (props.noContent ? "none" : "flex")};
     height: 27vh;
     justify-content: center;
     align-items: center;
@@ -88,9 +89,17 @@ const StyledNoContent = styled.div`
     }
 `;
 
-const IssuesListSection = () => {
+const IssuesListSection = (props) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
+    const [checked, setChecked] = useState(false);
 
+    const [checkedFromChild, setCheckedFrom] = useState(false);
+
+    useEffect(() => {
+        setCheckedFrom(true);
+        StyledListSortCheckBoxInput.attrs[0].checked = checkedFromChild;
+    }, [checkedFromChild]);
+    
     let noContent = true;
 
     const onOpenClosedRadioChange = (e) => {
@@ -102,7 +111,6 @@ const IssuesListSection = () => {
     };
 
     const issueData = JSON.parse(localStorage.getItem("issueData"));
-
     const filteredIssueData = [];
 
     issueData.sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
@@ -120,9 +128,12 @@ const IssuesListSection = () => {
     const usersData = JSON.parse(localStorage.getItem("usersData"));
     const usersLiData = [];
     usersData.forEach((ele) => {
-        usersLiData.push({ key: ele.userId, value: ele.userId, media: ele.userId});
+        usersLiData.push({
+            key: ele.userId,
+            value: ele.userId,
+            media: ele.userId,
+        });
     });
-
     const labelsData = JSON.parse(localStorage.getItem("labelsData"));
     const labelsLiData = [];
     labelsData.forEach((ele) => {
@@ -139,11 +150,17 @@ const IssuesListSection = () => {
         milestonesLiData.push({ key: ele.ID, value: ele.title });
     });
 
+    const checkClick = () => {
+        StyledListSortCheckBoxInput.attrs[0].checked = !StyledListSortCheckBoxInput.attrs[0].checked;
+        console.log(StyledListSortCheckBoxInput.attrs[0].checked);
+        // setChecked(!checked);
+    }
+
     return (
         <StyledListSection>
             <StyledListSortMenu>
                 <StyledListSortCheckBoxDiv>
-                    <StyledListSortCheckBoxInput />
+                    <StyledListSortCheckBoxInput onClick={checkClick} />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
                     <StyledListSortOpenClosedCheckBox
@@ -168,21 +185,28 @@ const IssuesListSection = () => {
                     </StyledListSortOpenClosedCheckBoxLabel>
                 </StyledListSortOpenClosedDiv>
                 <StyledListSortOptions>
-                    <DropdownMenu name={"Author"} dataArray={usersLiData} />
+                    <DropdownMenu
+                        name={"Author"}
+                        dataArray={usersLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
+                    />
                     <DropdownMenu
                         name={"Label"}
                         notUseTitle="Unlabeled"
                         dataArray={labelsLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
                     />
                     <DropdownMenu
                         name={"Milestones"}
                         notUseTitle="Issues with no milestones"
                         dataArray={milestonesLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
                     />
                     <DropdownMenu
                         name={"Assignee"}
                         notUseTitle="Assigned to nobody"
                         dataArray={usersLiData}
+                        addOptionToTextInput={props.addOptionToTextInput}
                     />
                 </StyledListSortOptions>
             </StyledListSortMenu>
@@ -196,10 +220,16 @@ const IssuesListSection = () => {
                             userId={userId}
                             status={status}
                             writingTime={writingTime}
+                            checked={checked}
+                            func={setChecked}
+                            func2={setCheckedFrom}
+                            count={issueData.length}
                         />
                     ),
                 )}
-                <StyledNoContent noContent={noContent}><p>No result matched your search.</p></StyledNoContent>
+                <StyledNoContent noContent={noContent}>
+                    <p>No result matched your search.</p>
+                </StyledNoContent>
             </StyledSortedList>
         </StyledListSection>
     );
