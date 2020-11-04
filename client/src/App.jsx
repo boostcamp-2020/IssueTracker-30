@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
 import NavBar from "./components/nav-bar.jsx";
@@ -26,6 +27,10 @@ const loginCheck = async () => {
 
 const App = () => {
     const [mode, setMode] = useState("login");
+
+    const changeMode = (props) => {
+        alert(props);
+    }
 
     useEffect(() => {
         loginCheck().then((res) => {
@@ -80,9 +85,18 @@ const App = () => {
 
     return (
         <>
-            <NavBar mode={mode} />
-            <MainSection mode={mode} />
-            <Footer />
+            <Router>
+                <NavBar mode={mode} />
+                <Switch>
+                    <Route path="/new">
+                        <MainSection mode="newIssue" />
+                    </Route>
+                    <Route path="/">
+                        <MainSection mode={mode} />
+                    </Route>
+                </Switch>
+                <Footer />
+            </Router>
         </>
     );
 };
