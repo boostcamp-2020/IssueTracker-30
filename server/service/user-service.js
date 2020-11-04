@@ -34,8 +34,6 @@ const UserService = {
     },
     signInAuth: (req, res) => {
         passport.authenticate('jwt', (err, userId, info) => {
-            console.log(userId)
-            console.log(info)
             if (!err) {
                 res.json({ message: 'success' });
             }
