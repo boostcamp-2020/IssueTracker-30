@@ -156,34 +156,43 @@ const IssuesListSection = (props) => {
         }
     });
 
+    console.log(filterOptions);
+
     const filteredIssueData = issueData
-        .sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId))
         .filter((ele) => ele.status === openClosedRadio)
-        .filter((ele) => {
-            return filterOptions.assignee
-                ? ele.assignId.includes(filterOptions.assignee[0])
-                : ele;
-        })
         .filter((ele) =>
             filterOptions.author
                 ? filterOptions.author.includes(ele.userId)
                 : ele
         )
+        .filter((ele) => {
+            return filterOptions.assignee
+                ? filterOptions.assignee[0] === "notUse"
+                    ? ele.assignId.length === 0
+                    : ele.assignId.includes(filterOptions.assignee[0])
+                : ele;
+        })
         .filter((ele) =>
             filterOptions.label
-                ? isOptionsInIssue(filterOptions.label, ele.labelContent)
+                ? filterOptions.label[0] === "notUse"
+                    ? ele.labelId.length === 0
+                    : isOptionsInIssue(filterOptions.label, ele.labelContent)
                 : ele
         )
         .filter((ele) =>
             filterOptions.milestones
-                ? filterOptions.milestones.includes(ele.milestoneTitle)
+                ? filterOptions.milestones[0] === "notUse"
+                    ? !ele.milestoneId
+                    : filterOptions.milestones.includes(ele.milestoneTitle)
                 : ele
         )
         .filter((ele) =>
             filterOptions.title
                 ? isOptionsInIssue(filterOptions.title, ele.issueTitle)
                 : ele
-        );
+        )
+        .sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
+
     if (filteredIssueData.length === 0) {
         noContent = false;
     }
