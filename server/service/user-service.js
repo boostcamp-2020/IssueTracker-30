@@ -26,8 +26,8 @@ const UserService = {
             if (!user) {
                 res.json({ message: info });
             } else {
-                const token = jwt.sign({ user }, process.env.secret_key, { expiresIn: 3000 });
-                res.cookie('user', token, { maxAge: 3000 * 1000 });
+                const token = jwt.sign({ user }, process.env.secret_key);
+                res.cookie('user', token);
                 res.json({ message: 'success', id: user.id });
             }
         })(req, res);
