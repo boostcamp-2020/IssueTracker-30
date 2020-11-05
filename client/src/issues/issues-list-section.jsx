@@ -62,6 +62,7 @@ const StyledListSortOpenClosedCheckBoxLabel = styled.label`
 
         return props.htmlFor === radioToString ? "lightgray" : "black";
     }};
+    cursor: pointer;
     margin-left: ${(props) => (props.htmlFor === "closed" ? "3%" : "0%")};
 `;
 
@@ -96,6 +97,10 @@ const DefaultDiv = styled.div`
     width: 40%;
 `;
 
+const DropdownMenuDiv = styled.div`
+    display: flex;
+`;
+
 const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
     const copiedOptionsArr = optionsArr.slice();
     for (let ele of optionsArr) {
@@ -119,11 +124,30 @@ const IssuesListSection = (props) => {
     const milestonesData = JSON.parse(localStorage.getItem("milestonesData"));
     const milestonesLiData = [];
 
+    const [checkedIssue, setCheckedIssue] = useState([]);
+    const [addIssue, setAddIssue] = useState(0);
+    const [excludeIssue, setExcludeIssue] = useState(0);
+
+    const numOfOpenIssue = issueData.filter(v => v.status).length;
+    const numOfClosedIssue = issueData.length - numOfOpenIssue;
+
     let noContent = true;
 
     useEffect(() => {
         setChecked(checkedFromChild);
     }, [checkedFromChild, selectedCount]);
+
+
+    useEffect(() => {
+        setCheckedIssue([...checkedIssue, addIssue]);
+    }, [addIssue]);
+
+    useEffect(() => {
+        const tempCheckedIssue = [...checkedIssue];
+        const idx = tempCheckedIssue.indexOf(excludeIssue);
+        if (idx > -1) tempCheckedIssue.splice(idx, 1);
+        setCheckedIssue(tempCheckedIssue);
+    }, [excludeIssue]);
 
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
@@ -144,6 +168,8 @@ const IssuesListSection = (props) => {
     const checkedFunc = () => {
         return checked;
     };
+
+    const markAsData = [{ key: 1, value: "Open" }, { key: 0, value: "Closed" }];
 
     const filterOptions = {};
     const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
@@ -225,7 +251,7 @@ const IssuesListSection = (props) => {
                     />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
-                    {selectedCount == 0 && (
+                    {selectedCount == 0 && 
                         <DefaultDiv>
                             <StyledListSortOpenClosedCheckBox
                                 onChange={onOpenClosedRadioChange}
@@ -235,8 +261,8 @@ const IssuesListSection = (props) => {
                                 htmlFor="open"
                                 openClosedRadio={openClosedRadio}
                             >
-                                ⓘ Open
-                            </StyledListSortOpenClosedCheckBoxLabel>
+                                ⓘ {numOfOpenIssue} Open
+                    </StyledListSortOpenClosedCheckBoxLabel>
                             <StyledListSortOpenClosedCheckBox
                                 onChange={onOpenClosedRadioChange}
                                 id="closed"
@@ -245,38 +271,43 @@ const IssuesListSection = (props) => {
                                 htmlFor="closed"
                                 openClosedRadio={openClosedRadio}
                             >
-                                ✔ Closed
-                            </StyledListSortOpenClosedCheckBoxLabel>
-                        </DefaultDiv>
-                    )}
-                    {selectedCount > 0 && (
-                        <SelectedDiv>{selectedCount} selected</SelectedDiv>
-                    )}
+                                ✔ {numOfClosedIssue} Closed
+                    </StyledListSortOpenClosedCheckBoxLabel></DefaultDiv>}
+                    {(selectedCount > 0)
+                        && <SelectedDiv>{selectedCount} selected</SelectedDiv>}
                 </StyledListSortOpenClosedDiv>
                 <StyledListSortOptions>
-                    <DropdownMenu
+                    {selectedCount > 0
+                        && <DropdownMenu
+                            name={"MarkAs"}
+                            dataArray={markAsData}
+                            addOptionToTextInput={props.addOptionToTextInput}
+                            checkedIssue={checkedIssue}
+                        />
+                    }
+                    {selectedCount === 0 && <DropdownMenuDiv><DropdownMenu
                         name={"Author"}
                         dataArray={usersLiData}
                         addOptionToTextInput={props.addOptionToTextInput}
                     />
-                    <DropdownMenu
-                        name={"Label"}
-                        notUseTitle="Unlabeled"
-                        dataArray={labelsLiData}
-                        addOptionToTextInput={props.addOptionToTextInput}
-                    />
-                    <DropdownMenu
-                        name={"Milestones"}
-                        notUseTitle="Issues with no milestones"
-                        dataArray={milestonesLiData}
-                        addOptionToTextInput={props.addOptionToTextInput}
-                    />
-                    <DropdownMenu
-                        name={"Assignee"}
-                        notUseTitle="Assigned to nobody"
-                        dataArray={usersLiData}
-                        addOptionToTextInput={props.addOptionToTextInput}
-                    />
+                        <DropdownMenu
+                            name={"Label"}
+                            notUseTitle="Unlabeled"
+                            dataArray={labelsLiData}
+                            addOptionToTextInput={props.addOptionToTextInput}
+                        />
+                        <DropdownMenu
+                            name={"Milestones"}
+                            notUseTitle="Issues with no milestones"
+                            dataArray={milestonesLiData}
+                            addOptionToTextInput={props.addOptionToTextInput}
+                        />
+                        <DropdownMenu
+                            name={"Assignee"}
+                            notUseTitle="Assigned to nobody"
+                            dataArray={usersLiData}
+                            addOptionToTextInput={props.addOptionToTextInput}
+                        /></DropdownMenuDiv>}
                 </StyledListSortOptions>
             </StyledListSortMenu>
             <StyledSortedList>
@@ -294,6 +325,8 @@ const IssuesListSection = (props) => {
                             func2={setCheckedFrom}
                             count={filteredIssueData.length}
                             selectedFunc={setSelectedCount}
+                            excludeIssueFunc={setExcludeIssue}
+                            addIssueFunc={setAddIssue}
                         />
                     )
                 )}
