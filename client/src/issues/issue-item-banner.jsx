@@ -38,6 +38,8 @@ const StyledBannerInnerDiv = styled.div`
 `;
 
 const StyledBannerTitle = styled.p`
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 700;
     font-size: 1em;
     margin: 0;
 `;
@@ -60,6 +62,8 @@ const StyledBannerLabel = styled.div`
 `;
 
 const StyledBannerInfo = styled.p`
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 400;
     font-size: 0.7em;
     margin: 0;
 `;
