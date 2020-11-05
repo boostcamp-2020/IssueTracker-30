@@ -237,6 +237,7 @@ const IssuesListSection = (props) => {
             key: ele.userId,
             value: ele.userId,
             media: ele.userId,
+            imageUrl: ele.imageURL,
         });
     });
 
