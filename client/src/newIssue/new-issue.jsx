@@ -8,8 +8,8 @@ const newIssue = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
-    const [assignee, setAssignee] = useState([]);
-    const [label, setLabel] = useState([]);
+    const [assignee, setAssignee] = useState(new Set());
+    const [label, setLabel] = useState(new Set());
     const [milestone, setMilestone] = useState('');
 
     const submit = () => {

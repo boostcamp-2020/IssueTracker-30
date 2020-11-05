@@ -73,6 +73,24 @@ const detailOption = (props) => {
             break
     }
 
+    const hadleClick = (e) => {
+        switch (props.name) {
+            case "Assignee":
+            case "Label":
+                const temp = new Set();
+                for(let item of props.data){
+                    temp.add(item);
+                }
+                temp.add(e.target.innerText);
+                console.log(temp);
+                props.setData(temp);
+                break;
+            case "Milestone":
+                props.setData(e.target.innerText);
+                break
+        }
+    }
+
     return (
         <StyledOption>
             <StyledOptionDiv onClick={detailOptionClick}>
@@ -85,9 +103,12 @@ const detailOption = (props) => {
                     name={props.name}
                     dataArray={liData}
                     defaultClick={setDropDown}
+                    hadleClick={hadleClick}
                 ></DetailDropdown>
             </StyledOptionDiv>
-            <StyledOptionDes>{props.message}</StyledOptionDes>
+            <StyledOptionDes>
+                {props.message}
+            </StyledOptionDes>
         </StyledOption>
     );
 };

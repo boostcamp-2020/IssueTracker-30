@@ -137,20 +137,21 @@ const SignUpForm = ({ history }) => {
             };
             axios({
                 method: "POST",
-                url: "http://localhost:3000/user/saveImg",
-                data : { userId, dataUrl: createImage() },
-                withCredentials: true,
-            })
-            axios({
-                method: "POST",
                 url: "http://localhost:3000/user/signUp",
                 data,
                 withCredentials: true,
             })
                 .then((res) => {
                     if (res.data.message === 'success') {
-                        alert('회원가입이 완료되었습니다.');
-                        document.location = '/';
+                        axios({
+                            method: "POST",
+                            url: "http://localhost:3000/user/saveImg",
+                            data : { userId, dataUrl: createImage() },
+                            withCredentials: true,
+                        }).then(() => {
+                            alert('회원가입이 완료되었습니다.');
+                            document.location = '/';
+                        })                        
                     } else {
                         alert(res.data.message);
                     }

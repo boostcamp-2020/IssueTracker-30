@@ -6,8 +6,9 @@ import query from "../db/query";
 require('dotenv').config();
 
 const UserService = {
-    saveImg : (req, res) => {
-        console.log(req.body);
+    saveImg : async (req, res) => {
+        const [rows] = await connection.query(query.insertUserImage, [req.body.dataUrl, req.body.userId]);
+        console.log(rows)
         res.send();
     },
 
