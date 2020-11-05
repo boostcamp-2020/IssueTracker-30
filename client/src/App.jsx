@@ -33,9 +33,9 @@ const App = () => {
     }
 
     useEffect(() => {
-        loginCheck().then((res) => {
+        loginCheck().then(async (res) => {
             if (res === "main") {
-                axios({
+                await axios({
                     method: "GET",
                     url: "http://localhost:3000/issue/",
                     withCredentials: true,
@@ -46,7 +46,7 @@ const App = () => {
                     );
                 });
                 
-                axios({
+                await axios({
                     method: "GET",
                     url: "http://localhost:3000/user/",
                     withCredentials: true,
@@ -57,7 +57,7 @@ const App = () => {
                     );
                 });
                     
-                axios({
+                await axios({
                     method: "GET",
                     url: "http://localhost:3000/label/",
                     withCredentials: true,
@@ -68,7 +68,7 @@ const App = () => {
                     );
                 });
 
-                axios({
+                await axios({
                     method: "GET",
                     url: "http://localhost:3000/milestone/",
                     withCredentials: true,
@@ -77,8 +77,8 @@ const App = () => {
                         "milestonesData",
                         JSON.stringify(milestones.data),
                     );
-                    setMode(res);
                 });
+                setMode(res);
             }
         });
     }, []);
