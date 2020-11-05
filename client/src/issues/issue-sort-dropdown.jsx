@@ -92,21 +92,6 @@ const StyledMediaSection = styled.div`
 
     ${(props) => {
         switch (props.mediaType) {
-            case "Author":
-            case "Assignee":
-                const base = Math.floor(Math.random() * 3);
-                const pool = [
-                    "https://i.ibb.co/x6Q07jp/1.png",
-                    "https://i.ibb.co/5YjKFzJ/2.png",
-                    "https://i.ibb.co/yQchVjL/3.png",
-                ];
-                return {
-                    backgroundImage: `url(${pool[base]})`,
-                    width: "20px",
-                    height: "20px",
-                    borderRadius: "65%",
-                    marginLeft: "5%",
-                };
             case "Label":
                 return {
                     backgroundColor: props.media,
@@ -121,6 +106,14 @@ const StyledMediaSection = styled.div`
                 return {};
         }
     }}
+`;
+
+const StyledUserImage = styled.img`
+	width: 20px;
+    margin-left: 5%;
+    box-shadow: 0 0 2px 0px black;
+	border-radius: 3px;
+	display: ${(props) => (props.src ? "block" : "none")};
 `;
 
 const DropDownMenu = (props) => {
@@ -203,10 +196,13 @@ const DropDownMenu = (props) => {
                                     key={element.key}
                                     onClick={addOptionToTextInput}
                                 >
+									<StyledUserImage
+										src={element.imageUrl}
+									></StyledUserImage>
                                     <StyledMediaSection
                                         mediaSection={mediaSection}
                                         mediaType={props.name}
-                                        media={element.media}
+										media={element.media}
                                     ></StyledMediaSection>
                                     <p>{element.value}</p>
                                 </StyledMenuLi>
