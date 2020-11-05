@@ -35,6 +35,8 @@ const IssueList = () => {
         const authorRegex = /author:\w+/;
         const assigneeRegex = /assignee:\w+/;
 
+        setIsFilterTextRemoverVisible(true);
+
         if (textInput.includes(option)) {
             setTextInput(textInput.replace(option, ""));
         } else if (authorRegex.test(option)) {

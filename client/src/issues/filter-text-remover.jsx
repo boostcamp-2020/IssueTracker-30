@@ -6,8 +6,16 @@ const StyledRemoverDiv = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 600px;
+    width: fit-content;
     margin: 10px;
+    transition: 0.1s;
+
+    &:hover,
+    &:hover > svg {
+        cursor: pointer;
+        color: #3949ab;
+        fill: #3949ab;
+    }
 `;
 
 const StyledRemoverIcon = styled.svg.attrs({
