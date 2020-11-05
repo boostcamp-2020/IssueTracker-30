@@ -157,6 +157,15 @@ const IssuesListSection = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (checked) {
+            const allIssue = issueData.map(v => v.issueId);
+            setCheckedIssue(allIssue);
+        } else {
+            setCheckedIssue([]);
+        }
+    }, [checked]);
+
     const checkClick = () => {
         checked
             ? setSelectedCount(0)
@@ -251,7 +260,7 @@ const IssuesListSection = (props) => {
                     />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
-                    {selectedCount == 0 && 
+                    {selectedCount == 0 &&
                         <DefaultDiv>
                             <StyledListSortOpenClosedCheckBox
                                 onChange={onOpenClosedRadioChange}
