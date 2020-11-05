@@ -47,7 +47,7 @@ const StyledBannerLabel = styled.div`
     background-color: ${(props) => props.color};
     height: 15px;
     margin-left: 1%;
-    padding: 0.3% 0.8% 0.8% 0.8%;;
+    padding: 0.3% 0.8% 0.8% 0.8%;
     color: white;
     text-shadow: 1px 1px 3px black;
     font-size: 10pt;
@@ -55,9 +55,9 @@ const StyledBannerLabel = styled.div`
     align-items: center;
 
     p {
-        margin: 0}
-    ;
-`
+        margin: 0;
+    }
+`;
 
 const StyledBannerInfo = styled.p`
     font-size: 0.7em;
@@ -67,31 +67,20 @@ const StyledBannerInfo = styled.p`
 let count = 0;
 let total;
 
-// color: "#FF0000"
-// content: "bug"
-// issueId: 1
-// issueTitle: "목록 보기 구현"
-// labelId: 2
-// milestoneId: 1
-// milestoneTitle: "스프린트2"
-// status: 1
-// userId: "123123"
-// writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
     const [checked, setChecked] = useState(false);
     const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
-        timeNow - new Date(props.writingTime),
+        timeNow - new Date(props.writingTime)
     ).getDate();
 
     useEffect(() => {
         if (props.checked) {
             setChecked(props.checked);
             count = props.count;
-        }
-        else {
+        } else {
             if (count == props.count || count == 0) {
                 setChecked(props.checked);
                 count = 0;
@@ -101,7 +90,7 @@ const IssueTitle = (props) => {
 
     const checkedFunc = () => {
         return checked;
-    }
+    };
 
     const setCheckFunc = () => {
         if (checked) {
@@ -109,9 +98,7 @@ const IssueTitle = (props) => {
             props.excludeIssueFunc(props.issueId);
             props.func2(false);
             count--;
-        }
-        else {
-            console.log(labelData);
+        } else {
             count++;
             props.addIssueFunc(props.issueId);
             if (count == props.count) {
@@ -120,20 +107,24 @@ const IssueTitle = (props) => {
         }
         props.selectedFunc(count);
         setChecked(!checked);
-    }
+    };
 
     const labelData = [];
-    for(let i = 0; i < props.labelInfo.color.length; i++) {
-        const data = {color: props.labelInfo.color[i], content: props.labelInfo.content[i]};
+    for (let i = 0; i < props.labelInfo.color.length; i++) {
+        const data = {
+            color: props.labelInfo.color[i],
+            content: props.labelInfo.content[i],
+        };
         labelData.push(data);
     }
-
-
 
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
-                <StyledBannerCheckBoxInput checked={checkedFunc()} onChange={setCheckFunc} />
+                <StyledBannerCheckBoxInput
+                    checked={checkedFunc()}
+                    onChange={setCheckFunc}
+                />
             </StyledBannerCheckBoxDiv>
 
             <StyledBannerOpenClosedDiv>
@@ -150,7 +141,8 @@ const IssueTitle = (props) => {
                     ))}
                 </StyledBannerInnerDiv>
                 <StyledBannerInfo>
-                    #{props.issueId}{" "}{openOrClosed}{" "}{updatedTimeBefore} days ago by {props.userId}
+                    #{props.issueId} {openOrClosed} {updatedTimeBefore} days ago
+                    by {props.userId}
                 </StyledBannerInfo>
             </StyledBannerTextDiv>
         </StyledBannersListDiv>

@@ -184,8 +184,6 @@ const IssuesListSection = (props) => {
         }
     });
 
-    console.log(filterOptions);
-
     const filteredIssueData = issueData
         .filter((ele) => ele.status === openClosedRadio)
         .filter((ele) =>
