@@ -104,7 +104,7 @@ const Filter = (props) => {
         } = e;
 
         setTextInput(value);
-        setFilterTextRemoverVisibility(true);
+        setFilterTextRemoverVisibility(value.length === 0 ? false : true);
     };
 
     const onFilterKeyPress = (e) => {
