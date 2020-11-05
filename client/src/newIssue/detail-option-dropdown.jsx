@@ -51,25 +51,19 @@ const StyledMenuLi = styled.li`
 	}
 `;
 
+const StyledImage = styled.img`
+	display: ${props => props.mediaType === "Assignee"? "block" : "none"};
+	width: 20px;
+	margin-left: 4%;
+	box-shadow: 0 0 2px 0 grey;
+	border-radius: 3px;
+`
+
 const StyledMediaSection = styled.div`
 	display: ${(props) => (props.mediaSection ? "block" : "none")};
 
 	${(props) => {
 		switch (props.mediaType) {
-			case "Assignee":
-				const base = Math.floor(Math.random() * 3);
-				const pool = [
-					"https://i.ibb.co/x6Q07jp/1.png",
-					"https://i.ibb.co/5YjKFzJ/2.png",
-					"https://i.ibb.co/yQchVjL/3.png",
-				];
-				return {
-					backgroundImage: `url(${pool[base]})`,
-					width: "20px",
-					height: "20px",
-					borderRadius: "65%",
-					marginLeft: "5%",
-				};
 			case "Label":
 				return {
 					backgroundColor: props.media,
@@ -107,6 +101,10 @@ const DropDownMenu = (props) => {
                 {props.dataArray.map((element) => (
                 <>
                     <StyledMenuLi key={element.key} onClick={props.hadleClick}>
+											<StyledImage
+												mediaType={props.name}
+												src={element.media}
+											/>
 											<StyledMediaSection
 													mediaSection={mediaSection}
 													mediaType={props.name}
