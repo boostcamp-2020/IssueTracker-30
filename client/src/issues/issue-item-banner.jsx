@@ -30,9 +30,33 @@ const StyledBannerOpenClosedIcon = styled.i``;
 
 const StyledBannerTextDiv = styled.div``;
 
+const StyledBannerInnerDiv = styled.div`
+    display: flex;
+    flex-direction: rows;
+    align-items: baseline;
+    width: 600px;
+`;
+
 const StyledBannerTitle = styled.p`
     font-size: 1em;
     margin: 0;
+`;
+
+const StyledBannerLabel = styled.div`
+    display: flex;
+    background-color: ${(props) => props.color};
+    height: 15px;
+    margin-left: 1%;
+    padding: 0.3% 0.8% 0.8% 0.8%;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+    font-size: 10pt;
+    border-radius: 3px;
+    align-items: center;
+
+    p {
+        margin: 0;
+    }
 `;
 
 const StyledBannerInfo = styled.p`
@@ -85,6 +109,15 @@ const IssueTitle = (props) => {
         setChecked(!checked);
     };
 
+    const labelData = [];
+    for (let i = 0; i < props.labelInfo.color.length; i++) {
+        const data = {
+            color: props.labelInfo.color[i],
+            content: props.labelInfo.content[i],
+        };
+        labelData.push(data);
+    }
+
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
@@ -99,11 +132,17 @@ const IssueTitle = (props) => {
             </StyledBannerOpenClosedDiv>
 
             <StyledBannerTextDiv>
-                <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
-                {console.log(props.labelInfo)}
+                <StyledBannerInnerDiv>
+                    <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
+                    {labelData.map((element) => (
+                        <StyledBannerLabel color={element.color}>
+                            <p>{element.content}</p>
+                        </StyledBannerLabel>
+                    ))}
+                </StyledBannerInnerDiv>
                 <StyledBannerInfo>
-                    #{props.issueId} by {props.userId} was {openOrClosed}{" "}
-                    {updatedTimeBefore} days ago
+                    #{props.issueId} {openOrClosed} {updatedTimeBefore} days ago
+                    by {props.userId}
                 </StyledBannerInfo>
             </StyledBannerTextDiv>
         </StyledBannersListDiv>
