@@ -79,7 +79,6 @@ const App = () => {
                         JSON.stringify(milestones.data),
                     );
                 });
-                setMode(res);
             }
             setMode(res);
 
@@ -104,5 +103,4 @@ const App = () => {
         </>
     );
 };
-
 export default App;
