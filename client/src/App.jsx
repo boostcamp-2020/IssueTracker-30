@@ -27,7 +27,7 @@ const loginCheck = async () => {
 };
 
 const App = () => {
-    const [mode, setMode] = useState("main");
+    const [mode, setMode] = useState("login");
 
     const changeMode = (props) => {
         alert(props);
@@ -46,7 +46,7 @@ const App = () => {
                         JSON.stringify(issueData.data),
                     );
                 });
-                
+
                 await axios({
                     method: "GET",
                     url: "http://localhost:3000/user/",
@@ -57,7 +57,7 @@ const App = () => {
                         JSON.stringify(users.data),
                     );
                 });
-                    
+
                 await axios({
                     method: "GET",
                     url: "http://localhost:3000/label/",
@@ -79,9 +79,8 @@ const App = () => {
                         JSON.stringify(milestones.data),
                     );
                 });
+                setMode(res);
             }
-            setMode(res);
-
         });
     }, []);
 
@@ -103,4 +102,5 @@ const App = () => {
         </>
     );
 };
+
 export default App;
