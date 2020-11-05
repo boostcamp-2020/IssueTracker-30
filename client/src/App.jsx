@@ -5,6 +5,7 @@ import axios from "axios";
 import NavBar from "./components/nav-bar.jsx";
 import MainSection from "./main-section.jsx";
 import Footer from "./components/footer.jsx";
+import DetailIssue from "./detailIssue/detail-issue.jsx";
 
 const loginCheck = async () => {
     if (document.cookie.split("=")[0] === "user") {
@@ -91,6 +92,7 @@ const App = () => {
                     <Route path="/new">
                         <MainSection mode="newIssue" />
                     </Route>
+                    <Route path="/detail/:issueId" component={DetailIssue} />
                     <Route path="/">
                         <MainSection mode={mode} />
                     </Route>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledBannersListDiv = styled.div`
     display: flex;
@@ -108,7 +109,9 @@ const IssueTitle = (props) => {
             </StyledBannerOpenClosedDiv>
 
             <StyledBannerTextDiv>
-                <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
+                <Link to={`detail/${props.issueId}`} style={{ textDecoration: 'none', color: 'black' }}>
+                    <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
+                </Link>
                 <StyledBannerInfo>
                     #{props.issueId} by {props.userId} was {openOrClosed}{" "}
                     {updatedTimeBefore} days ago
