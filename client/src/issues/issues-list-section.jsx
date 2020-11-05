@@ -346,6 +346,7 @@ const IssuesListSection = (props) => {
                         writingTime,
                         labelColor,
                         labelContent,
+                        assignId,
                     }) => (
                         <ItemBanner
                             key={issueId}
@@ -361,6 +362,7 @@ const IssuesListSection = (props) => {
                             selectedFunc={setSelectedCount}
                             excludeIssueFunc={setExcludeIssue}
                             addIssueFunc={setAddIssue}
+                            assignId={assignId}
                             labelInfo={{
                                 color: labelColor,
                                 content: labelContent,
