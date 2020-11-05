@@ -81,17 +81,19 @@ const IssueTitle = (props) => {
 
     const setCheckFunc = () => {
         if (checked) {
+            //취소를 누르면
+            props.excludeIssueFunc(props.issueId);
             props.func2(false);
             count--;
         }
         else {
             count++;
+            props.addIssueFunc(props.issueId);
             if (count == props.count) {
                 props.func2(true);
             }
         }
         props.selectedFunc(count);
-
         setChecked(!checked);
     }
 
