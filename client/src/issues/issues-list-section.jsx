@@ -336,7 +336,7 @@ const IssuesListSection = (props) => {
             </StyledListSortMenu>
             <StyledSortedList>
                 {filteredIssueData.map(
-                    ({ issueId, userId, issueTitle, status, writingTime, labelColor, labelContent}) => (
+                    ({ issueId, userId, issueTitle, status, writingTime, labelColor, labelContent, assignId}) => (
                         <ItemBanner
                             key={issueId}
                             issueTitle={issueTitle}
@@ -352,6 +352,8 @@ const IssuesListSection = (props) => {
                             excludeIssueFunc={setExcludeIssue}
                             addIssueFunc={setAddIssue}
                             labelInfo={{color: labelColor, content: labelContent}}
+                            test={filteredIssueData}
+                            assignId={assignId}
                         />
                     )
                 )}
