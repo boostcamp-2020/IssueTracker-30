@@ -5,6 +5,7 @@ import axios from "axios";
 import NavBar from "./components/nav-bar.jsx";
 import MainSection from "./main-section.jsx";
 import Footer from "./components/footer.jsx";
+import DetailIssue from "./detailIssue/detail-issue.jsx";
 
 const loginCheck = async () => {
     if (document.cookie.split("=")[0] === "user") {
@@ -26,7 +27,7 @@ const loginCheck = async () => {
 };
 
 const App = () => {
-    const [mode, setMode] = useState("main");
+    const [mode, setMode] = useState("login");
 
     const changeMode = (props) => {
         alert(props);
@@ -45,7 +46,7 @@ const App = () => {
                         JSON.stringify(issueData.data),
                     );
                 });
-                
+
                 await axios({
                     method: "GET",
                     url: "http://localhost:3000/user/",
@@ -56,7 +57,7 @@ const App = () => {
                         JSON.stringify(users.data),
                     );
                 });
-                    
+
                 await axios({
                     method: "GET",
                     url: "http://localhost:3000/label/",
@@ -78,9 +79,8 @@ const App = () => {
                         JSON.stringify(milestones.data),
                     );
                 });
+                setMode(res);
             }
-            setMode(res);
-
         });
     }, []);
 
@@ -92,6 +92,7 @@ const App = () => {
                     <Route path="/new">
                         <MainSection mode="newIssue" />
                     </Route>
+                    <Route path="/detail/:issueId" component={DetailIssue} />
                     <Route path="/">
                         <MainSection mode={mode} />
                     </Route>
