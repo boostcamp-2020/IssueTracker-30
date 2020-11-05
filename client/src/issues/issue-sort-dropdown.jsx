@@ -153,7 +153,7 @@ const DropDownMenu = (props) => {
                 });
             return;
         }
-        const currentOption = e.target.innerText;
+        const currentOption = e.currentTarget.dataset.name;
         const addOption = props.addOptionToTextInput;
         addOption(`${props.name.toLowerCase()}:${currentOption}`);
     };
@@ -190,6 +190,7 @@ const DropDownMenu = (props) => {
                         )}
                         {/* <StyledMenuUlHead>Filter by {props.name}</StyledMenuUlHead> */}
                         <StyledMenuLiNotUse
+                            data-name="notUse"
                             type={props.name}
                             onClick={addOptionToTextInput}
                         >
@@ -198,6 +199,7 @@ const DropDownMenu = (props) => {
                         {props.dataArray.map((element) => (
                             <>
                                 <StyledMenuLi
+                                    data-name={element.value}
                                     key={element.key}
                                     onClick={addOptionToTextInput}
                                 >
