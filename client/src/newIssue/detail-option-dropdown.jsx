@@ -106,13 +106,13 @@ const DropDownMenu = (props) => {
             <StyledMenuUl>
                 {props.dataArray.map((element) => (
                 <>
-                    <StyledMenuLi key={element.key}>
-                    <StyledMediaSection
-                        mediaSection={mediaSection}
-                        mediaType={props.name}
-                        media={element.media}
-                    ></StyledMediaSection>
-                    <p>{element.value}</p>
+                    <StyledMenuLi key={element.key} onClick={props.hadleClick}>
+											<StyledMediaSection
+													mediaSection={mediaSection}
+													mediaType={props.name}
+													media={element.media}
+											></StyledMediaSection>
+											<p>{element.value}</p>
                     </StyledMenuLi>
                 </>
                 ))}

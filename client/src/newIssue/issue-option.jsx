@@ -10,12 +10,24 @@ const StyleIssueOption = styled.div`
     height: 50%;
 `
 
-const IssueOption = () => {
+const IssueOption = (props) => {
     return (
         <StyleIssueOption>
-            <DetailOption name="Assignee" message="No one-assign yourself"/>
-            <DetailOption name="Label" message="None yet" />
-            <DetailOption name="Milestone" message="No milestone"/>
+            <DetailOption
+                data={props.assignee}
+                setData={props.setAssignee}
+                name="Assignee"
+                message="No one-assign yourself"/>
+            <DetailOption
+                data={props.label}
+                setData={props.setLabel}
+                name="Label"
+                message="None yet" />
+            <DetailOption
+                data={props.milestone}
+                setData={props.setMilestone}
+                name="Milestone"
+                message="No milestone"/>
         </StyleIssueOption>
     );
 };
