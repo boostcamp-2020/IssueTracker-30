@@ -82,6 +82,7 @@ const detailOption = (props) => {
                     temp.add(item);
                 }
                 temp.add(e.target.innerText);
+                console.log(temp);
                 props.setData(temp);
                 break;
             case "Milestone":

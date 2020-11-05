@@ -24,9 +24,10 @@ const query = {
     insertIssueCommentRelation: `INSERT INTO issueCommentRelation (issueId, commentId) values (?,?);`,
     updateComment: `UPDATE comment SET comment=?, writingTime=? WHERE ID = ?;`,
     deleteComment: `DELETE FROM comment WHERE ID = ?`,
-    getUser: `select userId from user`,
+    getUser: `select userId, imageURL from user`,
     getLabel: `SELECT ID, content, color FROM label`,
     getMilestone: `SELECT ID, title, dueDate, description FROM milestone`,
+    insertUserImage: `UPDATE user SET imageURL = ? WHERE userId = ? `,
 }
 
 module.exports = query;
