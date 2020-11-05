@@ -33,7 +33,8 @@ const StyledBannerTextDiv = styled.div``;
 const StyledBannerInnerDiv = styled.div`
     display: flex;
     flex-direction: rows;
-    align-items: baseline;
+    align-items: center;
+    padding-top: 1%;
     width: 600px;
 `;
 
@@ -66,6 +67,22 @@ const StyledBannerInfo = styled.p`
     font-weight: 400;
     font-size: 0.7em;
     margin: 0;
+`;
+
+const StyledAssigneeDiv = styled.div`
+    position: absolute;
+    display: flex;
+    padding-top: 1.5%;
+    width: 10%;
+    justify-content: flex-end;
+    right: 13.5%;
+`;
+
+const StyledAssignee = styled.img`
+    width: 20px;
+    margin-left: 8%;
+    box-shadow: 0 0 2px 0px black;
+    border-radius: 3px;
 `;
 
 let count = 0;
@@ -122,6 +139,14 @@ const IssueTitle = (props) => {
         labelData.push(data);
     }
 
+    const usersData = JSON.parse(localStorage.getItem("usersData"));
+
+    const assigneeUrl = [];
+    props.assignId.forEach((ele) => {
+        assigneeUrl.push(usersData
+            .filter((data) => data.userId === ele))
+    });
+
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
@@ -143,6 +168,13 @@ const IssueTitle = (props) => {
                             <p>{element.content}</p>
                         </StyledBannerLabel>
                     ))}
+                    <StyledAssigneeDiv>
+                        {assigneeUrl.map((element) => (
+                            <StyledAssignee src={element[0].imageURL}>
+
+                            </StyledAssignee>
+                        ))}
+                    </StyledAssigneeDiv>
                 </StyledBannerInnerDiv>
                 <StyledBannerInfo>
                     #{props.issueId} {openOrClosed} {updatedTimeBefore} days ago
