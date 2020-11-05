@@ -33,7 +33,7 @@ const StyledBannerTextDiv = styled.div``;
 const StyledBannerInnerDiv = styled.div`
     display: flex;
     flex-direction: rows;
-    align-items: center;
+    align-items: baseline;
     width: 600px;
 `;
 
@@ -46,15 +46,18 @@ const StyledBannerLabel = styled.div`
     display: flex;
     background-color: ${(props) => props.color};
     height: 15px;
-    margin-left: 2%;
-    padding: 1%;
+    margin-left: 1%;
+    padding: 0.3% 0.8% 0.8% 0.8%;;
     color: white;
-    text-shadow: 0 2px black;
+    text-shadow: 1px 1px 3px black;
     font-size: 10pt;
+    border-radius: 3px;
     align-items: center;
-    p{margin: 0};
-}
-`;
+
+    p {
+        margin: 0}
+    ;
+`
 
 const StyledBannerInfo = styled.p`
     font-size: 0.7em;
