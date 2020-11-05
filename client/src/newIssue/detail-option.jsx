@@ -51,7 +51,7 @@ const detailOption = (props) => {
                 liData.push({
                     key: ele.userId,
                     value: ele.userId,
-                    media: ele.userId,
+                    media: ele.imageURL,
                 });
             });
             break;
