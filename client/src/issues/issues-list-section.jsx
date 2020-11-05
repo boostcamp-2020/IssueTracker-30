@@ -182,8 +182,18 @@ const IssuesListSection = (props) => {
         }
     });
 
+    console.log(filterOptions);
+
     const filteredIssueData = issueData
-        .filter((ele) => ele.status === openClosedRadio)
+    .filter(ele => ele.status === openClosedRadio)
+        .filter((ele) => 
+            filterOptions.is 
+                ? filterOptions.is[0] === "open"
+                    ? ele.status === 1
+                    : ele.status === 0
+                : ele
+        
+        )
         .filter((ele) =>
             filterOptions.author
                 ? filterOptions.author.includes(ele.userId)

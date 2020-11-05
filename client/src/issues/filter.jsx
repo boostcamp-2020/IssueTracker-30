@@ -129,23 +129,23 @@ const Filter = (props) => {
     const [filter, setFilter] = useState([
         {
             id: 1,
-            value: "is:open sort:updated-desc",
+            value: "is:open",
             text: "Open issues",
             data: "",
         },
         {
             id: 2,
-            value: "is:open author:@me sort:updated-desc",
+            value: "is:open author:@me",
             text: "Your issues",
         },
         {
             id: 3,
-            value: "is:open assignee:@me sort:updated-desc",
+            value: "is:open assignee:@me",
             text: "Everything assigned to you",
         },
         {
             id: 4,
-            value: "is:open mentions:@me sort:updated-desc",
+            value: "is:open mentions:@me",
             text: "Everything mentioning you",
         },
         { id: 5, value: "is:closed", text: "Closed issues" },
