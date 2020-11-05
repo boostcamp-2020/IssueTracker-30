@@ -367,6 +367,7 @@ const IssuesListSection = (props) => {
                                 color: labelColor,
                                 content: labelContent,
                             }}
+                            addOptionToTextInput={props.addOptionToTextInput}
                         />
                     )
                 )}
