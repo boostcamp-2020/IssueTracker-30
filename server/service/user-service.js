@@ -6,6 +6,11 @@ import query from "../db/query";
 require('dotenv').config();
 
 const UserService = {
+    saveImg : (req, res) => {
+        console.log(req.body);
+        res.send();
+    },
+
     getUser: async (req, res) => {
         const [rows] = await connection.query(query.getUser);
         res.json(rows);

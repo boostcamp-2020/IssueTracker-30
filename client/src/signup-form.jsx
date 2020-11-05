@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import styled from "styled-components";
 import axios from "axios";
 
+import createImage from "./createImage.js";
+
 const StyledSignUpForm = styled.div`
     display: flex;
     flex-direction: column;
@@ -133,6 +135,12 @@ const SignUpForm = ({ history }) => {
                 userId,
                 userPw1,
             };
+            axios({
+                method: "POST",
+                url: "http://localhost:3000/user/saveImg",
+                data : { userId, dataUrl: createImage() },
+                withCredentials: true,
+            })
             axios({
                 method: "POST",
                 url: "http://localhost:3000/user/signUp",

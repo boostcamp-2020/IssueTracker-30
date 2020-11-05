@@ -14,9 +14,12 @@ const StyledNewIssueTitle = styled.input.attrs({
     padding-left: 1%;
 `;
 
-const newIssueTitle = () => {
+const newIssueTitle = (props) => {
+    const handleChange = (e) => {
+        props.setTitle(e.target.value);
+    }
     return (
-        <StyledNewIssueTitle />
+        <StyledNewIssueTitle value={props.title} onChange={handleChange}/>
     );
 };
 
