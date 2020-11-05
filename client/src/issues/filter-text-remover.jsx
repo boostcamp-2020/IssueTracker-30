@@ -30,6 +30,8 @@ const StyledRemoverIcon = styled.svg.attrs({
 `;
 
 const StyledRemoverMessage = styled.p`
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 700;
     margin: 0;
 `;
 

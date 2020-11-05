@@ -56,6 +56,8 @@ const StyledFilterList = styled.ul`
     list-style: none;
     margin: 0;
     padding: 2% 0% 0% 0%;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 100;
     font-size: 14px;
 `;
 const StyledFilterTitle = styled.li`
