@@ -143,9 +143,12 @@ const IssueTitle = (props) => {
 
     const assigneeUrl = [];
     props.assignId.forEach((ele) => {
-        assigneeUrl.push(usersData
-            .filter((data) => data.userId === ele))
+        assigneeUrl.push(usersData.filter((data) => data.userId === ele));
     });
+
+    const onIssueBannerClick = (e) => {
+        //
+    };
 
     return (
         <StyledBannersListDiv>
@@ -162,17 +165,26 @@ const IssueTitle = (props) => {
 
             <StyledBannerTextDiv>
                 <StyledBannerInnerDiv>
-                    <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
+                    <StyledBannerTitle
+                        uri={props.issueId}
+                        onClick={onIssueBannerClick}
+                    >
+                        {props.issueTitle}
+                    </StyledBannerTitle>
                     {labelData.map((element) => (
-                        <StyledBannerLabel color={element.color}>
+                        <StyledBannerLabel
+                            key={element.content}
+                            color={element.color}
+                        >
                             <p>{element.content}</p>
                         </StyledBannerLabel>
                     ))}
                     <StyledAssigneeDiv>
                         {assigneeUrl.map((element) => (
-                            <StyledAssignee src={element[0].imageURL}>
-
-                            </StyledAssignee>
+                            <StyledAssignee
+                                key={element[0].userId}
+                                src={element[0].imageURL}
+                            ></StyledAssignee>
                         ))}
                     </StyledAssigneeDiv>
                 </StyledBannerInnerDiv>

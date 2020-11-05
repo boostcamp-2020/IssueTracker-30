@@ -197,20 +197,18 @@ const DropDownMenu = (props) => {
                             {props.notUseTitle}
                         </StyledMenuLiNotUse>
                         {props.dataArray.map((element) => (
-                            <>
-                                <StyledMenuLi
-                                    data-name={element.value}
-                                    key={element.key}
-                                    onClick={addOptionToTextInput}
-                                >
-                                    <StyledMediaSection
-                                        mediaSection={mediaSection}
-                                        mediaType={props.name}
-                                        media={element.media}
-                                    ></StyledMediaSection>
-                                    <p>{element.value}</p>
-                                </StyledMenuLi>
-                            </>
+                            <StyledMenuLi
+                                data-name={element.value}
+                                key={element.key}
+                                onClick={addOptionToTextInput}
+                            >
+                                <StyledMediaSection
+                                    mediaSection={mediaSection}
+                                    mediaType={props.name}
+                                    media={element.media}
+                                ></StyledMediaSection>
+                                <p>{element.value}</p>
+                            </StyledMenuLi>
                         ))}
                     </StyledMenuUl>
                 </StyledMenuContent>
