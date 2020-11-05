@@ -151,8 +151,10 @@ const IssuesListSection = (props) => {
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
             setOpenClosedRadio(1);
+            props.addOptionToTextInput("is:open");
         } else {
             setOpenClosedRadio(0);
+            props.addOptionToTextInput("is:closed");
         }
     };
 
@@ -336,7 +338,16 @@ const IssuesListSection = (props) => {
             </StyledListSortMenu>
             <StyledSortedList>
                 {filteredIssueData.map(
-                    ({ issueId, userId, issueTitle, status, writingTime, labelColor, labelContent, assignId}) => (
+                    ({
+                        issueId,
+                        userId,
+                        issueTitle,
+                        status,
+                        writingTime,
+                        labelColor,
+                        labelContent,
+                        assignId,
+                    }) => (
                         <ItemBanner
                             key={issueId}
                             issueTitle={issueTitle}
@@ -351,9 +362,11 @@ const IssuesListSection = (props) => {
                             selectedFunc={setSelectedCount}
                             excludeIssueFunc={setExcludeIssue}
                             addIssueFunc={setAddIssue}
-                            labelInfo={{color: labelColor, content: labelContent}}
-                            test={filteredIssueData}
                             assignId={assignId}
+                            labelInfo={{
+                                color: labelColor,
+                                content: labelContent,
+                            }}
                         />
                     )
                 )}

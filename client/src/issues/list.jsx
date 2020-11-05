@@ -32,22 +32,28 @@ const IssueList = () => {
 
     const getTextInput = () => textInput;
     const addOptionToTextInput = (option) => {
-        const authorRegex = /author:\w+/;
-        const assigneeRegex = /assignee:\w+/;
+        const isRegex = /is:\w+/g;
+        const authorRegex = /author:[\w@]+/g;
+        const assigneeRegex = /assignee:[\w@]+/g;
 
-        if (textInput.includes(option)) {
-            setTextInput(textInput.replace(option, ""));
+        setIsFilterTextRemoverVisible(true);
+
+        let theText = "";
+        if (isRegex.test(option)) {
+            theText = `${textInput.replace(isRegex, "").trim()} ${option}`;
+        } else if (textInput.includes(option)) {
+            theText = textInput.replace(option, "");
         } else if (authorRegex.test(option)) {
-            setTextInput(
-                `${textInput.replace(authorRegex, "").trim()} ${option}`
-            );
+            theText = `${textInput.replace(authorRegex, "").trim()} ${option}`;
         } else if (assigneeRegex.test(option)) {
-            setTextInput(
-                `${textInput.replace(assigneeRegex, "").trim()} ${option}`
-            );
+            theText = `${textInput
+                .replace(assigneeRegex, "")
+                .trim()} ${option}`;
         } else {
-            setTextInput(`${textInput.trim()} ${option}`);
+            theText = `${textInput.trim()} ${option}`;
         }
+
+        setTextInput(theText.trim());
     };
 
     return (

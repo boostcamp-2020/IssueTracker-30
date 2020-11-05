@@ -56,6 +56,8 @@ const StyledFilterList = styled.ul`
     list-style: none;
     margin: 0;
     padding: 2% 0% 0% 0%;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 100;
     font-size: 14px;
 `;
 const StyledFilterTitle = styled.li`
@@ -102,7 +104,7 @@ const Filter = (props) => {
         } = e;
 
         setTextInput(value);
-        setFilterTextRemoverVisibility(true);
+        setFilterTextRemoverVisibility(value.length === 0 ? false : true);
     };
 
     const onFilterKeyPress = (e) => {
