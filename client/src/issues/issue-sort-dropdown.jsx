@@ -142,7 +142,6 @@ const DropDownMenu = (props) => {
 					})
 				)
 				.catch((errors) => {
-					// errors
 				});
 			return;
 		}
