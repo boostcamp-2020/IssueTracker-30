@@ -21,13 +21,13 @@ const StyledSubmitButton = styled.button`
     background: linear-gradient(rgba(51,205,86,1) 0%, rgba(41,171,71,1) 100%);
 `
 
-const newIssueControl = () => {
+const newIssueControl = (props) => {
     return (
         <>
             <Link to="/">
                 <StyledCancelButton>Cancel</StyledCancelButton>
             </Link>
-            <StyledSubmitButton>Submit new issue</StyledSubmitButton>
+            <StyledSubmitButton onClick={props.submit}>Submit new issue</StyledSubmitButton>
         </>
     );
 };
