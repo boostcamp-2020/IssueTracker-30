@@ -86,6 +86,7 @@ const Filter = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const setTextInput = props.setTextInput;
     const getTextInput = props.getTextInput;
+    const setFilterTextRemoverVisibility = props.setFilterTextRemoverVisibility;
 
     const onFilterSelectedChange = (e) => {
         if (e.target) {
@@ -101,6 +102,7 @@ const Filter = (props) => {
         } = e;
 
         setTextInput(value);
+        setFilterTextRemoverVisibility(true);
     };
 
     const onFilterKeyPress = (e) => {
