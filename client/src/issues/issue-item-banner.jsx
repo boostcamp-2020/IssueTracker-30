@@ -31,44 +31,93 @@ const StyledBannerOpenClosedIcon = styled.i``;
 
 const StyledBannerTextDiv = styled.div``;
 
+const StyledBannerInnerDiv = styled.div`
+    display: flex;
+    flex-direction: rows;
+    align-items: center;
+    padding-top: 1%;
+    width: 600px;
+`;
+
 const StyledBannerTitle = styled.p`
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 700;
     font-size: 1em;
+    margin: 0;
+
+    &:hover {
+        cursor: pointer;
+        color: #3949ab;
+    }
+`;
+
+const StyledBannerLabel = styled.div`
+    display: flex;
+    background-color: ${(props) => props.color};
+    height: 15px;
+    margin-left: 1%;
+    padding: 0.3% 0.8% 0.8% 0.8%;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+    font-size: 10pt;
+    border-radius: 3px;
+    align-items: center;
+
+    p {
+        margin: 0;
+    }
+`;
+
+const StyledBannerInfo = styled.div`
+    display: flex;
+    flex-direction: row;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 400;
+    font-size: 0.7em;
     margin: 0;
 `;
 
-const StyledBannerInfo = styled.p`
-    font-size: 0.7em;
-    margin: 0;
+const StyledBannerAuthor = styled.div`
+    margin: 0 2px;
+    &:hover {
+        cursor: pointer;
+        color: #3949ab;
+    }
+`;
+
+const StyledAssigneeDiv = styled.div`
+    position: absolute;
+    display: flex;
+    padding-top: 1.5%;
+    width: 10%;
+    justify-content: flex-end;
+    right: 13.5%;
+`;
+
+const StyledAssignee = styled.img`
+    width: 20px;
+    margin-left: 8%;
+    box-shadow: 0 0 2px 0px black;
+    border-radius: 3px;
 `;
 
 let count = 0;
 let total;
 
-// color: "#FF0000"
-// content: "bug"
-// issueId: 1
-// issueTitle: "목록 보기 구현"
-// labelId: 2
-// milestoneId: 1
-// milestoneTitle: "스프린트2"
-// status: 1
-// userId: "123123"
-// writingTime: "2020-10-28T15:00:00.000Z"
 const IssueTitle = (props) => {
     const [checked, setChecked] = useState(false);
     const openOrClosed = props.status === 1 ? "opened" : "closed";
 
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
-        timeNow - new Date(props.writingTime),
+        timeNow - new Date(props.writingTime)
     ).getDate();
 
     useEffect(() => {
         if (props.checked) {
             setChecked(props.checked);
             count = props.count;
-        }
-        else {
+        } else {
             if (count == props.count || count == 0) {
                 setChecked(props.checked);
                 count = 0;
@@ -78,7 +127,7 @@ const IssueTitle = (props) => {
 
     const checkedFunc = () => {
         return checked;
-    }
+    };
 
     const setCheckFunc = () => {
         if (checked) {
@@ -86,8 +135,7 @@ const IssueTitle = (props) => {
             props.excludeIssueFunc(props.issueId);
             props.func2(false);
             count--;
-        }
-        else {
+        } else {
             count++;
             props.addIssueFunc(props.issueId);
             if (count == props.count) {
@@ -96,12 +144,42 @@ const IssueTitle = (props) => {
         }
         props.selectedFunc(count);
         setChecked(!checked);
+    };
+
+    const labelData = [];
+    for (let i = 0; i < props.labelInfo.color.length; i++) {
+        const data = {
+            color: props.labelInfo.color[i],
+            content: props.labelInfo.content[i],
+        };
+        labelData.push(data);
     }
+
+    const usersData = JSON.parse(localStorage.getItem("usersData"));
+
+    const assigneeUrl = [];
+    props.assignId.forEach((ele) => {
+        assigneeUrl.push(usersData.filter((data) => data.userId === ele));
+    });
+
+    const onIssueBannerClick = (e) => {
+        e.preventDefault();
+        // TODO: 상세페이지 api?
+        window.location.href = `/issue/detail/${props.issueId}`;
+    };
+
+    const onAuthorClick = () => {
+        // TODO
+        props.addOptionToTextInput(`author:${props.userId}`);
+    };
 
     return (
         <StyledBannersListDiv>
             <StyledBannerCheckBoxDiv>
-                <StyledBannerCheckBoxInput checked={checkedFunc()} onChange={setCheckFunc} />
+                <StyledBannerCheckBoxInput
+                    checked={checkedFunc()}
+                    onChange={setCheckFunc}
+                />
             </StyledBannerCheckBoxDiv>
 
             <StyledBannerOpenClosedDiv>
@@ -109,12 +187,37 @@ const IssueTitle = (props) => {
             </StyledBannerOpenClosedDiv>
 
             <StyledBannerTextDiv>
-                <Link to={`detail/${props.issueId}`} style={{ textDecoration: 'none', color: 'black' }}>
-                    <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
-                </Link>
+                
+                <StyledBannerInnerDiv>
+                    <Link to={`detail/${props.issueId}`} style={{ textDecoration: 'none', color: 'black' }}>
+                        <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
+                    </Link>
+                    {/* <StyledBannerTitle onClick={onIssueBannerClick}>
+                        {props.issueTitle}
+                    </StyledBannerTitle> */}
+                    {labelData.map((element) => (
+                        <StyledBannerLabel
+                            key={element.content}
+                            color={element.color}
+                        >
+                            <p>{element.content}</p>
+                        </StyledBannerLabel>
+                    ))}
+                    <StyledAssigneeDiv>
+                        {assigneeUrl.map((element) => (
+                            <StyledAssignee
+                                key={element[0].userId}
+                                src={element[0].imageURL}
+                            ></StyledAssignee>
+                        ))}
+                    </StyledAssigneeDiv>
+                </StyledBannerInnerDiv>
                 <StyledBannerInfo>
-                    #{props.issueId} by {props.userId} was {openOrClosed}{" "}
-                    {updatedTimeBefore} days ago
+                    #{props.issueId} {openOrClosed} {updatedTimeBefore} days ago
+                    by{"  "}
+                    <StyledBannerAuthor onClick={onAuthorClick}>
+                        {props.userId}
+                    </StyledBannerAuthor>
                 </StyledBannerInfo>
             </StyledBannerTextDiv>
         </StyledBannersListDiv>

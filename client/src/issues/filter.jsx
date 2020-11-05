@@ -56,6 +56,8 @@ const StyledFilterList = styled.ul`
     list-style: none;
     margin: 0;
     padding: 2% 0% 0% 0%;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 100;
     font-size: 14px;
 `;
 const StyledFilterTitle = styled.li`
@@ -86,6 +88,7 @@ const Filter = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const setTextInput = props.setTextInput;
     const getTextInput = props.getTextInput;
+    const setFilterTextRemoverVisibility = props.setFilterTextRemoverVisibility;
 
     const onFilterSelectedChange = (e) => {
         if (e.target) {
@@ -101,6 +104,7 @@ const Filter = (props) => {
         } = e;
 
         setTextInput(value);
+        setFilterTextRemoverVisibility(value.length === 0 ? false : true);
     };
 
     const onFilterKeyPress = (e) => {
@@ -129,23 +133,23 @@ const Filter = (props) => {
     const [filter, setFilter] = useState([
         {
             id: 1,
-            value: "is:open sort:updated-desc",
+            value: "is:open",
             text: "Open issues",
             data: "",
         },
         {
             id: 2,
-            value: "is:open author:@me sort:updated-desc",
+            value: "is:open author:@me",
             text: "Your issues",
         },
         {
             id: 3,
-            value: "is:open assignee:@me sort:updated-desc",
+            value: "is:open assignee:@me",
             text: "Everything assigned to you",
         },
         {
             id: 4,
-            value: "is:open mentions:@me sort:updated-desc",
+            value: "is:open mentions:@me",
             text: "Everything mentioning you",
         },
         { id: 5, value: "is:closed", text: "Closed issues" },

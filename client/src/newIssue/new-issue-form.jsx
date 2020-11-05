@@ -5,7 +5,10 @@ import IssueTitle from "./new-issue-title.jsx";
 import IssueContent from "./new-issue-content.jsx"
 import IssueControl from "./new-issue-control.jsx"
 
-const StyledNewIssueForm = styled.div`
+const StyledNewIssueForm = styled.div.attrs({
+    action: "http://localhost:3000/user/test",
+    method: "POST"
+})`
     position: absolute;
     left: 20%;
     display: flex;
@@ -14,10 +17,11 @@ const StyledNewIssueForm = styled.div`
     height: 50%;
 `
 
-const StyledImgDiv = styled.div`
-    background-color: teal;
-    width:50px;
-    height:50px;
+const StyledImg = styled.img`
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 2px 0 grey;
+    border-radius: 3px;
 `
 
 const StyledTriangleDiv = styled.div`
@@ -72,20 +76,25 @@ const StyledControlDiv = styled.div`
     align-items: flex-end;
 `
 
-const newIssueForm = () => {
+const newIssueForm = (props) => {
+    const userId = localStorage.getItem('userId');
+    const usersData = JSON.parse(localStorage.getItem("usersData"));
+
+    const userData = usersData.filter((data) => data.userId === userId);
+
     return (
         <StyledNewIssueForm>
-            <StyledImgDiv />
+            <StyledImg src={userData[0].imageURL}/>
             <StyledNewIssueSection >
                 <StyledTitleDiv>
-                    <IssueTitle />
+                    <IssueTitle title={props.title} setTitle={props.setTitle} />
                 </StyledTitleDiv>
                 <StyledWriteTag>Write</StyledWriteTag>
                 <StyledContentDiv>
-                    <IssueContent />
+                    <IssueContent content={props.content} setContent={props.setContent} />
                 </StyledContentDiv>
                 <StyledControlDiv>
-                    <IssueControl />
+                    <IssueControl submit={props.submit} />
                 </StyledControlDiv>
             </StyledNewIssueSection>
             <StyledTriangleDiv />

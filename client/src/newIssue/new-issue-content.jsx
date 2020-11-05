@@ -41,10 +41,13 @@ const StyledLabel = styled.label.attrs({
     padding: 1%;
 `
 
-const newIssueContent = () => {
+const newIssueContent = (props) => {
+    const handleChange = (e) => {
+        props.setContent(e.target.value);
+    }
     return (
         <>
-            <StyledNewIssueContent />
+            <StyledNewIssueContent value={props.content} onChange={handleChange}/>
             <StyledNewIssueAttach id="attachFile"/>
             <StyledLabel>Attach files by selecting here</StyledLabel>
         </>

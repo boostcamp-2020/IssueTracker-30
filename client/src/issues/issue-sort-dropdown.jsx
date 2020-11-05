@@ -26,6 +26,8 @@ const StyledModalBackground = styled.div`
 
 const StyledMenuTitle = styled.div`
     position: relative;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 100;
     &:before {
         content: "${(props) => props.title} ▼";
     }
@@ -86,25 +88,10 @@ const StyledMenuLi = styled.li`
 `;
 
 const StyledMediaSection = styled.div`
-	display: ${(props) => (props.mediaSection ? "block" : "none")};
+    display: ${(props) => (props.mediaSection ? "block" : "none")};
 
-	${(props) => {
+    ${(props) => {
 		switch (props.mediaType) {
-			case "Author":
-			case "Assignee":
-				const base = Math.floor(Math.random() * 3);
-				const pool = [
-					"https://i.ibb.co/x6Q07jp/1.png",
-					"https://i.ibb.co/5YjKFzJ/2.png",
-					"https://i.ibb.co/yQchVjL/3.png",
-				];
-				return {
-					backgroundImage: `url(${pool[base]})`,
-					width: "20px",
-					height: "20px",
-					borderRadius: "65%",
-					marginLeft: "5%",
-				};
 			case "Label":
 				return {
 					backgroundColor: props.media,
@@ -121,27 +108,45 @@ const StyledMediaSection = styled.div`
 	}}
 `;
 
+const StyledUserImage = styled.img`
+	width: 20px;
+    margin-left: 5%;
+    box-shadow: 0 0 2px 0px black;
+	border-radius: 3px;
+	display: ${(props) => (props.src ? "block" : "none")};
+`;
+
 const DropDownMenu = (props) => {
 	const [menuVisibility, setMenuVisibility] = useState("none");
 	const addOptionToTextInput = (e) => {
 		if (props.name === "MarkAs") {
 			const axiosFuncArr = [];
-			props.checkedIssue.forEach(v => {
-				axiosFuncArr.push(axios.put('http://localhost:3000/issue', {
-					mode: 4,
-					issueId: v,
-					status: e.target.innerText === "Open" ? 1 : 0,
-				}, { withCredentials: true } ))
-			})
-			axios.all(axiosFuncArr)
-				.then(axios.spread((...responses) => {
-					document.location = "/";
-				})).catch(errors => {
+			props.checkedIssue.forEach((v) => {
+				axiosFuncArr.push(
+					axios.put(
+						"http://localhost:3000/issue",
+						{
+							mode: 4,
+							issueId: v,
+							status: e.target.innerText === "Open" ? 1 : 0,
+						},
+						{ withCredentials: true }
+					)
+				);
+			});
+			axios
+				.all(axiosFuncArr)
+				.then(
+					axios.spread((...responses) => {
+						document.location = "/";
+					})
+				)
+				.catch((errors) => {
 					// errors
-				})
+				});
 			return;
 		}
-		const currentOption = e.target.innerText;
+		const currentOption = e.currentTarget.dataset.name;
 		const addOption = props.addOptionToTextInput;
 		addOption(`${props.name.toLowerCase()}:${currentOption}`);
 	};
@@ -169,26 +174,37 @@ const DropDownMenu = (props) => {
 			<StyledMenuTitle title={props.name}>
 				<StyledMenuContent isVisible={menuVisibility}>
 					<StyledMenuUl>
-						{props.name === 'MarkAs' ? <StyledMenuUlHead>Actions</StyledMenuUlHead> :
-							<StyledMenuUlHead>Filter by {props.name}</StyledMenuUlHead>}
+						{props.name === "MarkAs" ? (
+							<StyledMenuUlHead>Actions</StyledMenuUlHead>
+						) : (
+								<StyledMenuUlHead>
+									Filter by {props.name}
+								</StyledMenuUlHead>
+							)}
 						{/* <StyledMenuUlHead>Filter by {props.name}</StyledMenuUlHead> */}
 						<StyledMenuLiNotUse
+							data-name="notUse"
 							type={props.name}
 							onClick={addOptionToTextInput}
 						>
 							{props.notUseTitle}
 						</StyledMenuLiNotUse>
 						{props.dataArray.map((element) => (
-							<>
-								<StyledMenuLi key={element.key} onClick={addOptionToTextInput}>
-									<StyledMediaSection
-										mediaSection={mediaSection}
-										mediaType={props.name}
-										media={element.media}
-									></StyledMediaSection>
-									<p>{element.value}</p>
-								</StyledMenuLi>
-							</>
+							<StyledMenuLi
+								data-name={element.value}
+								key={element.key}
+								onClick={addOptionToTextInput}
+							>
+								<StyledUserImage
+									src={element.imageUrl}
+								></StyledUserImage>
+								<StyledMediaSection
+									mediaSection={mediaSection}
+									mediaType={props.name}
+									media={element.media}
+								></StyledMediaSection>
+								<p>{element.value}</p>
+							</StyledMenuLi>
 						))}
 					</StyledMenuUl>
 				</StyledMenuContent>
