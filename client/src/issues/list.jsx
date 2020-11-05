@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Filter from "./filter.jsx";
 import HeaderButtons from "./header-buttons.jsx";
 import IssuesList from "./issues-list-section.jsx";
+import FilterTextRemover from "./filter-text-remover.jsx";
 
 const StyledListDiv = styled.div`
     display: flex;
@@ -23,7 +24,11 @@ const StyledListHeader = styled.div`
 
 const IssueList = () => {
     const [textInput, setTextInput] = useState("is:open");
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+    const [
+        isFilterTextRemoverVisible,
+        setIsFilterTextRemoverVisible,
+    ] = useState(false);
 
     const getTextInput = () => textInput;
     const addOptionToTextInput = (option) => {
@@ -46,16 +51,23 @@ const IssueList = () => {
     };
 
     return (
-        // TODO
         <StyledListDiv>
             <StyledListHeader>
                 <Filter
                     setIsOpen={setIsOpen}
                     setTextInput={setTextInput}
                     getTextInput={getTextInput}
+                    setFilterTextRemoverVisibility={
+                        setIsFilterTextRemoverVisible
+                    }
                 />
                 <HeaderButtons />
             </StyledListHeader>
+            <FilterTextRemover
+                isVisible={isFilterTextRemoverVisible}
+                setVisible={setIsFilterTextRemoverVisible}
+                setTextInput={setTextInput}
+            />
             <IssuesList
                 filterOptions={textInput}
                 addOptionToTextInput={addOptionToTextInput}
