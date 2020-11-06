@@ -6,9 +6,11 @@ import DetailIssueComment from "./detail-issue-comment.jsx";
 import axios from "axios";
 
 const DetailIssueContentDiv = styled.div`
-    width: 95%;
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    width: 60%;
     height: 80%;
-    margin-top: 10%;
 `;
 
 const HrLine = styled.hr`
@@ -17,6 +19,14 @@ const HrLine = styled.hr`
 
 const DetailIssueCenter =  (issue) => {
     const [comment, setComment] = useState([]);
+
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+
+    const [assignee, setAssignee] = useState(new Set());
+    const [label, setLabel] = useState(new Set());
+    const [milestone, setMilestone] = useState('');
+
     useEffect( () => {
         axios({
             method: "POST",
@@ -51,8 +61,16 @@ const DetailIssueCenter =  (issue) => {
                         commentWritingTime={commentWritingTime}
                     />
                 )) }
-                <IssueOption />
             </DetailIssueContentDiv>
+            <IssueOption
+                mode="detail"
+                assignee={assignee}
+                setAssignee={setAssignee}
+                label={label}
+                setLabel={setLabel}
+                milestone={milestone}
+                setMilestone={setMilestone}
+            />
         </>
     );
 };

@@ -5,8 +5,9 @@ import axios from "axios";
 const StyledDetailIssueTitle = styled.div`
     position: absolute;
     top: 10%;
-    left: 2%;
-    width: 80%;
+    left: 20%;
+    width: 60%;
+    height: 15%;
 `;
 
 const StyledTitle = styled.h1`
