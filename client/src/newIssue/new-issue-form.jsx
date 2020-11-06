@@ -6,7 +6,7 @@ import IssueContent from "./new-issue-content.jsx"
 import IssueControl from "./new-issue-control.jsx"
 
 const StyledNewIssueForm = styled.div.attrs({
-    action: "http://localhost:3000/user/test",
+    action: "/user/test",
     method: "POST"
 })`
     position: absolute;

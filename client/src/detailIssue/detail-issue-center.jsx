@@ -30,7 +30,7 @@ const DetailIssueCenter =  (issue) => {
     useEffect( () => {
         axios({
             method: "POST",
-            url: "http://localhost:3000/comment/getComment",
+            url: "/comment/getComment",
             data: {
                 issueId: issue.id
             },
