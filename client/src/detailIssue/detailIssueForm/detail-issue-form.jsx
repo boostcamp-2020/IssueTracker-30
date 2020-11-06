@@ -1,14 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import IssueTitle from "./new-issue-title.jsx";
-import IssueContent from "./new-issue-content.jsx"
-import IssueControl from "./new-issue-control.jsx"
+import IssueContent from "./detail-issue-content.jsx"
+import IssueControl from "./detail-issue-control.jsx"
 
-const StyledNewIssueForm = styled.div.attrs({
-    action: "http://localhost:3000/user/test",
-    method: "POST"
-})`
+const StyledNewIssueForm = styled.div`
     position: absolute;
     left: 20%;
     display: flex;
@@ -17,11 +13,10 @@ const StyledNewIssueForm = styled.div.attrs({
     height: 50%;
 `
 
-const StyledImg = styled.img`
-    width: 50px;
-    height: 50px;
-    box-shadow: 0 0 2px 0 grey;
-    border-radius: 3px;
+const StyledImgDiv = styled.div`
+    background-color: teal;
+    width:50px;
+    height:50px;
 `
 
 const StyledTriangleDiv = styled.div`
@@ -76,25 +71,18 @@ const StyledControlDiv = styled.div`
     align-items: flex-end;
 `
 
-const newIssueForm = (props) => {
-    const userId = localStorage.getItem('userId');
-    const usersData = JSON.parse(localStorage.getItem("usersData"));
-
-    const userData = usersData.filter((data) => data.userId === userId);
-
+const detailIssueForm = () => {
     return (
         <StyledNewIssueForm>
-            <StyledImg src={userData[0].imageURL}/>
+            <StyledImgDiv />
             <StyledNewIssueSection >
                 <StyledTitleDiv>
-                    <IssueTitle title={props.title} setTitle={props.setTitle} />
                 </StyledTitleDiv>
-                <StyledWriteTag>Write</StyledWriteTag>
                 <StyledContentDiv>
-                    <IssueContent content={props.content} setContent={props.setContent} />
+                    <IssueContent />
                 </StyledContentDiv>
                 <StyledControlDiv>
-                    <IssueControl submit={props.submit} />
+                    <IssueControl />
                 </StyledControlDiv>
             </StyledNewIssueSection>
             <StyledTriangleDiv />
@@ -102,4 +90,4 @@ const newIssueForm = (props) => {
     );
 };
 
-export default newIssueForm;
+export default detailIssueForm;

@@ -8,14 +8,27 @@ const StyleIssueOption = styled.div`
     right: 20%;
     width: 12%;
     height: 50%;
+    margin-top: ${props => props.mode === "detail" ? "3%" : "0%"};
 `
 
-const IssueOption = () => {
+const IssueOption = (props) => {
     return (
-        <StyleIssueOption>
-            <DetailOption name="Assignee" message="No one-assign yourself"/>
-            <DetailOption name="Label" message="None yet" />
-            <DetailOption name="Milestone" message="No milestone"/>
+        <StyleIssueOption mode={props.mode}>
+            <DetailOption
+                data={props.assignee}
+                setData={props.setAssignee}
+                name="Assignee"
+                message="No one-assign yourself"/>
+            <DetailOption
+                data={props.label}
+                setData={props.setLabel}
+                name="Label"
+                message="None yet" />
+            <DetailOption
+                data={props.milestone}
+                setData={props.setMilestone}
+                name="Milestone"
+                message="No milestone"/>
         </StyleIssueOption>
     );
 };

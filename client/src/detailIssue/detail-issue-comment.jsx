@@ -1,27 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-import IssueTitle from "./new-issue-title.jsx";
-import IssueContent from "./new-issue-content.jsx"
-import IssueControl from "./new-issue-control.jsx"
-
-const StyledNewIssueForm = styled.div.attrs({
-    action: "http://localhost:3000/user/test",
-    method: "POST"
-})`
+const StyledNewIssueForm = styled.div`
     position: absolute;
-    left: 20%;
     display: flex;
     background-color: white;
-    width: 47%;
+    width: 78%;
     height: 50%;
 `
 
-const StyledImg = styled.img`
-    width: 50px;
-    height: 50px;
-    box-shadow: 0 0 2px 0 grey;
-    border-radius: 3px;
+const StyledImgDiv = styled.div`
+    background-color: teal;
+    width:50px;
+    height:50px;
 `
 
 const StyledTriangleDiv = styled.div`
@@ -41,7 +32,7 @@ const StyledNewIssueSection = styled.div`
     position: absolute;
     right: 0%;
     width: 90%;
-    height: 90%;
+    height: 30%;
     border: 1px solid #dbdde2;
     border-radius: 3px;
 `
@@ -66,7 +57,7 @@ const StyledWriteTag = styled.button`
 `
 
 const StyledContentDiv = styled.div`
-    height: 60%;
+    height: 30%;
 `
 
 const StyledControlDiv = styled.div`
@@ -76,30 +67,22 @@ const StyledControlDiv = styled.div`
     align-items: flex-end;
 `
 
-const newIssueForm = (props) => {
-    const userId = localStorage.getItem('userId');
-    const usersData = JSON.parse(localStorage.getItem("usersData"));
-
-    const userData = usersData.filter((data) => data.userId === userId);
-
+const detailIssueComment = (comment) => {
+    console.log(comment.mode);
     return (
         <StyledNewIssueForm>
-            <StyledImg src={userData[0].imageURL}/>
+            <StyledImgDiv />
             <StyledNewIssueSection >
                 <StyledTitleDiv>
-                    <IssueTitle title={props.title} setTitle={props.setTitle} />
+                    {comment.userId}
                 </StyledTitleDiv>
-                <StyledWriteTag>Write</StyledWriteTag>
                 <StyledContentDiv>
-                    <IssueContent content={props.content} setContent={props.setContent} />
+                    {comment.content ? comment.content : comment.comment}
                 </StyledContentDiv>
-                <StyledControlDiv>
-                    <IssueControl submit={props.submit} />
-                </StyledControlDiv>
             </StyledNewIssueSection>
             <StyledTriangleDiv />
         </StyledNewIssueForm>
     );
 };
 
-export default newIssueForm;
+export default detailIssueComment;

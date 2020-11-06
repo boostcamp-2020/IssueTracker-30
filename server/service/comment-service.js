@@ -5,7 +5,6 @@ const IssueService = {
     getComment: async (req, res) => {
         const issueId = req.body.issueId;
         const [rows] = await connection.query(query.getComment, [issueId]);
-        console.log(rows);
         res.json(rows);
     },
 
@@ -16,9 +15,6 @@ const IssueService = {
             writingTime: req.body.writingTime,
             comment: req.body.comment
         };
-
-        console.log(comment);
-
         const [rows1] = await connection.query(query.insertComment, [userId, comment.writingTime, comment.comment]);
         const [rows2] = await connection.query(query.insertIssueCommentRelation, [comment.issueId, rows1.insertId]);
 

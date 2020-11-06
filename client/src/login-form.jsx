@@ -137,6 +137,7 @@ const LoginForm = () => {
         }).then((res) => {
             if (res.data && res.data.message === "success") {
                 alert(`${res.data.id}님 로그인 되었습니다.`);
+                localStorage.setItem('userId', res.data.id);
                 window.location.reload();
             } else {
                 alert(res.data.message);

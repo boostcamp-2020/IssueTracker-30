@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get("/", isLoggedIn, UserService.getUser);
 
+router.post("/saveImg", UserService.saveImg);
+
 router.post("/signUp", UserService.signUp);
 
 router.post("/signIn", UserService.signIn);

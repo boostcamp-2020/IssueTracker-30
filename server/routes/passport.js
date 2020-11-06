@@ -29,8 +29,6 @@ module.exports = () => {
             if (saveResult.affectedRows) return done(null, newUser, { message: "success" });
             else return done(null, flase, "삽입 실패");
         });
-
-        connection.release();
     }));
 
     passport.use('local', new LocalStrategy({
@@ -50,7 +48,6 @@ module.exports = () => {
                 return done(null, false, '아이디 또는 비밀번호를 다시 확인하세요.');
             }
         });
-        connection.release();
     }));
 
     const cookieExtractor = (req) => {
@@ -67,7 +64,6 @@ module.exports = () => {
         jwtFromRequest: cookieExtractor,
         secretOrKey: process.env.secret_key,
     }, (jwtPayload, done) => {
-        console.log(jwtPayload)
         done(null, jwtPayload.user.id, { message: 'success' })
     }));
 }
