@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledNewIssueForm = styled.div`
-    left: 20%;
+    position: absolute;
     display: flex;
     background-color: white;
-    width: 47%;
+    width: 78%;
     height: 50%;
 `
 

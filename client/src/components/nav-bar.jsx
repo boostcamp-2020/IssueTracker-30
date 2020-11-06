@@ -42,6 +42,7 @@ const LogoutBtn = styled.button`
 `
 const NavBar = ({ mode }) => {
   const logoutOnclickHandler = () => {
+    localStorage.clear();
     axios({
       method: "GET",
       url: "http://localhost:3000/user/signOut",

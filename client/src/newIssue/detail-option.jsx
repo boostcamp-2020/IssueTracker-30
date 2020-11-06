@@ -6,7 +6,8 @@ import DetailDropdown from "./detail-option-dropdown.jsx";
 const StyledOption = styled.div`
     border-bottom: 1px solid lightgray;
     margin-bottom: 10%;
-    height: 20%;
+    height: auto;
+    min-height: 20%;
 `
 
 
@@ -30,8 +31,35 @@ const StyledOptionDiv = styled.div`
     }
 `
 
+const StyledOptionDesDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const StyledOptionDesInnerDiv = styled.div`
+    display:flex;
+    margin: 0.5% 0%;
+`
+
+const StyledOptionImg = styled.img`
+    width: 20px;
+    height: 20px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+`
+
+const StyledOptionTag = styled.div`
+    background-color: ${props => props.bgColor};
+    color: white;
+    text-shadow: 1px 1px 3px black;
+    padding: 1% 1% 1% 2%;
+    margin: 1% 0%;
+    border-radius: 3px;
+`
+
 const StyledOptionDes = styled.p`
-    color: #999ea3;
+    margin: 0% 0% 0% 3%;
+    color: black;
 `
 
 const detailOption = (props) => {
@@ -82,13 +110,35 @@ const detailOption = (props) => {
                     temp.add(item);
                 }
                 temp.add(e.target.innerText);
-                console.log(temp);
                 props.setData(temp);
                 break;
             case "Milestone":
                 props.setData(e.target.innerText);
                 break
         }
+    }
+
+    const urlData = [];
+    const colorData = [];
+    
+    switch(props.name) {
+        case "Assignee":
+            if (props.data.size > 0) {
+                const usersData = JSON.parse(localStorage.getItem("usersData"));
+                for(const item of props.data){
+                    urlData.push(usersData.filter(data => data.userId === item)[0])
+                }
+            }
+            break;
+        case "Label":
+            if (props.data.size > 0) {
+                for(const item of props.data){
+                    colorData.push(liData.filter(data => data.value === item)[0])
+                }
+            }
+            break;
+        case "Milestone":
+            break
     }
 
     return (
@@ -106,9 +156,25 @@ const detailOption = (props) => {
                     hadleClick={hadleClick}
                 ></DetailDropdown>
             </StyledOptionDiv>
-            <StyledOptionDes>
-                {props.message}
-            </StyledOptionDes>
+            <StyledOptionDesDiv>
+                {urlData.map((ele) => (
+                    <StyledOptionDesInnerDiv>
+                        <StyledOptionImg
+                            src={ele.imageURL}
+                        />
+                        <StyledOptionDes>
+                            {ele.userId}
+                        </StyledOptionDes>
+                    </StyledOptionDesInnerDiv>
+                ))}
+                {colorData.map((ele) => (
+                    <StyledOptionTag bgColor={ele.media}>
+                        {ele.value}
+                    </StyledOptionTag>
+                ))}
+                
+                
+            </StyledOptionDesDiv>
         </StyledOption>
     );
 };

@@ -8,11 +8,12 @@ const StyleIssueOption = styled.div`
     right: 20%;
     width: 12%;
     height: 50%;
+    margin-top: ${props => props.mode === "detail" ? "3%" : "0%"};
 `
 
 const IssueOption = (props) => {
     return (
-        <StyleIssueOption>
+        <StyleIssueOption mode={props.mode}>
             <DetailOption
                 data={props.assignee}
                 setData={props.setAssignee}
