@@ -124,7 +124,7 @@ const DropDownMenu = (props) => {
 			props.checkedIssue.forEach((v) => {
 				axiosFuncArr.push(
 					axios.put(
-						"http://localhost:3000/issue",
+						"/issue",
 						{
 							mode: 4,
 							issueId: v,
