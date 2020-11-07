@@ -12,9 +12,6 @@ const newIssue = () => {
     const [label, setLabel] = useState(new Set());
     const [milestone, setMilestone] = useState('');
 
-    const submit = () => {
-        console.log(title, content)
-    }
     return (
         <>
             <NewIssueForm 

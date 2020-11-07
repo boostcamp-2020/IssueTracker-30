@@ -68,7 +68,6 @@ const StyledControlDiv = styled.div`
 `
 
 const detailIssueComment = (comment) => {
-    console.log(comment.mode);
     return (
         <StyledNewIssueForm>
             <StyledImgDiv />

@@ -39,7 +39,6 @@ const DetailIssueCenter =  (issue) => {
             setComment(res.data);
         });
     }, []);
-    console.log(comment);
 
     return (
         <>

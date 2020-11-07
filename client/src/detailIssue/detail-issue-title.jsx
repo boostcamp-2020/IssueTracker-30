@@ -86,7 +86,6 @@ const DetailIssueTitle = (issue) => {
     const [editableMode, setEditableMode] = useState(false);
     const [title, setTitle] = useState(issue.title);
     const editCancelBtnClickHandler = () => {
-        console.log(editableMode);
         setEditableMode(!editableMode);
     }
 
@@ -110,7 +109,6 @@ const DetailIssueTitle = (issue) => {
             },
             withCredentials: true
         }).then(result => {
-            console.log(result);
             const tempLocalStorage = JSON.parse(localStorage.issueData);
             tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === issue.id)].issueTitle = title;
             localStorage.setItem(

@@ -112,7 +112,6 @@ const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
 };
 
 const IssuesListSection = (props) => {
-    console.log('리스트 섹션', JSON.parse(localStorage.getItem('issueData')));
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(true);
     const [checkedFromChild, setCheckedFrom] = useState(false);
@@ -137,7 +136,6 @@ const IssuesListSection = (props) => {
 
     useEffect(() => {
         setCheckedIssue([...checkedIssue, addIssue]);
-        console.log(checkedIssue);
     }, [addIssue]);
 
     useEffect(() => {
@@ -145,7 +143,6 @@ const IssuesListSection = (props) => {
         const idx = tempCheckedIssue.indexOf(excludeIssue);
         if (idx > -1) tempCheckedIssue.splice(idx, 1);
         setCheckedIssue(tempCheckedIssue);
-        console.log(checkedIssue);
     }, [excludeIssue]);
 
     const onOpenClosedRadioChange = (e) => {
@@ -157,16 +154,6 @@ const IssuesListSection = (props) => {
             props.addOptionToTextInput("is:closed");
         }
     };
-
-    // useEffect(() => {
-    //     if (checked) {
-    //         const allIssue = issueData.map(v => v.issueId);
-    //         setCheckedIssue(allIssue);
-    //     } else {
-    //         setCheckedIssue([]);
-    //     }
-    //     console.log(checkedIssue);
-    // }, [checked]);
 
     const checkClick = () => {
         checked

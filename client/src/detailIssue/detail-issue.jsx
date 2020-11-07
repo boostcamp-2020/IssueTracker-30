@@ -18,7 +18,6 @@ const detailIssue = ({ match }) => {
     const issueId = match.params.issueId;
     const issueData = JSON.parse(localStorage.getItem("issueData"));
     const issue = issueData.find(v => v.issueId === Number(issueId));
-    console.log(issue);
     return (
         <>
             <StyledMainSection>
