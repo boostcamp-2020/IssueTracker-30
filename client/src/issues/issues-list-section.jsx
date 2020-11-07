@@ -112,6 +112,7 @@ const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
 };
 
 const IssuesListSection = (props) => {
+    console.log('리스트 섹션', JSON.parse(localStorage.getItem('issueData')));
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(true);
     const [checkedFromChild, setCheckedFrom] = useState(false);
@@ -127,9 +128,6 @@ const IssuesListSection = (props) => {
     const [checkedIssue, setCheckedIssue] = useState([]);
     const [addIssue, setAddIssue] = useState(0);
     const [excludeIssue, setExcludeIssue] = useState(0);
-
-    const numOfOpenIssue = issueData.filter((v) => v.status).length;
-    const numOfClosedIssue = issueData.length - numOfOpenIssue;
 
     let noContent = true;
 
@@ -203,6 +201,11 @@ const IssuesListSection = (props) => {
             filterOptions[key] = [value];
         }
     });
+    
+    if(!issueData) return <div></div>
+
+    const numOfOpenIssue = issueData.filter((v) => v.status).length;
+    const numOfClosedIssue = issueData.length - numOfOpenIssue;
 
     const filteredIssueData = issueData
         .filter((ele) => ele.status === openClosedRadio)

@@ -60,7 +60,6 @@ const NavBar = ({ mode }) => {
   const logoClickEvent = () => {
     document.location = "/"
   }
-
   switch (mode) {
     case "login":
       return (
@@ -68,6 +67,7 @@ const NavBar = ({ mode }) => {
       );
 
     case "main":
+    case "mainForMarkAs":
       return (
         <StyledNavBar>
             <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="300" height="100" viewBox="0 0 1813.000000 727.000000" preserveAspectRatio="xMidYMid meet" onClick={logoClickEvent}>
