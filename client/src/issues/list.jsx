@@ -10,7 +10,7 @@ const StyledListDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    /* position: absolute; */
+    position: absolute;
     top: 180px;
 `;
 
