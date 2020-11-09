@@ -26,10 +26,9 @@ const DetailIssueCenter = (issue) => {
     issue.assign.forEach((id) => assigneeSet.add(id));
     const [assignee, setAssignee] = useState(assigneeSet);
     const labelSet = new Set();
-    console.log(issue.label);
     issue.label.forEach((issue) => labelSet.add(issue));
     const [label, setLabel] = useState(labelSet);
-    const [milestone, setMilestone] = useState("");
+    const [milestone, setMilestone] = useState(issue.milestone);
 
     useEffect(() => {
         axios({

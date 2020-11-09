@@ -12,22 +12,18 @@ const IssueService = {
             v.labelContent = [];
             v.labelColor = [];
             v.assignId = [];
-            labelIssue
-                .filter((e) => {
-                    return e.issueId == v.issueId;
-                })
-                .forEach((k, i) => {
-                    v.labelId.push(k.labelId);
-                    v.labelContent.push(k.content);
-                    v.labelColor.push(k.color);
-                });
-            assignIssue
-                .filter((e) => {
-                    return e.issueId == v.issueId;
-                })
-                .forEach((k, i) => {
-                    v.assignId.push(k.assignId);
-                });
+            labelIssue.filter((e) => {
+                return e.issueId == v.issueId;
+            }).forEach((k, i) => {
+                v.labelId.push(k.labelId);
+                v.labelContent.push(k.content);
+                v.labelColor.push(k.color);
+            });
+            assignIssue.filter((e) => {
+                return e.issueId == v.issueId;
+            }).forEach((k, i) => {
+                v.assignId.push(k.assignId);
+            });
         });
 
         res.json(rows);
@@ -42,35 +38,24 @@ const IssueService = {
             milestoneId: req.body.milestoneId,
             content: req.body.content,
             labelId: req.body.labelId,
-            assignId: req.body.assignId,
+            assignId: req.body.assignId
         };
 
-        const [rows1] = await connection.query(query.insertIssue, [
-            userId,
-            issue.title,
-            issue.writingTime,
-            issue.status,
-            issue.milestoneId,
-            issue.content,
-        ]);
+        const [rows1] = await connection.query(query.insertIssue, [userId, issue.title, issue.writingTime, issue.status, issue.milestoneId, issue.content]);
 
-        issue.labelId.forEach(async (v) => {
-            await connection.query(query.insertLabelIssueRelation, [
-                rows1.insertId,
-                v,
-            ]);
+        issue.labelId.forEach(async v => {
+            await connection.query(query.insertLabelIssueRelation, [rows1.insertId, v]);
         });
 
-        issue.assignId.forEach(async (v) => {
-            await connection.query(query.insertassignIssueRelation, [
-                v,
-                rows1.insertId,
-            ]);
+        issue.assignId.forEach(async v => {
+            await connection.query(query.insertassignIssueRelation, [v, rows1.insertId]);
         });
+
 
         if (rows1.affectedRows > 0) {
             res.json({ message: "success" });
-        } else {
+        }
+        else {
             res.json({ messages: "Error" });
         }
     },
@@ -84,55 +69,33 @@ const IssueService = {
             milestoneId: req.body.milestoneId,
             content: req.body.content,
             labelId: req.body.labelId,
-            assignId: req.body.assignId,
+            assignId: req.body.assignId
         };
 
         try {
             switch (issue.mode) {
                 case 1:
-                    await connection.query(query.updateIssueTitle, [
-                        issue.title,
-                        issue.issueId,
-                    ]);
+                    await connection.query(query.updateIssueTitle, [issue.title, issue.issueId]);
                     break;
                 case 2:
-                    await connection.query(query.updateIssueContent, [
-                        issue.content,
-                        issue.issueId,
-                    ]);
+                    await connection.query(query.updateIssueContent, [issue.content, issue.issueId]);
                     break;
                 case 3:
-                    await connection.query(query.updateIssueMilestone, [
-                        issue.milestoneId,
-                        issue.issueId,
-                    ]);
+                    await connection.query(query.updateIssueMilestone, [issue.milestoneId, issue.issueId]);
                     break;
                 case 4:
-                    await connection.query(query.updateIssueStatus, [
-                        issue.status,
-                        issue.issueId,
-                    ]);
+                    await connection.query(query.updateIssueStatus, [issue.status, issue.issueId]);
                     break;
                 case 5:
-                    await connection.query(query.deleteAssignIssueRelation, [
-                        issue.issueId,
-                    ]);
-                    issue.assignId.forEach(async (v) => {
-                        await connection.query(
-                            query.updateAssignIssueRelation,
-                            [v, issue.issueId]
-                        );
+                    await connection.query(query.deleteAssignIssueRelation, [issue.issueId]);
+                    issue.assignId.forEach(async v => {
+                        await connection.query(query.updateAssignIssueRelation, [v, issue.issueId]);
                     });
                     break;
                 case 6:
-                    await connection.query(query.deleteLabelIssueRelation, [
-                        issue.issueId,
-                    ]);
-                    issue.labelId.forEach(async (v) => {
-                        await connection.query(query.updateLabelIssueRelation, [
-                            issue.issueId,
-                            v,
-                        ]);
+                    await connection.query(query.deleteLabelIssueRelation, [issue.issueId]);
+                    issue.labelId.forEach(async v => {
+                        await connection.query(query.updateLabelIssueRelation, [issue.issueId, v]);
                     });
                     break;
                 default:
@@ -142,7 +105,7 @@ const IssueService = {
         } catch (error) {
             res.json({ message: "fail" });
         }
-    },
-};
+    }
+}
 
 export default IssueService;

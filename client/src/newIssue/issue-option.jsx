@@ -31,6 +31,7 @@ const IssueOption = (props) => {
                 message="None yet"
             />
             <DetailOption
+                issueId={props.issueId}
                 data={props.milestone}
                 setData={props.setMilestone}
                 name="Milestone"

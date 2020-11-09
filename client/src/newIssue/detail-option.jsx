@@ -104,7 +104,31 @@ const detailOption = (props) => {
             break;
     }
 
-    const hadleClick = (e) => {
+    const hadleClick = async (e) => {
+        const axiosFunc = (data, localStorageData) => {
+            axios({
+                method: "PUT",
+                url: "http://localhost:3000/issue",
+                data: data,
+                withCredentials: true,
+            }).then(res => {
+                const tempLocalStorage = JSON.parse(localStorage.issueData);
+                if (props.name === 'Assignee') {
+                    tempLocalStorage[tempLocalStorage.findIndex((v) => v.issueId === props.issueId)].assignId = localStorageData.data;
+                } else if (props.name === 'Label') {
+                    tempLocalStorage[tempLocalStorage.findIndex((v) => v.issueId === props.issueId)].labelContent = localStorageData.contentArr;
+                    tempLocalStorage[tempLocalStorage.findIndex((v) => v.issueId === props.issueId)].labelId = localStorageData.data;
+                } else if (props.name === 'Milestone') {
+                    tempLocalStorage[tempLocalStorage.findIndex((v) => v.issueId === props.issueId)].milestoneId = localStorageData.id;
+                    tempLocalStorage[tempLocalStorage.findIndex((v) => v.issueId === props.issueId)].milestoneTitle = localStorageData.title;
+                }
+                localStorage.setItem(
+                    "issueData",
+                    JSON.stringify(tempLocalStorage)
+                );
+            });
+        }
+
         switch (props.name) {
             case "Assignee": {
                 const temp = new Set();
@@ -116,46 +140,25 @@ const detailOption = (props) => {
                 } else {
                     temp.add(e.target.innerText);
                 }
-                props.setData(temp);
                 const data = [];
                 temp.forEach((assingId) => {
                     data.push(assingId);
                 });
-                axios({
-                    method: "PUT",
-                    url: "http://localhost:3000/issue",
-                    data: {
-                        mode: 5,
-                        issueId: props.issueId,
-                        assignId: data,
-                    },
-                    withCredentials: true,
-                }).then((res) => {
-                    const tempLocalStorage = JSON.parse(localStorage.issueData);
-                    tempLocalStorage[
-                        tempLocalStorage.findIndex(
-                            (v) => v.issueId === props.issueId
-                        )
-                    ].assignId = data;
-                    localStorage.setItem(
-                        "issueData",
-                        JSON.stringify(tempLocalStorage)
-                    );
-                });
+                axiosFunc({
+                    mode: 5,
+                    issueId: props.issueId,
+                    assignId: data,
+                }, { data: data })
+                props.setData(temp);
                 break;
             }
             case "Label": {
                 let temp = new Set();
-                const idTemp = new Set();
                 for (let item of props.data) {
                     temp.add({ id: item.id, content: item.content });
                 }
                 const tempArr = [...temp];
-                const tempInd = tempArr.findIndex(
-                    (label) =>
-                        label.id ===
-                        Number(e.target.getAttribute("id").split("_")[1])
-                );
+                const tempInd = tempArr.findIndex((label) => label.id === +(e.target.getAttribute("id").split("_")[1]));
                 if (tempInd > -1) {
                     tempArr.splice(tempInd, 1);
                     temp = new Set(tempArr);
@@ -165,42 +168,38 @@ const detailOption = (props) => {
                         content: e.target.innerText,
                     });
                 }
-                props.setData(temp);
                 const data = [];
                 const contentArr = [];
                 temp.forEach((label) => {
                     data.push(label.id);
                     contentArr.push(label.content);
-                });
-                axios({
-                    method: "PUT",
-                    url: "http://localhost:3000/issue",
-                    data: {
-                        mode: 6,
-                        issueId: props.issueId,
-                        labelId: data,
-                    },
-                    withCredentials: true,
-                }).then((res) => {
-                    const tempLocalStorage = JSON.parse(localStorage.issueData);
-                    tempLocalStorage[
-                        tempLocalStorage.findIndex(
-                            (v) => v.issueId === props.issueId
-                        )
-                    ].labelContent = contentArr;
-                    tempLocalStorage[
-                        tempLocalStorage.findIndex(
-                            (v) => v.issueId === props.issueId
-                        )
-                    ].labelId = data;
-                    localStorage.setItem(
-                        "issueData",
-                        JSON.stringify(tempLocalStorage)
-                    );
-                });
+                }); 
+                axiosFunc({
+                    mode: 6,
+                    issueId: props.issueId,
+                    labelId: data,
+                }, { contentArr: contentArr, data: data });
+                props.setData(temp);
                 break;
             }
             case "Milestone":
+                if(props.data.id === +e.target.getAttribute("id").split("_")[1]){
+                    axiosFunc({
+                        mode: 3,
+                        issueId: props.issueId,
+                        milestoneId: null,
+                    }, { id: '', title: '' })
+                    props.setData({
+                        id: null,
+                        value: null,
+                    });
+                    break;
+                }
+                axiosFunc({
+                    mode: 3,
+                    issueId: props.issueId,
+                    milestoneId: +e.target.getAttribute("id").split("_")[1],
+                }, { id: +e.target.getAttribute("id").split("_")[1], title: e.target.innerText })
                 props.setData({
                     id: e.target.getAttribute("id").split("_")[1],
                     value: e.target.innerText,
