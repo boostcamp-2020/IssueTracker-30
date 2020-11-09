@@ -5,10 +5,7 @@ import IssueTitle from "./new-issue-title.jsx";
 import IssueContent from "./new-issue-content.jsx"
 import IssueControl from "./new-issue-control.jsx"
 
-const StyledNewIssueForm = styled.div.attrs({
-    action: "/user/test",
-    method: "POST"
-})`
+const StyledNewIssueForm = styled.div`
     position: absolute;
     left: 20%;
     display: flex;
