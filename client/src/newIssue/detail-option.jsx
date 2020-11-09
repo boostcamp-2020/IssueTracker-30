@@ -113,7 +113,11 @@ const detailOption = (props) => {
                 for (let item of props.data) {
                     temp.add(item);
                 }
-                temp.add(e.target.innerText);
+                if (temp.has(e.target.innerText)) {
+                    temp.delete(e.target.innerText);
+                } else {
+                    temp.add(e.target.innerText);
+                }
                 props.setData(temp);
                 const data = [];
                 temp.forEach(assingId => {
@@ -130,7 +134,7 @@ const detailOption = (props) => {
                     withCredentials: true,
                 }).then(res => {
                     const tempLocalStorage = JSON.parse(localStorage.issueData);
-                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].assignId.push(e.target.innerText);
+                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].assignId = data;
                     localStorage.setItem(
                         "issueData",
                         JSON.stringify(tempLocalStorage),
@@ -140,19 +144,28 @@ const detailOption = (props) => {
                 break;
             }
             case "Label": {
-                const temp = new Set();
+                let temp = new Set();
                 const idTemp = new Set();
                 for (let item of props.data) {
                     temp.add({ id: item.id, content: item.content });
                 }
-                temp.add({
-                    id: Number(e.target.getAttribute('id').split('_')[1]),
-                    content: e.target.innerText
-                });
+                const tempArr = [...temp];
+                const tempInd = tempArr.findIndex(label => label.id === Number(e.target.getAttribute('id').split('_')[1]));
+                if (tempInd > -1) {
+                    tempArr.splice(tempInd, 1);
+                    temp = new Set(tempArr);
+                } else {
+                    temp.add({
+                        id: Number(e.target.getAttribute('id').split('_')[1]),
+                        content: e.target.innerText
+                    });
+                }
                 props.setData(temp);
                 const data = [];
+                const contentArr = [];
                 temp.forEach(label => {
                     data.push(label.id);
+                    contentArr.push(label.content);
                 })
                 axios({
                     method: "PUT",
@@ -165,8 +178,8 @@ const detailOption = (props) => {
                     withCredentials: true,
                 }).then(res => {
                     const tempLocalStorage = JSON.parse(localStorage.issueData);
-                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].labelContent.push(e.target.innerText);
-                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].labelId.push(Number(e.target.getAttribute('id').split('_')[1]));
+                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].labelContent = contentArr;
+                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].labelId = data;
                     localStorage.setItem(
                         "issueData",
                         JSON.stringify(tempLocalStorage),
