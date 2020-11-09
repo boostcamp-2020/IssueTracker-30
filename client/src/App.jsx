@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 
 import NavBar from "./components/nav-bar.jsx";
 import MainSection from "./main-section.jsx";
 import Footer from "./components/footer.jsx";
 import DetailIssue from "./detailIssue/detail-issue.jsx";
+import Labels from "./labels/labels-list.jsx";
+
+const StyledRouter = styled(Router)`
+    display: flex;
+    flex-direction: column;
+`;
 
 const loginCheck = async () => {
     if (document.cookie.split("=")[0] === "user") {
@@ -29,10 +36,6 @@ const loginCheck = async () => {
 const App = () => {
     const [mode, setMode] = useState("login");
 
-    const changeMode = (props) => {
-        alert(props);
-    }
-
     useEffect(() => {
         loginCheck().then(async (res) => {
             if (res === "main") {
@@ -43,7 +46,7 @@ const App = () => {
                 }).then((issueData) => {
                     localStorage.setItem(
                         "issueData",
-                        JSON.stringify(issueData.data),
+                        JSON.stringify(issueData.data)
                     );
                 });
 
@@ -54,7 +57,7 @@ const App = () => {
                 }).then((users) => {
                     localStorage.setItem(
                         "usersData",
-                        JSON.stringify(users.data),
+                        JSON.stringify(users.data)
                     );
                 });
 
@@ -65,7 +68,7 @@ const App = () => {
                 }).then((labels) => {
                     localStorage.setItem(
                         "labelsData",
-                        JSON.stringify(labels.data),
+                        JSON.stringify(labels.data)
                     );
                 });
 
@@ -76,7 +79,7 @@ const App = () => {
                 }).then((milestones) => {
                     localStorage.setItem(
                         "milestonesData",
-                        JSON.stringify(milestones.data),
+                        JSON.stringify(milestones.data)
                     );
                 });
                 setMode(res);
@@ -85,21 +88,20 @@ const App = () => {
     }, []);
 
     return (
-        <>
-            <Router>
-                <NavBar mode={mode} />
-                <Switch>
-                    <Route path="/new">
-                        <MainSection mode="newIssue" />
-                    </Route>
-                    <Route path="/detail/:issueId" component={DetailIssue} />
-                    <Route path="/">
-                        <MainSection mode={mode} />
-                    </Route>
-                </Switch>
-                <Footer />
-            </Router>
-        </>
+        <StyledRouter>
+            <NavBar mode={mode} />
+            <Switch>
+                <Route path="/new">
+                    <MainSection mode="newIssue" />
+                </Route>
+                <Route path="/detail/:issueId" component={DetailIssue} />
+                <Route path="/labels" component={Labels} />
+                <Route path="/">
+                    <MainSection mode={mode} />
+                </Route>
+            </Switch>
+            <Footer />
+        </StyledRouter>
     );
 };
 
