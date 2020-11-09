@@ -13,6 +13,8 @@ const StyledMainSection = styled.div`
     width: 100%;
     height: 80vh;
     background-color: ${props => props.loginColor};
+    margin-top: 5%;
+    margin-bottom: 5%;
 `;
 
 const StyledTitle = styled.div`
