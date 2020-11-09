@@ -38,7 +38,7 @@ const IssueList = () => {
         const type = option.split(":")[0];
         const typeRegex = new RegExp(`\\s{0,1}${type}:\\S+`, "g");
         const typeNotUseRegex = new RegExp(`\\s{0,1}${type}:notUse`);
-        const optionTrimRegex = new RegExp(`\\s{0,1}${option}}`);
+        const optionTrimRegex = new RegExp(`\\s{0,1}${option}`, "g");
 
         setIsFilterTextRemoverVisible(true);
 
