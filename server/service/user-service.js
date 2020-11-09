@@ -40,7 +40,7 @@ const UserService = {
     signInAuth: (req, res) => {
         passport.authenticate('jwt', (err, userId, info) => {
             if (!err) {
-                res.json({ message: 'success' });
+                res.json({ userId, message: 'success' });
             }
         })(req, res);
     },
