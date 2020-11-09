@@ -30,7 +30,8 @@ const IssueService = {
     },
 
     insertIssue: async (req, res) => {
-        const userId = req.body.userId;
+        console.log(req.body)
+        /* const { userId } = req.body;
         const issue = {
             title: req.body.title,
             writingTime: req.body.writingTime,
@@ -57,7 +58,8 @@ const IssueService = {
         }
         else {
             res.json({ messages: "Error" });
-        }
+        } */
+        res.send({tt:1});
     },
 
     updateIssue: async (req, res) => {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import NewIssueForm from "./new-issue-form.jsx";
 import IssueOption from "./issue-option.jsx";
@@ -13,7 +14,23 @@ const newIssue = () => {
     const [milestone, setMilestone] = useState('');
 
     const submit = () => {
-        console.log(title, content)
+        const data = {
+            title,
+            writingTime: 0,
+            status: 1,
+            milestoneId: milestone.id,
+            content,
+            labelId: label,
+            assignId: assignee
+        };
+        axios({
+            method: "POST",
+            url: "http://localhost:3000/issue",
+            data,
+            withCredentials: true,
+        }).then((data) => {
+            console.log(data)
+        });
     }
     return (
         <>
