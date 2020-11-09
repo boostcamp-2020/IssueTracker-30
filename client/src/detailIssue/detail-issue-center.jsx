@@ -15,14 +15,19 @@ const DetailIssueContentDiv = styled.div`
 
 const HrLine = styled.hr`
     margin-bottom: 2%;
+    margin-top: 3%;
 `;
 
 const DetailIssueCenter = issue => {
     const [comment, setComment] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [assignee, setAssignee] = useState(new Set());
-    const [label, setLabel] = useState( issue.label );
+    const assigneeSet = new Set();
+    issue.assign.forEach(id => assigneeSet.add(id));
+    const [assignee, setAssignee] = useState(assigneeSet);
+    const labelSet = new Set();
+    issue.label.forEach(issue => labelSet.add(issue));
+    const [label, setLabel] = useState(labelSet);
     const [milestone, setMilestone] = useState('');
 
 

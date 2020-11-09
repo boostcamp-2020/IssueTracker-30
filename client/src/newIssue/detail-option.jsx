@@ -72,7 +72,6 @@ const StyledProgressBar = styled.progress`
 
 const detailOption = (props) => {
     const [dropDown, setDropDown] = useState(false);
-
     const detailOptionClick = (e) => {
         e.preventDefault();
         setDropDown(!dropDown);
@@ -106,32 +105,54 @@ const detailOption = (props) => {
             });
             break
     }
+
+    const temp = new Set();
+    const idTemp = new Set();
+    for (let item of props.data) {
+        temp.add(item.content);
+        idTemp.add(item.id);
+    }
+    // temp.add(e.target.innerText);
+    // for (let item of props.data) {
+    //     // idTemp.add(item.id);
+    //     console.log(item);
+    // }
+    // props.setData(temp);
+    // props.setLabelId(idTemp);
+
+
     const hadleClick = (e) => {
         switch (props.name) {
             case "Assignee": {
-                    const temp = new Set();
-                    for(let item of props.data){
-                        temp.add(item);
-                    }
-                    temp.add(e.target.innerText);
-                    props.setData(temp);
-                    break;
+                const temp = new Set();
+                for (let item of props.data) {
+                    temp.add(item);
                 }
-            case "Label":{
-                    const temp = new Set();
-                    for(let item of props.data){
-                        temp.add(item);
-                    }
-                    temp.add(e.target.innerText);
-                    const idTemp = new Set();
-                    for(let item of props.labelId){
-                        idTemp.add(item);
-                    }
-                    idTemp.add(e.target.getAttribute('id'));
-                    props.setData(temp);
-                    props.setLabelId(idTemp);
-                    break;
+                temp.add(e.target.innerText);
+                props.setData(temp);
+                console.log(e.target.innerText);
+                //assign id 추가 라우터
+
+                break;
+            }
+            case "Label": {
+                const temp = new Set();
+                console.log(props);
+                for (let item of props.data) {
+                    temp.add(item);
                 }
+                temp.add(e.target.innerText);
+                const idTemp = new Set();
+                for (let item of props.labelId) {
+                    idTemp.add(item);
+                }
+                idTemp.add(e.target.getAttribute('id'));
+                props.setData(temp);
+                props.setLabelId(idTemp);
+                //label 추가 라우터
+                
+                break;
+            }
             case "Milestone":
                 props.setData({
                     id: e.target.getAttribute('id').split('_')[1],
@@ -145,20 +166,20 @@ const detailOption = (props) => {
     const colorData = [];
     let open = 0;
     let close = 0;
-    
-    switch(props.name) {
+
+    switch (props.name) {
         case "Assignee":
             if (props.data.size > 0) {
                 const usersData = JSON.parse(localStorage.getItem("usersData"));
-                for(const item of props.data){
+                for (const item of props.data) {
                     urlData.push(usersData.filter(data => data.userId === item)[0])
                 }
             }
             break;
         case "Label":
             if (props.data.size > 0) {
-                for(const item of props.data){
-                    colorData.push(liData.filter(data => data.value === item)[0])
+                for (const item of props.data) {
+                    colorData.push(liData.filter(data => data.value === item.content)[0])
                 }
             }
             break;
@@ -209,15 +230,15 @@ const detailOption = (props) => {
                     </StyledOptionTag>
                 ))}
                 <StyledMilestoneDiv>
-                    { props.name==="Milestone" ? 
-                    <>
-                        <p>{props.data.value}</p>
-                        <StyledProgressBar 
-                            data={props.data}
-                            value={close}
-                            max={open+close}
-                        />
-                    </> : null }
+                    {props.name === "Milestone" ?
+                        <>
+                            <p>{props.data.value}</p>
+                            <StyledProgressBar
+                                data={props.data}
+                                value={close}
+                                max={open + close}
+                            />
+                        </> : null}
                 </StyledMilestoneDiv>
             </StyledOptionDesDiv>
         </StyledOption>

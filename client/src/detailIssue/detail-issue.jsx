@@ -22,6 +22,7 @@ const detailIssue = ({ match }) => {
     issue.label = issue.labelId.map((id, ind) => {
         return { id: id, content: issue.labelContent[ind] };
     });
+    
     return (
         <>
             <StyledMainSection>
@@ -41,6 +42,7 @@ const detailIssue = ({ match }) => {
                     writingTime={issue.writingTime}
                     content={issue.content}
                     label={issue.label}
+                    assign={issue.assignId}
                 />
             </StyledMainSection>
         </>

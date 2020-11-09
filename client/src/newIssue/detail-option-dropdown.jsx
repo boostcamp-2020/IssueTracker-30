@@ -81,7 +81,6 @@ const StyledMediaSection = styled.div`
 `;
 
 const DropDownMenu = (props) => {
-	console.log()
 	const [menuVisibility, setMenuVisibility] = useState("none");
 
 	const handleMenuVisibility = () => {
