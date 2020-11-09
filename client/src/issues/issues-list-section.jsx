@@ -8,7 +8,10 @@ const StyledListSection = styled.section`
     width: 1200px;
     ${"" /* height: 700px; */}
     min-height: 300px;
+    max-height: 55vh;
     margin-top: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     border: 1px solid rgba(207, 216, 220, 1);
     border-radius: 7px;
 `;
