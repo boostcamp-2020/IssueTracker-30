@@ -77,9 +77,7 @@ const detailOption = (props) => {
         e.preventDefault();
         setDropDown(!dropDown);
     }
-
     const liData = []
-
     switch (props.name) {
         case "Assignee":
             const usersData = JSON.parse(localStorage.getItem("usersData"));
@@ -108,7 +106,6 @@ const detailOption = (props) => {
             });
             break
     }
-
     const hadleClick = (e) => {
         switch (props.name) {
             case "Assignee": {
@@ -207,8 +204,8 @@ const detailOption = (props) => {
                     </StyledOptionDesInnerDiv>
                 ))}
                 {colorData.map((ele) => (
-                    <StyledOptionTag bgColor={ele.media}>
-                        {ele.value}
+                    <StyledOptionTag bgColor={ele ? ele.media : ''}>
+                        {ele ? ele.value : ''}
                     </StyledOptionTag>
                 ))}
                 <StyledMilestoneDiv>

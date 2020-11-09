@@ -128,9 +128,6 @@ const IssuesListSection = (props) => {
     const [addIssue, setAddIssue] = useState(0);
     const [excludeIssue, setExcludeIssue] = useState(0);
 
-    const numOfOpenIssue = issueData.filter((v) => v.status).length;
-    const numOfClosedIssue = issueData.length - numOfOpenIssue;
-
     let noContent = true;
 
     useEffect(() => {
@@ -139,7 +136,6 @@ const IssuesListSection = (props) => {
 
     useEffect(() => {
         setCheckedIssue([...checkedIssue, addIssue]);
-        console.log(checkedIssue);
     }, [addIssue]);
 
     useEffect(() => {
@@ -147,7 +143,6 @@ const IssuesListSection = (props) => {
         const idx = tempCheckedIssue.indexOf(excludeIssue);
         if (idx > -1) tempCheckedIssue.splice(idx, 1);
         setCheckedIssue(tempCheckedIssue);
-        console.log(checkedIssue);
     }, [excludeIssue]);
 
     const onOpenClosedRadioChange = (e) => {
@@ -159,16 +154,6 @@ const IssuesListSection = (props) => {
             props.addOptionToTextInput("is:closed");
         }
     };
-
-    // useEffect(() => {
-    //     if (checked) {
-    //         const allIssue = issueData.map(v => v.issueId);
-    //         setCheckedIssue(allIssue);
-    //     } else {
-    //         setCheckedIssue([]);
-    //     }
-    //     console.log(checkedIssue);
-    // }, [checked]);
 
     const checkClick = () => {
         checked
@@ -203,6 +188,11 @@ const IssuesListSection = (props) => {
             filterOptions[key] = [value];
         }
     });
+    
+    if(!issueData) return <div></div>
+
+    const numOfOpenIssue = issueData.filter((v) => v.status).length;
+    const numOfClosedIssue = issueData.length - numOfOpenIssue;
 
     const filteredIssueData = issueData
         .filter((ele) => ele.status === openClosedRadio)

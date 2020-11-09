@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 
 const StyledNewIssueContent = styled.textarea.attrs({
@@ -18,10 +18,13 @@ const StyledNewIssueContent = styled.textarea.attrs({
     padding: 1%;
 `;
 
-const detailIssueContent = () => {
+const detailIssueContent = props => {
+    const commentChangeHandler = event => {
+        props.setComment(event.target.value);
+    }
     return (
         <>
-            <StyledNewIssueContent />
+            <StyledNewIssueContent onChange={commentChangeHandler} value={props.comment}>{props.comment}</StyledNewIssueContent>
         </>
     );
 };

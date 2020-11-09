@@ -83,7 +83,7 @@ const IssueService = {
                 case 3:
                     await connection.query(query.updateIssueMilestone, [issue.milestoneId, issue.issueId]);
                     break;
-                case 4:``
+                case 4:
                     await connection.query(query.updateIssueStatus, [issue.status, issue.issueId]);
                     break;
                 case 5:

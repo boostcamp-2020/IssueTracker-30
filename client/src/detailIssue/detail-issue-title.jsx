@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const StyledDetailIssueTitle = styled.div`
-    position: absolute;
+    /* position: absolute; */
     top: 10%;
     left: 20%;
     width: 60%;
@@ -86,10 +86,8 @@ const DetailIssueTitle = (issue) => {
     const [editableMode, setEditableMode] = useState(false);
     const [title, setTitle] = useState(issue.title);
     const editCancelBtnClickHandler = () => {
-        console.log(editableMode);
         setEditableMode(!editableMode);
     }
-
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
         timeNow - new Date(issue.writingTime),
@@ -110,7 +108,6 @@ const DetailIssueTitle = (issue) => {
             },
             withCredentials: true
         }).then(result => {
-            console.log(result);
             const tempLocalStorage = JSON.parse(localStorage.issueData);
             tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === issue.id)].issueTitle = title;
             localStorage.setItem(

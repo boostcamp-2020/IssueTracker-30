@@ -33,6 +33,7 @@ const MainSection = ({ mode }) => {
             );
 
         case "main":
+        case "mainForMarkAs":
             return (
                 <StyledMainSection loginColor='white'>
                     <IssueList />
