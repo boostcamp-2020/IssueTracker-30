@@ -217,7 +217,7 @@ const detailOption = (props) => {
                         <p>{props.data.value}</p>
                         <StyledProgressBar 
                             data={props.data}
-                            value={open}
+                            value={close}
                             max={open+close}
                         />
                     </> : null }
