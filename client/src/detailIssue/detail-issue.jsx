@@ -22,7 +22,7 @@ const detailIssue = ({ match }) => {
     issue.label = issue.labelId.map((id, ind) => {
         return { id: id, content: issue.labelContent[ind] };
     });
-    
+    console.log(issue);
     return (
         <>
             <StyledMainSection>

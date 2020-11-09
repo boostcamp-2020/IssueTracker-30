@@ -18,28 +18,28 @@ const HrLine = styled.hr`
     margin-top: 3%;
 `;
 
-const DetailIssueCenter = issue => {
+const DetailIssueCenter = (issue) => {
     const [comment, setComment] = useState([]);
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
     const assigneeSet = new Set();
-    issue.assign.forEach(id => assigneeSet.add(id));
+    issue.assign.forEach((id) => assigneeSet.add(id));
     const [assignee, setAssignee] = useState(assigneeSet);
     const labelSet = new Set();
-    issue.label.forEach(issue => labelSet.add(issue));
+    console.log(issue.label);
+    issue.label.forEach((issue) => labelSet.add(issue));
     const [label, setLabel] = useState(labelSet);
-    const [milestone, setMilestone] = useState('');
-
+    const [milestone, setMilestone] = useState("");
 
     useEffect(() => {
         axios({
             method: "POST",
             url: "http://localhost:3000/comment/getComment",
             data: {
-                issueId: issue.id
+                issueId: issue.id,
             },
             withCredentials: true,
-        }).then(res => {
+        }).then((res) => {
             setComment(res.data);
         });
     }, []);
@@ -54,15 +54,17 @@ const DetailIssueCenter = issue => {
                     writingTime={issue.writingTime}
                     content={issue.content}
                 />
-                {comment.map(({ commentUserId, comment, ID, commentWritingTime }) => (
-                    <DetailIssueComment
-                        mode={"comment"}
-                        id={ID}
-                        userId={commentUserId}
-                        comment={comment}
-                        commentWritingTime={commentWritingTime}
-                    />
-                ))}
+                {comment.map(
+                    ({ commentUserId, comment, ID, commentWritingTime }) => (
+                        <DetailIssueComment
+                            mode={"comment"}
+                            id={ID}
+                            userId={commentUserId}
+                            comment={comment}
+                            commentWritingTime={commentWritingTime}
+                        />
+                    )
+                )}
             </DetailIssueContentDiv>
             <DetailIssueForm
                 userId={issue.userId}

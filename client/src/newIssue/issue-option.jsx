@@ -8,8 +8,8 @@ const StyleIssueOption = styled.div`
     right: 20%;
     width: 12%;
     height: 50%;
-    margin-top: ${props => props.mode === "detail" ? "3%" : "0%"};
-`
+    margin-top: ${(props) => (props.mode === "detail" ? "3%" : "0%")};
+`;
 
 const IssueOption = (props) => {
     return (
@@ -19,7 +19,8 @@ const IssueOption = (props) => {
                 setData={props.setAssignee}
                 name="Assignee"
                 issueId={props.issueId}
-                message="No one-assign yourself"/>
+                message="No one-assign yourself"
+            />
             <DetailOption
                 issueId={props.issueId}
                 data={props.label}
@@ -27,12 +28,14 @@ const IssueOption = (props) => {
                 labelId={props.labelId}
                 setLabelId={props.setLabelId}
                 name="Label"
-                message="None yet" />
+                message="None yet"
+            />
             <DetailOption
                 data={props.milestone}
                 setData={props.setMilestone}
                 name="Milestone"
-                message="No milestone"/>
+                message="No milestone"
+            />
         </StyleIssueOption>
     );
 };
