@@ -6,7 +6,6 @@ import ItemBanner from "./issue-item-banner.jsx";
 
 const StyledListSection = styled.section`
     width: 1200px;
-    ${"" /* height: 700px; */}
     min-height: 300px;
     margin-top: 20px;
     border: 1px solid rgba(207, 216, 220, 1);
@@ -158,11 +157,11 @@ const IssuesListSection = (props) => {
     const checkClick = () => {
         checked
             ? setSelectedCount(0)
-            : setSelectedCount(filteredIssueData.length);
+            : setSelectedCount(showingFilteredIssueData.length);
         setChecked(!checked);
         setCheckedFrom(!checked);
         if (!checked) {
-            const allIssue = issueData.map(v => v.issueId);
+            const allIssue = issueData.map((v) => v.issueId);
             setCheckedIssue(allIssue);
         } else {
             setCheckedIssue([]);
@@ -195,14 +194,6 @@ const IssuesListSection = (props) => {
     const numOfClosedIssue = issueData.length - numOfOpenIssue;
 
     const filteredIssueData = issueData
-        .filter((ele) => ele.status === openClosedRadio)
-        .filter((ele) =>
-            filterOptions.is
-                ? filterOptions.is[0] === "open"
-                    ? ele.status === 1
-                    : ele.status === 0
-                : ele
-        )
         .filter((ele) =>
             filterOptions.author
                 ? filterOptions.author.includes(ele.userId)
@@ -236,7 +227,18 @@ const IssuesListSection = (props) => {
         )
         .sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
 
-    if (filteredIssueData.length === 0) {
+    const showingFilteredIssueData = filteredIssueData.filter((ele) =>
+        filterOptions.is
+            ? filterOptions.is[0] === "open"
+                ? ele.status === 1
+                : ele.status === 0
+            : ele
+    );
+    const openNums = filteredIssueData.filter((ele) => ele.status === 1).length;
+    const closedNums = filteredIssueData.filter((ele) => ele.status === 0)
+        .length;
+
+    if (showingFilteredIssueData.length === 0) {
         noContent = false;
     }
 
@@ -281,7 +283,7 @@ const IssuesListSection = (props) => {
                                 htmlFor="open"
                                 openClosedRadio={openClosedRadio}
                             >
-                                ⓘ {numOfOpenIssue} Open
+                                ⓘ {openNums} Open
                             </StyledListSortOpenClosedCheckBoxLabel>
                             <StyledListSortOpenClosedCheckBox
                                 onChange={onOpenClosedRadioChange}
@@ -291,7 +293,7 @@ const IssuesListSection = (props) => {
                                 htmlFor="closed"
                                 openClosedRadio={openClosedRadio}
                             >
-                                ✔ {numOfClosedIssue} Closed
+                                ✔ {closedNums} Closed
                             </StyledListSortOpenClosedCheckBoxLabel>
                         </DefaultDiv>
                     )}
@@ -346,7 +348,7 @@ const IssuesListSection = (props) => {
                 </StyledListSortOptions>
             </StyledListSortMenu>
             <StyledSortedList>
-                {filteredIssueData.map(
+                {showingFilteredIssueData.map(
                     ({
                         issueId,
                         userId,
@@ -367,7 +369,7 @@ const IssuesListSection = (props) => {
                             checked={checked}
                             func={setChecked}
                             func2={setCheckedFrom}
-                            count={filteredIssueData.length}
+                            count={showingFilteredIssueData.length}
                             selectedFunc={setSelectedCount}
                             excludeIssueFunc={setExcludeIssue}
                             addIssueFunc={setAddIssue}
