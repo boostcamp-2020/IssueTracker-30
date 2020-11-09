@@ -102,7 +102,7 @@ const DetailIssueTitle = (issue) => {
     const changeTitle = async (evt) => {
         await axios({
             method: 'put',
-            url: 'http://localhost:3000/issue',
+            url: '/issue',
             data: {
                 mode: 1,
                 issueId: issue.id,

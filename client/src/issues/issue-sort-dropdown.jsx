@@ -91,125 +91,125 @@ const StyledMediaSection = styled.div`
     display: ${(props) => (props.mediaSection ? "block" : "none")};
 
     ${(props) => {
-		switch (props.mediaType) {
-			case "Label":
-				return {
-					backgroundColor: props.media,
-					width: "20px",
-					height: "20px",
-					borderRadius: "65%",
-					marginLeft: "5%",
-				};
-			case "Milestone":
-				return {};
-			case "MarkAs":
-				return {};
-		}
-	}}
+        switch (props.mediaType) {
+            case "Label":
+                return {
+                    backgroundColor: props.media,
+                    width: "20px",
+                    height: "20px",
+                    borderRadius: "65%",
+                    marginLeft: "5%",
+                };
+            case "Milestone":
+                return {};
+            case "MarkAs":
+                return {};
+        }
+    }}
 `;
 
 const StyledUserImage = styled.img`
-	width: 20px;
+    width: 20px;
     margin-left: 5%;
     box-shadow: 0 0 2px 0px black;
-	border-radius: 3px;
-	display: ${(props) => (props.src ? "block" : "none")};
+    border-radius: 3px;
+    display: ${(props) => (props.src ? "block" : "none")};
 `;
 
 const DropDownMenu = (props) => {
-	const [menuVisibility, setMenuVisibility] = useState("none");
-	const addOptionToTextInput = (e) => {
-		if (props.name === "MarkAs") {
-			const axiosFuncArr = [];
-			props.checkedIssue.forEach((v) => {
-				axiosFuncArr.push(
-					axios.put(
-						"http://localhost:3000/issue",
-						{
-							mode: 4,
-							issueId: v,
-							status: e.target.innerText === "Open" ? 1 : 0,
-						},
-						{ withCredentials: true }
-					)
-				);
-			});
-			axios
-				.all(axiosFuncArr)
-				.then(
-					axios.spread((...responses) => {
-						document.location = "/";
-					})
-				)
-				.catch((errors) => {
-				});
-			return;
-		}
-		const currentOption = e.currentTarget.dataset.name;
-		const addOption = props.addOptionToTextInput;
-		addOption(`${props.name.toLowerCase()}:${currentOption}`);
-	};
+    const [menuVisibility, setMenuVisibility] = useState("none");
+    const addOptionToTextInput = (e) => {
+        if (props.name === "MarkAs") {
+            const axiosFuncArr = [];
+            props.checkedIssue.forEach((v) => {
+                axiosFuncArr.push(
+                    axios.put(
+                        "http://localhost:3000/issue",
+                        {
+                            mode: 4,
+                            issueId: v,
+                            status: e.target.innerText === "Open" ? 1 : 0,
+                        },
+                        { withCredentials: true }
+                    )
+                );
+            });
+            axios
+                .all(axiosFuncArr)
+                .then(
+                    axios.spread((...responses) => {
+                        document.location = "/";
+                    })
+                )
+                .catch((errors) => {
+                    // errors
+                });
+            return;
+        }
+        const currentOption = e.currentTarget.dataset.name;
+        const addOption = props.addOptionToTextInput;
+        addOption(`${props.name.toLowerCase()}:${currentOption}`);
+    };
 
-	const handleMenuVisibility = () => {
-		if (menuVisibility === "none") {
-			setMenuVisibility("block");
-		} else {
-			setMenuVisibility("none");
-		}
-	};
+    const handleMenuVisibility = () => {
+        if (menuVisibility === "none") {
+            setMenuVisibility("block");
+        } else {
+            setMenuVisibility("none");
+        }
+    };
 
-	let mediaSection = true;
+    let mediaSection = true;
 
-	if (props.name === "Milestones") {
-		mediaSection = false;
-	}
+    if (props.name === "Milestones") {
+        mediaSection = false;
+    }
 
-	return (
-		<StyledDropDownMenu onClick={handleMenuVisibility}>
-			<StyledModalBackground
-				isVisible={menuVisibility}
-				onClick={handleMenuVisibility}
-			></StyledModalBackground>
-			<StyledMenuTitle title={props.name}>
-				<StyledMenuContent isVisible={menuVisibility}>
-					<StyledMenuUl>
-						{props.name === "MarkAs" ? (
-							<StyledMenuUlHead>Actions</StyledMenuUlHead>
-						) : (
-								<StyledMenuUlHead>
-									Filter by {props.name}
-								</StyledMenuUlHead>
-							)}
-						{/* <StyledMenuUlHead>Filter by {props.name}</StyledMenuUlHead> */}
-						<StyledMenuLiNotUse
-							data-name="notUse"
-							type={props.name}
-							onClick={addOptionToTextInput}
-						>
-							{props.notUseTitle}
-						</StyledMenuLiNotUse>
-						{props.dataArray.map((element) => (
-							<StyledMenuLi
-								data-name={element.value}
-								key={element.key}
-								onClick={addOptionToTextInput}
-							>
-								<StyledUserImage
-									src={element.imageUrl}
-								></StyledUserImage>
-								<StyledMediaSection
-									mediaSection={mediaSection}
-									mediaType={props.name}
-									media={element.media}
-								></StyledMediaSection>
-								<p>{element.value}</p>
-							</StyledMenuLi>
-						))}
-					</StyledMenuUl>
-				</StyledMenuContent>
-			</StyledMenuTitle>
-		</StyledDropDownMenu>
-	);
+    return (
+        <StyledDropDownMenu onClick={handleMenuVisibility}>
+            <StyledModalBackground
+                isVisible={menuVisibility}
+                onClick={handleMenuVisibility}
+            ></StyledModalBackground>
+            <StyledMenuTitle title={props.name}>
+                <StyledMenuContent isVisible={menuVisibility}>
+                    <StyledMenuUl>
+                        {props.name === "MarkAs" ? (
+                            <StyledMenuUlHead>Actions</StyledMenuUlHead>
+                        ) : (
+                            <StyledMenuUlHead>
+                                Filter by {props.name}
+                            </StyledMenuUlHead>
+                        )}
+                        <StyledMenuLiNotUse
+                            data-name="notUse"
+                            type={props.name}
+                            onClick={addOptionToTextInput}
+                        >
+                            {props.notUseTitle}
+                        </StyledMenuLiNotUse>
+                        {props.dataArray.map((element) => (
+                            <StyledMenuLi
+                                data-name={element.value}
+                                key={element.key}
+                                onClick={addOptionToTextInput}
+                            >
+                                <StyledUserImage
+                                    src={element.imageUrl}
+                                ></StyledUserImage>
+                                <StyledMediaSection
+                                    mediaSection={mediaSection}
+                                    mediaType={props.name}
+                                    media={element.media}
+                                ></StyledMediaSection>
+                                <p>{element.value}</p>
+                            </StyledMenuLi>
+                        ))}
+                    </StyledMenuUl>
+                </StyledMenuContent>
+            </StyledMenuTitle>
+        </StyledDropDownMenu>
+    );
 };
 
 export default DropDownMenu;
