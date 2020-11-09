@@ -62,6 +62,14 @@ const StyledOptionDes = styled.p`
     color: black;
 `
 
+const StyledMilestoneDiv = styled.div`
+    background-color: white;
+`
+
+const StyledProgressBar = styled.progress`
+    display: ${props => props.data ? "block" : "none"};
+`
+
 const detailOption = (props) => {
     const [dropDown, setDropDown] = useState(false);
 
@@ -103,23 +111,43 @@ const detailOption = (props) => {
 
     const hadleClick = (e) => {
         switch (props.name) {
-            case "Assignee":
-            case "Label":
-                const temp = new Set();
-                for(let item of props.data){
-                    temp.add(item);
+            case "Assignee": {
+                    const temp = new Set();
+                    for(let item of props.data){
+                        temp.add(item);
+                    }
+                    temp.add(e.target.innerText);
+                    props.setData(temp);
+                    break;
                 }
-                temp.add(e.target.innerText);
-                props.setData(temp);
-                break;
+            case "Label":{
+                    const temp = new Set();
+                    for(let item of props.data){
+                        temp.add(item);
+                    }
+                    temp.add(e.target.innerText);
+                    const idTemp = new Set();
+                    for(let item of props.labelId){
+                        idTemp.add(item);
+                    }
+                    idTemp.add(e.target.getAttribute('id'));
+                    props.setData(temp);
+                    props.setLabelId(idTemp);
+                    break;
+                }
             case "Milestone":
-                props.setData(e.target.innerText);
+                props.setData({
+                    id: e.target.getAttribute('id').split('_')[1],
+                    value: e.target.innerText,
+                });
                 break
         }
     }
 
     const urlData = [];
     const colorData = [];
+    let open = 0;
+    let close = 0;
     
     switch(props.name) {
         case "Assignee":
@@ -138,6 +166,17 @@ const detailOption = (props) => {
             }
             break;
         case "Milestone":
+            open = 0;
+            close = 0;
+
+            const issueData = JSON.parse(localStorage.getItem('issueData'));
+            if (props.data) {
+                issueData.forEach(element => {
+                    if (Number(props.data.id) === element.milestoneId) {
+                        element.status === 0 ? close++ : open++;
+                    }
+                });
+            }
             break
     }
 
@@ -172,8 +211,17 @@ const detailOption = (props) => {
                         {ele.value}
                     </StyledOptionTag>
                 ))}
-                
-                
+                <StyledMilestoneDiv>
+                    { props.name==="Milestone" ? 
+                    <>
+                        <p>{props.data.value}</p>
+                        <StyledProgressBar 
+                            data={props.data}
+                            value={open}
+                            max={open+close}
+                        />
+                    </> : null }
+                </StyledMilestoneDiv>
             </StyledOptionDesDiv>
         </StyledOption>
     );

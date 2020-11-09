@@ -165,7 +165,7 @@ const IssueTitle = (props) => {
     const onIssueBannerClick = (e) => {
         e.preventDefault();
         // TODO: 상세페이지 api?
-        window.location.href = `/issue/detail/${props.issueId}`;
+        window.location.href = `http://localhost:3000/issue/detail/${props.issueId}`;
     };
 
     const onAuthorClick = () => {

@@ -39,13 +39,13 @@ module.exports = {
         }),
     ],
     devServer: {
-        host: "127.0.0.1",
+        host: "localhost",
         port: port,
         open: true,
         // contentBase: path.join(__dirname, '/public'),
-        proxy: {
+        /* proxy: {
             '/': 'http://localhost:3000/',
-        },
+        }, */
         historyApiFallback: true,
     },
 };
