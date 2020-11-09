@@ -32,6 +32,8 @@ const StyledMenuUl = styled.ul`
 	margin: 0;
 	padding: 0%;
 	font-size: 14px;
+	overflow-y: scroll;
+	max-height: 137px;
 `;
 
 const StyledMenuLi = styled.li`
@@ -110,7 +112,7 @@ const DropDownMenu = (props) => {
 													mediaType={props.name}
 													media={element.media}
 											></StyledMediaSection>
-											<p>{element.value}</p>
+											<p id={props.name + '_' + props.dataArray[0].key}>{element.value}</p>
                     </StyledMenuLi>
                 </>
                 ))}
