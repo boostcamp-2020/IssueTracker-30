@@ -111,15 +111,30 @@ const detailOption = (props) => {
 
     const hadleClick = (e) => {
         switch (props.name) {
-            case "Assignee":
-            case "Label":
-                const temp = new Set();
-                for(let item of props.data){
-                    temp.add(item);
+            case "Assignee": {
+                    const temp = new Set();
+                    for(let item of props.data){
+                        temp.add(item);
+                    }
+                    temp.add(e.target.innerText);
+                    props.setData(temp);
+                    break;
                 }
-                temp.add(e.target.innerText);
-                props.setData(temp);
-                break;
+            case "Label":{
+                    const temp = new Set();
+                    for(let item of props.data){
+                        temp.add(item);
+                    }
+                    temp.add(e.target.innerText);
+                    const idTemp = new Set();
+                    for(let item of props.labelId){
+                        idTemp.add(item);
+                    }
+                    idTemp.add(e.target.getAttribute('id'));
+                    props.setData(temp);
+                    props.setLabelId(idTemp);
+                    break;
+                }
             case "Milestone":
                 props.setData({
                     id: e.target.getAttribute('id').split('_')[1],

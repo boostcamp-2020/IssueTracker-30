@@ -81,6 +81,7 @@ const StyledMediaSection = styled.div`
 `;
 
 const DropDownMenu = (props) => {
+	console.log()
 	const [menuVisibility, setMenuVisibility] = useState("none");
 
 	const handleMenuVisibility = () => {
@@ -102,7 +103,7 @@ const DropDownMenu = (props) => {
             <StyledMenuUl>
                 {props.dataArray.map((element) => (
                 <>
-                    <StyledMenuLi key={element.key} onClick={props.hadleClick}>
+                    <StyledMenuLi id={props.name + '_' + element.key} key={element.key} onClick={props.hadleClick}>
 											<StyledImage
 												mediaType={props.name}
 												src={element.media}

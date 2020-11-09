@@ -22,6 +22,8 @@ const IssueOption = (props) => {
             <DetailOption
                 data={props.label}
                 setData={props.setLabel}
+                labelId={props.labelId}
+                setLabelId={props.setLabelId}
                 name="Label"
                 message="None yet" />
             <DetailOption
