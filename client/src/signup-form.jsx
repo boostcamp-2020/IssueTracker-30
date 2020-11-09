@@ -137,7 +137,7 @@ const SignUpForm = ({ history }) => {
             };
             axios({
                 method: "POST",
-                url: "/user/signUp",
+                url: "http://localhost:3000/user/signUp",
                 data,
                 withCredentials: true,
             })
@@ -145,7 +145,7 @@ const SignUpForm = ({ history }) => {
                     if (res.data.message === 'success') {
                         axios({
                             method: "POST",
-                            url: "/user/saveImg",
+                            url: "http://localhost:3000/user/saveImg",
                             data : { userId, dataUrl: createImage() },
                             withCredentials: true,
                         }).then(() => {

@@ -30,7 +30,7 @@ const IssueService = {
     },
 
     insertIssue: async (req, res) => {
-        const userId = req.body.userId;
+        const { userId } = req.body;
         const issue = {
             title: req.body.title,
             writingTime: req.body.writingTime,

@@ -45,7 +45,7 @@ const NavBar = ({ mode }) => {
     localStorage.clear();
     axios({
       method: "GET",
-      url: "/user/signOut",
+      url: "http://localhost:3000/user/signOut",
       withCredentials: true,
     })
       .then((res) => {

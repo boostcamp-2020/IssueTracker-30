@@ -35,6 +35,10 @@ const IssueList = () => {
         const isRegex = /is:\w+/g;
         const authorRegex = /author:[\w@]+/g;
         const assigneeRegex = /assignee:[\w@]+/g;
+        const type = option.split(":")[0];
+        const typeRegex = new RegExp(`\\s{0,1}${type}:\\S+`, "g");
+        const typeNotUseRegex = new RegExp(`\\s{0,1}${type}:notUse`);
+        const optionTrimRegex = new RegExp(`\\s{0,1}${option}`, "g");
 
         setIsFilterTextRemoverVisible(true);
 
@@ -42,7 +46,9 @@ const IssueList = () => {
         if (isRegex.test(option)) {
             theText = `${textInput.replace(isRegex, "").trim()} ${option}`;
         } else if (textInput.includes(option)) {
-            theText = textInput.replace(option, "");
+            theText = textInput.replace(optionTrimRegex, "").trim();
+        } else if (typeNotUseRegex.test(option)) {
+            theText = `${textInput.replace(typeRegex, "").trim()} ${option}`;
         } else if (authorRegex.test(option)) {
             theText = `${textInput.replace(authorRegex, "").trim()} ${option}`;
         } else if (assigneeRegex.test(option)) {
@@ -50,7 +56,9 @@ const IssueList = () => {
                 .replace(assigneeRegex, "")
                 .trim()} ${option}`;
         } else {
-            theText = `${textInput.trim()} ${option}`;
+            theText = `${textInput
+                .replace(typeNotUseRegex, "")
+                .trim()} ${option}`;
         }
 
         setTextInput(theText.trim());

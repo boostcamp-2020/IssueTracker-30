@@ -32,6 +32,8 @@ const StyledMenuUl = styled.ul`
 	margin: 0;
 	padding: 0%;
 	font-size: 14px;
+	overflow-y: scroll;
+	max-height: 137px;
 `;
 
 const StyledMenuLi = styled.li`
@@ -79,6 +81,7 @@ const StyledMediaSection = styled.div`
 `;
 
 const DropDownMenu = (props) => {
+	console.log()
 	const [menuVisibility, setMenuVisibility] = useState("none");
 
 	const handleMenuVisibility = () => {
@@ -100,7 +103,7 @@ const DropDownMenu = (props) => {
             <StyledMenuUl>
                 {props.dataArray.map((element) => (
                 <>
-                    <StyledMenuLi key={element.key} onClick={props.hadleClick}>
+                    <StyledMenuLi id={props.name + '_' + element.key} key={element.key} onClick={props.hadleClick}>
 											<StyledImage
 												mediaType={props.name}
 												src={element.media}
@@ -110,7 +113,7 @@ const DropDownMenu = (props) => {
 													mediaType={props.name}
 													media={element.media}
 											></StyledMediaSection>
-											<p>{element.value}</p>
+											<p id={props.name + '_' + props.dataArray[0].key}>{element.value}</p>
                     </StyledMenuLi>
                 </>
                 ))}
