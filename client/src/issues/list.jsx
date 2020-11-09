@@ -46,14 +46,14 @@ const IssueList = () => {
 
         if (isRegex.test(option)) {
             theText = `${textInput.replace(isRegex, "").trim()} ${option}`;
+        } else if (optionTrimRegex.test(textInput)) {
+            theText = textInput.replace(optionTrimRegex, " ").trim();
         } else if (authorRegex.test(option)) {
             theText = `${textInput.replace(authorRegex, "").trim()} ${option}`;
         } else if (assigneeRegex.test(option)) {
             theText = `${textInput
                 .replace(assigneeRegex, "")
                 .trim()} ${option}`;
-        } else if (textInput.includes(option)) {
-            theText = textInput.replace(optionTrimRegex, " ").trim();
         } else if (typeNotUseRegex.test(option)) {
             theText = `${textInput.replace(typeRegex, "").trim()} ${option}`;
         } else {
