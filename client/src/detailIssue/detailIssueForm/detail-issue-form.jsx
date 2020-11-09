@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-
+import axios from "axios";
 import IssueContent from "./detail-issue-content.jsx"
 import IssueControl from "./detail-issue-control.jsx"
 
 const StyledNewIssueForm = styled.div`
-    position: absolute;
+    /* position: absolute; */
     left: 20%;
     display: flex;
     background-color: white;
@@ -33,7 +33,7 @@ const StyledTriangleDiv = styled.div`
 
 const StyledNewIssueSection = styled.div`
     background-color: white;
-    position: absolute;
+    /* position: absolute; */
     right: 0%;
     width: 90%;
     height: 90%;
@@ -65,13 +65,41 @@ const StyledContentDiv = styled.div`
 `
 
 const StyledControlDiv = styled.div`
-    height: 15%;
-    padding: 0% 1%;
-    display: flex;
-    align-items: flex-end;
+    float:right
 `
+const getDatetime = date => {
+    const pad = n => { return n < 10 ? '0' + n : n }
+    return date.getUTCFullYear() + '-'
+        + pad(date.getUTCMonth() + 1) + '-'
+        + pad(date.getUTCDate()) + ' '
+        + pad(date.getUTCHours()) + ':'
+        + pad(date.getUTCMinutes()) + ':'
+        + pad(date.getUTCSeconds())
+}
 
-const detailIssueForm = () => {
+const detailIssueForm = props => {
+    const [comment, setComment] = useState('');
+    const clickCommentHandler = () => {
+        axios({
+            method: "POST",
+            url: "http://localhost:3000/comment/insertComment",
+            data: {
+                issueId: props.issueId,
+                writingTime: getDatetime(new Date()),
+                comment: comment
+            },
+            withCredentials: true,
+        }).then(res => {
+            const newComment = {
+                ID: res.data.insertId,
+                commentUserId: props.userId,
+                commentWritingTime: getDatetime(new Date()),
+                comment: comment
+            }
+            setComment('');
+            props.setAllComment([...props.allComment, newComment]);
+        });
+    }
     return (
         <StyledNewIssueForm>
             <StyledImgDiv />
@@ -79,10 +107,10 @@ const detailIssueForm = () => {
                 <StyledTitleDiv>
                 </StyledTitleDiv>
                 <StyledContentDiv>
-                    <IssueContent />
+                    <IssueContent setComment={setComment} comment={comment} />
                 </StyledContentDiv>
                 <StyledControlDiv>
-                    <IssueControl />
+                    <IssueControl clickComment={clickCommentHandler} issueId={props.issueId} status={props.status} setStatus={props.setStatus}/>
                 </StyledControlDiv>
             </StyledNewIssueSection>
             <StyledTriangleDiv />

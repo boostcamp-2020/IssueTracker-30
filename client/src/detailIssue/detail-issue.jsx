@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 // import IssueOption from "../newIssue/issue-option.jsx";
 import DetailIssueTitle from "./detail-issue-title.jsx";
@@ -18,23 +18,30 @@ const detailIssue = ({ match }) => {
     const issueId = match.params.issueId;
     const issueData = JSON.parse(localStorage.getItem("issueData"));
     const issue = issueData.find(v => v.issueId === Number(issueId));
+    const [status, setStatus] = useState(issue.status);
+    issue.label = issue.labelId.map((id, ind) => {
+        return { id: id, content: issue.labelContent[ind] };
+    });
     return (
         <>
             <StyledMainSection>
-                <DetailIssueTitle 
-                    title={issue.issueTitle} 
+                <DetailIssueTitle
+                    title={issue.issueTitle}
                     id={issue.issueId}
-                    status={issue.status}
+                    status={status}
                     userId={issue.userId}
                     writingTime={issue.writingTime}
                 />
                 <DetailIssueContent
                     title={issue.issueTitle}
                     id={issue.issueId}
+                    status={status}
+                    setStatus={setStatus}
                     userId={issue.userId}
                     writingTime={issue.writingTime}
                     content={issue.content}
-                 />
+                    label={issue.label}
+                />
             </StyledMainSection>
         </>
     );

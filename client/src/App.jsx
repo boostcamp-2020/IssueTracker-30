@@ -11,7 +11,7 @@ const loginCheck = async () => {
     if (document.cookie.split("=")[0] === "user") {
         const mode = await axios({
             method: "POST",
-            url: "/user/signIn/auth",
+            url: "http://localhost:3000/user/signIn/auth",
             withCredentials: true,
         }).then((res) => {
             if (res.data.message === "success") {
@@ -38,7 +38,7 @@ const App = () => {
             if (res === "main") {
                 await axios({
                     method: "GET",
-                    url: "/issue/",
+                    url: "http://localhost:3000/issue/",
                     withCredentials: true,
                 }).then((issueData) => {
                     localStorage.setItem(
@@ -49,7 +49,7 @@ const App = () => {
 
                 await axios({
                     method: "GET",
-                    url: "/user/",
+                    url: "http://localhost:3000/user/",
                     withCredentials: true,
                 }).then((users) => {
                     localStorage.setItem(
@@ -60,7 +60,7 @@ const App = () => {
 
                 await axios({
                     method: "GET",
-                    url: "/label/",
+                    url: "http://localhost:3000/label/",
                     withCredentials: true,
                 }).then((labels) => {
                     localStorage.setItem(
@@ -71,7 +71,7 @@ const App = () => {
 
                 await axios({
                     method: "GET",
-                    url: "/milestone/",
+                    url: "http://localhost:3000/milestone/",
                     withCredentials: true,
                 }).then((milestones) => {
                     localStorage.setItem(

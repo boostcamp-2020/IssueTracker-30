@@ -6,7 +6,7 @@ import DetailIssueComment from "./detail-issue-comment.jsx";
 import axios from "axios";
 
 const DetailIssueContentDiv = styled.div`
-    position: absolute;
+    /* position: absolute; */
     top: 25%;
     left: 20%;
     width: 60%;
@@ -17,20 +17,19 @@ const HrLine = styled.hr`
     margin-bottom: 2%;
 `;
 
-const DetailIssueCenter =  (issue) => {
+const DetailIssueCenter = issue => {
     const [comment, setComment] = useState([]);
-
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-
     const [assignee, setAssignee] = useState(new Set());
-    const [label, setLabel] = useState(new Set());
+    const [label, setLabel] = useState( issue.label );
     const [milestone, setMilestone] = useState('');
 
-    useEffect( () => {
+
+    useEffect(() => {
         axios({
             method: "POST",
-            url: "/comment/getComment",
+            url: "http://localhost:3000/comment/getComment",
             data: {
                 issueId: issue.id
             },
@@ -39,7 +38,6 @@ const DetailIssueCenter =  (issue) => {
             setComment(res.data);
         });
     }, []);
-
     return (
         <>
             <DetailIssueContentDiv>
@@ -51,7 +49,7 @@ const DetailIssueCenter =  (issue) => {
                     writingTime={issue.writingTime}
                     content={issue.content}
                 />
-                { comment.map(({commentUserId, comment, ID, commentWritingTime }) => (
+                {comment.map(({ commentUserId, comment, ID, commentWritingTime }) => (
                     <DetailIssueComment
                         mode={"comment"}
                         id={ID}
@@ -59,8 +57,17 @@ const DetailIssueCenter =  (issue) => {
                         comment={comment}
                         commentWritingTime={commentWritingTime}
                     />
-                )) }
+                ))}
             </DetailIssueContentDiv>
+            <DetailIssueForm
+                userId={issue.userId}
+                issueId={issue.id}
+                status={issue.status}
+                setStatus={issue.setStatus}
+                allComment={comment}
+                setAllComment={setComment}
+            ></DetailIssueForm>
+
             <IssueOption
                 mode="detail"
                 assignee={assignee}

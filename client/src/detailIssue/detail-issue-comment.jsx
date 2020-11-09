@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+// import DetailIssueFrom from "./detailIssueForm/detail-issue-form.jsx";
 
 const StyledNewIssueForm = styled.div`
-    position: absolute;
+    /* position: absolute; */
     display: flex;
     background-color: white;
     width: 78%;
@@ -29,7 +31,16 @@ const StyledTriangleDiv = styled.div`
 
 const StyledNewIssueSection = styled.div`
     background-color: white;
-    position: absolute;
+    /* position: absolute; */
+    right: 0%;
+    width: 90%;
+    height: 30%;
+    border: 1px solid #dbdde2;
+    border-radius: 3px;
+`
+const StyledInputSection = styled.textarea`
+    background-color: white;
+    /* position: absolute; */
     right: 0%;
     width: 90%;
     height: 30%;
@@ -67,20 +78,98 @@ const StyledControlDiv = styled.div`
     align-items: flex-end;
 `
 
-const detailIssueComment = (comment) => {
+const StyledEditBtn = styled.button`
+    float: right;
+`;
+
+const StyledEditSectionFooter = styled.div`
+`;
+
+const StyledEditCancelBtn = styled.button`
+`;
+
+const StyledEditUpdateBtn = styled.button`
+`;
+
+const detailIssueComment = (props) => {
+    const [mode, setMode] = useState('default');
+    const [content, setContent] = useState(props.content);
+    const [comment, setComment] = useState(props.comment);
+
+    const editCancelBtnClickHandler = () => {
+        const temp = mode === 'default' ? 'edit' : 'default';
+        setMode(temp);
+    }
+
+    const textareaChangeHandler = event => {
+        if (content) {
+            setContent(event.target.value);
+            return;
+        }
+        setComment(event.target.value);
+    }
+
+    const getDatetime = date => {
+        const pad = n => { return n < 10 ? '0' + n : n }
+        return date.getUTCFullYear() + '-'
+            + pad(date.getUTCMonth() + 1) + '-'
+            + pad(date.getUTCDate()) + ' '
+            + pad(date.getUTCHours()) + ':'
+            + pad(date.getUTCMinutes()) + ':'
+            + pad(date.getUTCSeconds())
+    }
+
+    const editUpdateHandler = event => {
+        const data = {
+            mode: 2,
+            issueId: props.id,
+            content: content,
+            ID: props.id,
+            comment: comment,
+            writingTime: getDatetime(new Date()),
+        }
+        axios({
+            method: "PUT",
+            url: content ? "http://localhost:3000/issue" : "http://localhost:3000/comment",
+            data,
+            withCredentials: true,
+        }).then((res) => {
+            
+        });
+        setMode('default');
+    }
+
     return (
-        <StyledNewIssueForm>
-            <StyledImgDiv />
-            <StyledNewIssueSection >
-                <StyledTitleDiv>
-                    {comment.userId}
-                </StyledTitleDiv>
-                <StyledContentDiv>
-                    {comment.content ? comment.content : comment.comment}
-                </StyledContentDiv>
-            </StyledNewIssueSection>
-            <StyledTriangleDiv />
-        </StyledNewIssueForm>
+        <>
+            <StyledNewIssueForm>
+                <StyledImgDiv />
+                {mode === 'default' &&
+                    <StyledNewIssueSection >
+                        <StyledTitleDiv>
+                            {props.userId}
+                            {props.userId === localStorage.getItem('userId') ? <StyledEditBtn onClick={editCancelBtnClickHandler}>Edit</StyledEditBtn> : ''}
+                        </StyledTitleDiv>
+                        <StyledContentDiv>
+                            {props.content ? content : comment}
+                        </StyledContentDiv>
+                    </StyledNewIssueSection>}
+                {mode === 'edit' &&
+                    <StyledNewIssueSection >
+                        <StyledTitleDiv>
+                            Write
+                    </StyledTitleDiv>
+                        <StyledInputSection onChange={textareaChangeHandler}>
+                            {props.content ? content : comment}
+                        </StyledInputSection>
+                        <StyledEditSectionFooter>
+                            <StyledEditCancelBtn onClick={editCancelBtnClickHandler}>Cancel</StyledEditCancelBtn>
+                            <StyledEditUpdateBtn onClick={editUpdateHandler}>Update comment</StyledEditUpdateBtn>
+                        </StyledEditSectionFooter>
+                    </StyledNewIssueSection>}
+                <StyledTriangleDiv />
+            </StyledNewIssueForm>
+            {/* <DetailIssueFrom></DetailIssueFrom> */}
+        </>
     );
 };
 

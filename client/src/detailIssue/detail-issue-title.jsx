@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const StyledDetailIssueTitle = styled.div`
-    position: absolute;
+    /* position: absolute; */
     top: 10%;
     left: 20%;
     width: 60%;
@@ -88,7 +88,6 @@ const DetailIssueTitle = (issue) => {
     const editCancelBtnClickHandler = () => {
         setEditableMode(!editableMode);
     }
-
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
         timeNow - new Date(issue.writingTime),
@@ -101,7 +100,7 @@ const DetailIssueTitle = (issue) => {
     const changeTitle = async (evt) => {
         await axios({
             method: 'put',
-            url: '/issue',
+            url: 'http://localhost:3000/issue',
             data: {
                 mode: 1,
                 issueId: issue.id,

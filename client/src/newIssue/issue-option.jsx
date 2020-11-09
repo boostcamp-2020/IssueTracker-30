@@ -22,6 +22,7 @@ const IssueOption = (props) => {
             <DetailOption
                 data={props.label}
                 setData={props.setLabel}
+                label={props.label}
                 name="Label"
                 message="None yet" />
             <DetailOption
