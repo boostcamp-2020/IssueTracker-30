@@ -91,6 +91,9 @@ const App = () => {
             <Router>
                 <NavBar mode={mode} />
                 <Switch>
+                    <Route path="/milestones">
+                        <MainSection mode="milestones" />
+                    </Route>
                     <Route path="/new">
                         <MainSection mode="newIssue" />
                     </Route>
