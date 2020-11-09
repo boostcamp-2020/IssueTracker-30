@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const StyledButtons = styled.div`
     display: flex;
-    ali
     height: 100%;
     width: 66%;
 `;
@@ -71,9 +70,16 @@ const StyledLabelMilestoneNumber = styled.div`
 `;
 
 const LabelMilestoneButtons = () => {
-    const labelCount = JSON.parse(localStorage.getItem("labelsData")).length;
-    const milestoneCount = JSON.parse(localStorage.getItem("milestonesData")).length;
-
+    const labelData = JSON.parse(localStorage.getItem("labelsData"));
+    const milestoneData = JSON.parse(localStorage.getItem("milestonesData"));
+    let labelCount = 0;
+    let milestoneCount = 0;
+    if (labelData) {
+        labelCount = labelData.length;
+    }
+    if (milestoneData) {
+        milestoneCount = milestoneData.length;
+    }
     const onLabelButtonClick = (e) => {
         // TODO 클릭 이벤트 -> label 만 나오는 페이지
         alert("Label 만 보여주는 페이지로 이동");

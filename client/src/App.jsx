@@ -34,7 +34,7 @@ const loginCheck = async () => {
 };
 
 const App = () => {
-    const [mode, setMode] = useState("login");
+    const [mode, setMode] = useState("main");
 
     useEffect(() => {
         loginCheck().then(async (res) => {
@@ -82,10 +82,12 @@ const App = () => {
                         JSON.stringify(milestones.data)
                     );
                 });
-                setMode(res);
+                setMode("mainForMarkAs");
+            } else {
+                setMode("login");
             }
         });
-    }, []);
+    });
 
     return (
         <StyledRouter>

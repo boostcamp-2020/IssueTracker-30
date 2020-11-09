@@ -3,7 +3,7 @@ import passport from "passport";
 const isLoggedIn = (req, res, next) => {
     try {
         passport.authenticate('jwt', async (err, userId, info) => {
-            if (userId) {
+            if (req) {
                 req.body.userId = userId;
                 next();
             } else {
