@@ -131,7 +131,7 @@ const LoginForm = () => {
         };
         axios({
             method: "POST",
-            url: "http://localhost:3000/user/signIn",
+            url: "/user/signIn",
             data,
             withCredentials: true,
         }).then((res) => {
@@ -148,7 +148,7 @@ const LoginForm = () => {
     const githubLogin = () => {
         axios({
             method: "GET",
-            url: "http://localhost:3000/oAuth/github",
+            url: "/oAuth/github",
         }).then((res) => {
             window.location.href = res.data;
         });
@@ -190,7 +190,7 @@ const LoginForm = () => {
 
             <StyledGithubLoginButton onClick={githubLogin}>
                 Sign Up with Github
-                <StyledImage src="../public/images/GithubIcon.png"></StyledImage>
+                <StyledImage src="https://raw.githubusercontent.com/primer/octicons/7d85df3bd8425639956c95f908a0d972b7c52eb5/icons/mark-github-16.svg"></StyledImage>
             </StyledGithubLoginButton>
         </StyledLoginForm>
     );

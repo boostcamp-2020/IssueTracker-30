@@ -5,12 +5,13 @@ import axios from "axios";
 import NavBar from "./components/nav-bar.jsx";
 import MainSection from "./main-section.jsx";
 import Footer from "./components/footer.jsx";
+import DetailIssue from "./detailIssue/detail-issue.jsx";
 
 const loginCheck = async () => {
     if (document.cookie.split("=")[0] === "user") {
         const mode = await axios({
             method: "POST",
-            url: "http://localhost:3000/user/signIn/auth",
+            url: "/user/signIn/auth",
             withCredentials: true,
         }).then((res) => {
             if (res.data.message === "success") {
@@ -26,7 +27,7 @@ const loginCheck = async () => {
 };
 
 const App = () => {
-    const [mode, setMode] = useState("main");
+    const [mode, setMode] = useState("login");
 
     const changeMode = (props) => {
         alert(props);
@@ -37,7 +38,7 @@ const App = () => {
             if (res === "main") {
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/issue/",
+                    url: "/issue/",
                     withCredentials: true,
                 }).then((issueData) => {
                     localStorage.setItem(
@@ -45,10 +46,10 @@ const App = () => {
                         JSON.stringify(issueData.data),
                     );
                 });
-                
+
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/user/",
+                    url: "/user/",
                     withCredentials: true,
                 }).then((users) => {
                     localStorage.setItem(
@@ -56,10 +57,10 @@ const App = () => {
                         JSON.stringify(users.data),
                     );
                 });
-                    
+
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/label/",
+                    url: "/label/",
                     withCredentials: true,
                 }).then((labels) => {
                     localStorage.setItem(
@@ -70,7 +71,7 @@ const App = () => {
 
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/milestone/",
+                    url: "/milestone/",
                     withCredentials: true,
                 }).then((milestones) => {
                     localStorage.setItem(
@@ -78,9 +79,8 @@ const App = () => {
                         JSON.stringify(milestones.data),
                     );
                 });
+                setMode(res);
             }
-            setMode(res);
-
         });
     }, []);
 
@@ -92,6 +92,7 @@ const App = () => {
                     <Route path="/new">
                         <MainSection mode="newIssue" />
                     </Route>
+                    <Route path="/detail/:issueId" component={DetailIssue} />
                     <Route path="/">
                         <MainSection mode={mode} />
                     </Route>

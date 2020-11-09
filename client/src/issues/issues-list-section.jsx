@@ -139,6 +139,7 @@ const IssuesListSection = (props) => {
 
     useEffect(() => {
         setCheckedIssue([...checkedIssue, addIssue]);
+        console.log(checkedIssue);
     }, [addIssue]);
 
     useEffect(() => {
@@ -146,6 +147,7 @@ const IssuesListSection = (props) => {
         const idx = tempCheckedIssue.indexOf(excludeIssue);
         if (idx > -1) tempCheckedIssue.splice(idx, 1);
         setCheckedIssue(tempCheckedIssue);
+        console.log(checkedIssue);
     }, [excludeIssue]);
 
     const onOpenClosedRadioChange = (e) => {
@@ -158,12 +160,28 @@ const IssuesListSection = (props) => {
         }
     };
 
+    // useEffect(() => {
+    //     if (checked) {
+    //         const allIssue = issueData.map(v => v.issueId);
+    //         setCheckedIssue(allIssue);
+    //     } else {
+    //         setCheckedIssue([]);
+    //     }
+    //     console.log(checkedIssue);
+    // }, [checked]);
+
     const checkClick = () => {
         checked
             ? setSelectedCount(0)
             : setSelectedCount(filteredIssueData.length);
         setChecked(!checked);
         setCheckedFrom(!checked);
+        if (!checked) {
+            const allIssue = issueData.map(v => v.issueId);
+            setCheckedIssue(allIssue);
+        } else {
+            setCheckedIssue([]);
+        }
     };
 
     const checkedFunc = () => {
@@ -259,7 +277,7 @@ const IssuesListSection = (props) => {
                 <StyledListSortCheckBoxDiv>
                     <StyledListSortCheckBoxInput
                         checked={checkedFunc()}
-                        onChange={checkClick}
+                        onClick={checkClick}
                     />
                 </StyledListSortCheckBoxDiv>
                 <StyledListSortOpenClosedDiv>
