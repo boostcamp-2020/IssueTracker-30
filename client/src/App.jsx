@@ -21,6 +21,7 @@ const loginCheck = async () => {
             url: "http://localhost:3000/user/signIn/auth",
             withCredentials: true,
         }).then((res) => {
+            localStorage.setItem('userId', res.data.userId);
             if (res.data.message === "success") {
                 return "main";
             } else {

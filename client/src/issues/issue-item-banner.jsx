@@ -31,12 +31,16 @@ const StyledBannerOpenClosedIcon = styled.i``;
 
 const StyledBannerTextDiv = styled.div``;
 
+const StyledBannerTop = styled.div`
+    display: flex;
+`;
+
 const StyledBannerInnerDiv = styled.div`
     display: flex;
     flex-direction: rows;
     align-items: center;
     padding-top: 1%;
-    width: 600px;
+    width: 48vw;
 `;
 
 const StyledBannerTitle = styled.p`
@@ -86,17 +90,14 @@ const StyledBannerAuthor = styled.div`
 `;
 
 const StyledAssigneeDiv = styled.div`
-    position: absolute;
     display: flex;
     padding-top: 1.5%;
-    width: 10%;
-    justify-content: flex-end;
-    right: 13.5%;
+    width: 4vw%;
 `;
 
 const StyledAssignee = styled.img`
     width: 20px;
-    margin-left: 8%;
+    margin-right: 50%;
     box-shadow: 0 0 2px 0px black;
     border-radius: 3px;
 `;
@@ -187,22 +188,23 @@ const IssueTitle = (props) => {
             </StyledBannerOpenClosedDiv>
 
             <StyledBannerTextDiv>
-                
-                <StyledBannerInnerDiv>
-                    <Link to={`detail/${props.issueId}`} style={{ textDecoration: 'none', color: 'black' }}>
-                        <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
-                    </Link>
-                    {/* <StyledBannerTitle onClick={onIssueBannerClick}>
-                        {props.issueTitle}
-                    </StyledBannerTitle> */}
-                    {labelData.map((element) => (
-                        <StyledBannerLabel
-                            key={element.content}
-                            color={element.color}
-                        >
-                            <p>{element.content}</p>
-                        </StyledBannerLabel>
-                    ))}
+                <StyledBannerTop>
+                    <StyledBannerInnerDiv>
+                        <Link to={`detail/${props.issueId}`} style={{ textDecoration: 'none', color: 'black' }}>
+                            <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
+                        </Link>
+                        {/* <StyledBannerTitle onClick={onIssueBannerClick}>
+                            {props.issueTitle}
+                        </StyledBannerTitle> */}
+                        {labelData.map((element) => (
+                            <StyledBannerLabel
+                                key={element.content}
+                                color={element.color}
+                            >
+                                <p>{element.content}</p>
+                            </StyledBannerLabel>
+                        ))}
+                    </StyledBannerInnerDiv>
                     <StyledAssigneeDiv>
                         {assigneeUrl.map((element) => (
                             <StyledAssignee
@@ -211,7 +213,7 @@ const IssueTitle = (props) => {
                             ></StyledAssignee>
                         ))}
                     </StyledAssigneeDiv>
-                </StyledBannerInnerDiv>
+                </StyledBannerTop>
                 <StyledBannerInfo>
                     #{props.issueId} {openOrClosed} {updatedTimeBefore} days ago
                     by{"  "}
