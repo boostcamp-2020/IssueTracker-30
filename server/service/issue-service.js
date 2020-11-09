@@ -101,9 +101,9 @@ const IssueService = {
                 default:
                     break;
             }
-            res.json({message: "success"});
+            res.json({ message: "success" });
         } catch (error) {
-            res.json({message: "fail"});
+            res.json({ message: "fail" });
         }
     }
 }
