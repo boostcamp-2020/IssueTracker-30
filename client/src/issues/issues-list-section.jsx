@@ -237,6 +237,7 @@ const IssuesListSection = (props) => {
             key: ele.userId,
             value: ele.userId,
             media: ele.userId,
+            imageUrl: ele.imageURL,
         });
     });
 
@@ -367,6 +368,7 @@ const IssuesListSection = (props) => {
                                 color: labelColor,
                                 content: labelContent,
                             }}
+                            addOptionToTextInput={props.addOptionToTextInput}
                         />
                     )
                 )}

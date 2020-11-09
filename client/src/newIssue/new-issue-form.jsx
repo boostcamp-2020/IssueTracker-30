@@ -17,10 +17,11 @@ const StyledNewIssueForm = styled.div.attrs({
     height: 50%;
 `
 
-const StyledImgDiv = styled.div`
-    background-color: teal;
-    width:50px;
-    height:50px;
+const StyledImg = styled.img`
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 2px 0 grey;
+    border-radius: 3px;
 `
 
 const StyledTriangleDiv = styled.div`
@@ -76,9 +77,14 @@ const StyledControlDiv = styled.div`
 `
 
 const newIssueForm = (props) => {
+    const userId = localStorage.getItem('userId');
+    const usersData = JSON.parse(localStorage.getItem("usersData"));
+
+    const userData = usersData.filter((data) => data.userId === userId);
+
     return (
         <StyledNewIssueForm>
-            <StyledImgDiv />
+            <StyledImg src={userData[0].imageURL}/>
             <StyledNewIssueSection >
                 <StyledTitleDiv>
                     <IssueTitle title={props.title} setTitle={props.setTitle} />

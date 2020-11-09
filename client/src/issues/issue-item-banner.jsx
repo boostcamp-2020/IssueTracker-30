@@ -43,6 +43,11 @@ const StyledBannerTitle = styled.p`
     font-weight: 700;
     font-size: 1em;
     margin: 0;
+
+    &:hover {
+        cursor: pointer;
+        color: #3949ab;
+    }
 `;
 
 const StyledBannerLabel = styled.div`
@@ -62,11 +67,21 @@ const StyledBannerLabel = styled.div`
     }
 `;
 
-const StyledBannerInfo = styled.p`
+const StyledBannerInfo = styled.div`
+    display: flex;
+    flex-direction: row;
     font-family: "Noto Sans KR", sans-serif;
     font-weight: 400;
     font-size: 0.7em;
     margin: 0;
+`;
+
+const StyledBannerAuthor = styled.div`
+    margin: 0 2px;
+    &:hover {
+        cursor: pointer;
+        color: #3949ab;
+    }
 `;
 
 const StyledAssigneeDiv = styled.div`
@@ -147,7 +162,14 @@ const IssueTitle = (props) => {
     });
 
     const onIssueBannerClick = (e) => {
-        //
+        e.preventDefault();
+        // TODO: 상세페이지 api?
+        window.location.href = `/issue/detail/${props.issueId}`;
+    };
+
+    const onAuthorClick = () => {
+        // TODO
+        props.addOptionToTextInput(`author:${props.userId}`);
     };
 
     return (
@@ -165,10 +187,7 @@ const IssueTitle = (props) => {
 
             <StyledBannerTextDiv>
                 <StyledBannerInnerDiv>
-                    <StyledBannerTitle
-                        uri={props.issueId}
-                        onClick={onIssueBannerClick}
-                    >
+                    <StyledBannerTitle onClick={onIssueBannerClick}>
                         {props.issueTitle}
                     </StyledBannerTitle>
                     {labelData.map((element) => (
@@ -190,7 +209,10 @@ const IssueTitle = (props) => {
                 </StyledBannerInnerDiv>
                 <StyledBannerInfo>
                     #{props.issueId} {openOrClosed} {updatedTimeBefore} days ago
-                    by {props.userId}
+                    by{"  "}
+                    <StyledBannerAuthor onClick={onAuthorClick}>
+                        {props.userId}
+                    </StyledBannerAuthor>
                 </StyledBannerInfo>
             </StyledBannerTextDiv>
         </StyledBannersListDiv>
