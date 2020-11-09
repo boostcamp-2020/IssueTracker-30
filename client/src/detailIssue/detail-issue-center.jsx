@@ -75,6 +75,7 @@ const DetailIssueCenter = issue => {
 
             <IssueOption
                 mode="detail"
+                issueId={issue.id}
                 assignee={assignee}
                 setAssignee={setAssignee}
                 label={label}

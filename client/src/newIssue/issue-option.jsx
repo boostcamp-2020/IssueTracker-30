@@ -18,8 +18,10 @@ const IssueOption = (props) => {
                 data={props.assignee}
                 setData={props.setAssignee}
                 name="Assignee"
+                issueId={props.issueId}
                 message="No one-assign yourself"/>
             <DetailOption
+                issueId={props.issueId}
                 data={props.label}
                 setData={props.setLabel}
                 labelId={props.labelId}

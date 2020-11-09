@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
+import axios from 'axios';
 import DetailDropdown from "./detail-option-dropdown.jsx";
 
 const StyledOption = styled.div`
@@ -106,21 +106,6 @@ const detailOption = (props) => {
             break
     }
 
-    const temp = new Set();
-    const idTemp = new Set();
-    for (let item of props.data) {
-        temp.add(item.content);
-        idTemp.add(item.id);
-    }
-    // temp.add(e.target.innerText);
-    // for (let item of props.data) {
-    //     // idTemp.add(item.id);
-    //     console.log(item);
-    // }
-    // props.setData(temp);
-    // props.setLabelId(idTemp);
-
-
     const hadleClick = (e) => {
         switch (props.name) {
             case "Assignee": {
@@ -130,27 +115,63 @@ const detailOption = (props) => {
                 }
                 temp.add(e.target.innerText);
                 props.setData(temp);
-                console.log(e.target.innerText);
-                //assign id 추가 라우터
+                const data = [];
+                temp.forEach(assingId => {
+                    data.push(assingId);
+                });
+                axios({
+                    method: "PUT",
+                    url: "http://localhost:3000/issue",
+                    data: {
+                        mode: 5,
+                        issueId: props.issueId,
+                        assignId: data,
+                    },
+                    withCredentials: true,
+                }).then(res => {
+                    const tempLocalStorage = JSON.parse(localStorage.issueData);
+                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].assignId.push(e.target.innerText);
+                    localStorage.setItem(
+                        "issueData",
+                        JSON.stringify(tempLocalStorage),
+                    );
+                });
 
                 break;
             }
             case "Label": {
                 const temp = new Set();
-                console.log(props);
-                for (let item of props.data) {
-                    temp.add(item);
-                }
-                temp.add(e.target.innerText);
                 const idTemp = new Set();
-                for (let item of props.labelId) {
-                    idTemp.add(item);
+                for (let item of props.data) {
+                    temp.add({ id: item.id, content: item.content });
                 }
-                idTemp.add(e.target.getAttribute('id'));
+                temp.add({
+                    id: Number(e.target.getAttribute('id').split('_')[1]),
+                    content: e.target.innerText
+                });
                 props.setData(temp);
-                props.setLabelId(idTemp);
-                //label 추가 라우터
-                
+                const data = [];
+                temp.forEach(label => {
+                    data.push(label.id);
+                })
+                axios({
+                    method: "PUT",
+                    url: "http://localhost:3000/issue",
+                    data: {
+                        mode: 6,
+                        issueId: props.issueId,
+                        labelId: data,
+                    },
+                    withCredentials: true,
+                }).then(res => {
+                    const tempLocalStorage = JSON.parse(localStorage.issueData);
+                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].labelContent.push(e.target.innerText);
+                    tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === props.issueId)].labelId.push(Number(e.target.getAttribute('id').split('_')[1]));
+                    localStorage.setItem(
+                        "issueData",
+                        JSON.stringify(tempLocalStorage),
+                    );
+                });
                 break;
             }
             case "Milestone":
