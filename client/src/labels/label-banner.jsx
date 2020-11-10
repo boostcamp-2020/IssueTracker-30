@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledLabelBanner = styled(Link)`
+const StyledLabelBanner = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -11,8 +11,6 @@ const StyledLabelBanner = styled(Link)`
     width: 100%;
     height: 50px;
     box-shadow: 0 1px 1px -1px rgb(36, 41, 46);
-
-    text-decoration: none;
 
     &:hover {
         background-color: rgba(236, 239, 241, 1);
@@ -23,8 +21,10 @@ const StyledLabelBanner = styled(Link)`
         outline: none;
     }
 `;
-const StyledLabelTagDiv = styled.div`
+const StyledLabelTagDiv = styled(Link)`
     width: 250px;
+
+    text-decoration: none;
 `;
 
 const StyledLabelTag = styled.div`
@@ -83,8 +83,8 @@ const StyledLabelEditDeleteButton = styled.button`
 const LabelBanner = ({ data }) => {
     const { color, content, detail } = data;
     return (
-        <StyledLabelBanner to="/">
-            <StyledLabelTagDiv>
+        <StyledLabelBanner>
+            <StyledLabelTagDiv to="/">
                 <StyledLabelTag color={color}>{content}</StyledLabelTag>
             </StyledLabelTagDiv>
             <StyledLabelDetail>{detail || content}</StyledLabelDetail>
