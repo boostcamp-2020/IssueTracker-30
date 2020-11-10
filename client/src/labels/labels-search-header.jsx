@@ -28,7 +28,7 @@ const StyledSearchInputs = styled.div`
     width: 590px;
 `;
 
-const SearchHeader = ({ getRandomColor }) => {
+const SearchHeader = ({ getRandomColor, filterText, setFilterText }) => {
     const [isNewAreaVisible, setIsNewAreaVisible] = useState(false);
 
     return (
@@ -36,7 +36,10 @@ const SearchHeader = ({ getRandomColor }) => {
             <StyledDefaultHeader>
                 <StyledSearchInputs>
                     <HeaderButtons />
-                    <HeaderSearchInput />
+                    <HeaderSearchInput
+                        filterText={filterText}
+                        setFilterText={setFilterText}
+                    />
                 </StyledSearchInputs>
                 <HeaderNewButton setIsNewAreaVisible={setIsNewAreaVisible} />
             </StyledDefaultHeader>
