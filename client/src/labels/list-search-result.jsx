@@ -31,7 +31,7 @@ const ListSearchResult = ({ labelsData, numOfLabel, getRandomColor }) => {
         <StyledLablesList>
             {labelsData.map((ele) => (
                 <LabelBanner
-                    key={ele.id}
+                    key={ele.ID}
                     data={ele}
                     getRandomColor={getRandomColor}
                 />
