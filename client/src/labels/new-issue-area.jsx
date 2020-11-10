@@ -41,6 +41,7 @@ const NewIssueArea = ({
                 contents={contents}
                 setContents={setContents}
                 getRandomColor={getRandomColor}
+                isEditorVisible={isNewAreaVisible}
                 setIsNewAreaVisible={setIsNewAreaVisible}
             />
         </StyledNewIssueWrapper>

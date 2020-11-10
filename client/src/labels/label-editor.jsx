@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const StyledEditorWrapper = styled.div`
-    display: flex;
+    display: ${(props) => (props.isEditorVisible ? "flex" : "none")};
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-start;
@@ -27,7 +27,13 @@ const StyledEditNameInput = styled.input.attrs({
     placeholder: "Label Name",
 })`
     width: 98%;
-    height: 20px;
+    height: 25px;
+    padding: 0 10px;
+    font-size: 13px;
+
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 rgb(36, 41, 46);
 `;
 
 const StyledEditDesc = styled.div`
@@ -36,7 +42,7 @@ const StyledEditDesc = styled.div`
     justify-content: space-between;
     align-items: flex-start;
 
-    width: 380px;
+    width: 350px;
     height: 100%;
     font-weight: bold;
 `;
@@ -45,7 +51,13 @@ const StyledEditDescInput = styled.input.attrs({
     placeholder: "Description(optional)",
 })`
     width: 98%;
-    height: 20px;
+    height: 25px;
+    padding: 0 10px;
+    font-size: 13px;
+
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 rgb(36, 41, 46);
 `;
 
 const StyledEditColor = styled.div`
@@ -72,10 +84,11 @@ const StyledEditColorRefreshButton = styled.button`
     justify-content: center;
     align-items: center;
 
-    width: 23px;
-    height: 23px;
+    width: 25px;
+    height: 25px;
     border: 0;
     border-radius: 5px;
+    box-shadow: 0 0 2px 0 rgb(36, 41, 46);
     background-color: ${(props) => props.color};
 
     &:hover {
@@ -91,8 +104,15 @@ const StyledEditColorRefreshSvg = styled.svg``;
 
 const StyledEditColorInput = styled.input`
     width: 60px;
-    height: 98%;
-    height: 20px;
+    height: 25px;
+    padding: 0 5px;
+
+    font-size: 13px;
+    text-align: center;
+
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 rgb(36, 41, 46);
 `;
 
 const StyledButtonsWrapper = styled.div`
@@ -121,9 +141,9 @@ const StyledCancelButton = styled.button`
 
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
-    font-size: 12px;
+    font-size: 13px;
 
-    height: 25px;
+    height: 27px;
     padding: 0 10px;
 
     border: 0;
@@ -146,9 +166,10 @@ const StyledSaveButton = styled.button`
 
     background-color: rgb(46, 164, 79);
     color: rgb(255, 255, 255);
-    font-size: 12px;
+    font-size: 13px;
 
-    height: 25px;
+    width: max-content;
+    height: 27px;
     padding: 0 10px;
 
     border: 0;
