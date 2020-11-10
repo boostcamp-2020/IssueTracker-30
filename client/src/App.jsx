@@ -8,6 +8,7 @@ import MainSection from "./main-section.jsx";
 import Footer from "./components/footer.jsx";
 import DetailIssue from "./detailIssue/detail-issue.jsx";
 import Labels from "./labels/labels-list.jsx";
+import Milestones from "./milestones/milestones-list.jsx";
 
 const StyledRouter = styled(Router)`
     display: flex;
@@ -99,6 +100,7 @@ const App = () => {
                 </Route>
                 <Route path="/detail/:issueId" component={DetailIssue} />
                 <Route path="/labels" component={Labels} />
+                <Route path="/milestones" component={Milestones} />
                 <Route path="/">
                     <MainSection mode={mode} />
                 </Route>

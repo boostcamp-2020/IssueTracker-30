@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import SearchHeader from "./labels-search-header.jsx";
-import SearchResults from "./search-list.jsx";
+import SearchResults from "../components/search-list.jsx";
 
 const StyledLabelList = styled.div`
   display: flex;

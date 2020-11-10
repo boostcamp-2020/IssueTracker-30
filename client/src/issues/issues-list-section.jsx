@@ -190,8 +190,8 @@ const IssuesListSection = (props) => {
             filterOptions[key] = [value];
         }
     });
-    
-    if(!issueData) return <div></div>
+
+    if (!issueData) return <div></div>
 
     const numOfOpenIssue = issueData.filter((v) => v.status).length;
     const numOfClosedIssue = issueData.length - numOfOpenIssue;
@@ -362,28 +362,28 @@ const IssuesListSection = (props) => {
                         labelContent,
                         assignId,
                     }) => (
-                        <ItemBanner
-                            key={issueId}
-                            issueTitle={issueTitle}
-                            issueId={issueId}
-                            userId={userId}
-                            status={status}
-                            writingTime={writingTime}
-                            checked={checked}
-                            func={setChecked}
-                            func2={setCheckedFrom}
-                            count={showingFilteredIssueData.length}
-                            selectedFunc={setSelectedCount}
-                            excludeIssueFunc={setExcludeIssue}
-                            addIssueFunc={setAddIssue}
-                            assignId={assignId}
-                            labelInfo={{
-                                color: labelColor,
-                                content: labelContent,
-                            }}
-                            addOptionToTextInput={props.addOptionToTextInput}
-                        />
-                    )
+                            <ItemBanner
+                                key={issueId}
+                                issueTitle={issueTitle}
+                                issueId={issueId}
+                                userId={userId}
+                                status={status}
+                                writingTime={writingTime}
+                                checked={checked}
+                                func={setChecked}
+                                func2={setCheckedFrom}
+                                count={showingFilteredIssueData.length}
+                                selectedFunc={setSelectedCount}
+                                excludeIssueFunc={setExcludeIssue}
+                                addIssueFunc={setAddIssue}
+                                assignId={assignId}
+                                labelInfo={{
+                                    color: labelColor,
+                                    content: labelContent,
+                                }}
+                                addOptionToTextInput={props.addOptionToTextInput}
+                            />
+                        )
                 )}
                 <StyledNoContent noContent={noContent}>
                     <p>No result matched your search.</p>

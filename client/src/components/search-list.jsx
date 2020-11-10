@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import ListInfoBar from "./list-info-bar.jsx";
-import ListSearchResult from "./list-search-result.jsx";
+import ListSearchResult from "../labels/list-search-result.jsx";
 
 const StyledList = styled.div`
   width: 900px;

@@ -65,6 +65,7 @@ const StyledMilestoneButton = styled(Link)`
 const StyledLabelMilestoneText = styled.div`
     border: 0;
     margin: 0 5px;
+    color: black;
 `;
 
 const StyledLabelMilestoneNumber = styled.div`
@@ -110,7 +111,7 @@ const LabelMilestoneButtons = () => {
                 </StyledLabelMilestoneNumber>
             </StyledLabelButton>
 
-            <StyledMilestoneButton to="/">
+            <StyledMilestoneButton to="/milestones">
                 <svg
                     viewBox="0 0 16 16"
                     version="1.1"
