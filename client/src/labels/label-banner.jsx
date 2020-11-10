@@ -9,9 +9,9 @@ const StyledLabelBanner = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: center;
 
-    width: 100%;
+    width: 900px;
     min-height: 50px;
     padding: 10px 0;
     box-shadow: 0 1px 1px -1px rgb(36, 41, 46);
@@ -100,11 +100,6 @@ const StyledLabelEditDeleteButton = styled.button`
     }
 `;
 
-const StyledLabelEditorWrapper = styled.div`
-    display: ${(props) => (props.isEditorVisible ? "flex" : "none")};
-    width: 100%;
-`;
-
 const LabelBanner = ({
     data: { ID, color, content: name, description: desc },
     getRandomColor,
@@ -182,17 +177,15 @@ const LabelBanner = ({
                 </StyledLabelEditDeleteDiv>
             </StyledLabelInfo>
 
-            <StyledLabelEditorWrapper isEditorVisible={isEditorVisible}>
-                <LabelEditor
-                    mode={"edit"}
-                    contents={contents}
-                    setContents={setContents}
-                    getRandomColor={getRandomColor}
-                    isEditorVisible={isEditorVisible}
-                    setIsNewAreaVisible={setEditorVisible}
-                    setIsEditButtonVisible={setIsEditButtonVisible}
-                />
-            </StyledLabelEditorWrapper>
+            <LabelEditor
+                mode={"edit"}
+                contents={contents}
+                setContents={setContents}
+                getRandomColor={getRandomColor}
+                isEditorVisible={isEditorVisible}
+                setIsNewAreaVisible={setEditorVisible}
+                setIsEditButtonVisible={setIsEditButtonVisible}
+            />
         </StyledLabelBanner>
     );
 };

@@ -14,8 +14,7 @@ const StyledList = styled.div`
     border-radius: 5px;
     box-shadow: 0 0 2px 0 rgb(36, 41, 46);
 
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-        sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 400;
     font-size: 12px;
 `;
