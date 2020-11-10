@@ -21,14 +21,31 @@ const StyledList = styled.div`
 `;
 
 const labelsData = JSON.parse(localStorage.getItem("labelsData"));
-const numOfLabel = labelsData?.length || 0;
 
-const SearchList = ({ getRandomColor }) => {
+const compareDataWithFilter = (dataText, filterTextLine) => {
+    if (filterTextLine === "") return true;
+    const splittedText = filterTextLine.split(" ");
+
+    for (let t of splittedText) {
+        if (t !== "" && dataText.includes(t)) return true;
+    }
+    return false;
+};
+
+const SearchList = ({ getRandomColor, filterText }) => {
+    const filteredData = labelsData?.filter(
+        (ele) =>
+            compareDataWithFilter(ele.content, filterText) ||
+            compareDataWithFilter(ele.description, filterText) ||
+            compareDataWithFilter(ele.color, filterText)
+    );
+    const numOfLabel = filteredData?.length || 0;
+
     return (
         <StyledList>
             <ListInfoBar numOfLabel={numOfLabel} />
             <ListSearchResult
-                labelsData={labelsData}
+                labelsData={filteredData}
                 numOfLabel={numOfLabel}
                 getRandomColor={getRandomColor}
             />

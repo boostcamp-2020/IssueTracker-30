@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import SearchHeader from "./labels-search-header.jsx";
@@ -12,6 +12,8 @@ const StyledLabelList = styled.div`
 `;
 
 const LabelsList = () => {
+    const [filterText, setFilterText] = useState("");
+
     const getRandomColor = () =>
         `#${[...Array(6).keys()]
             .map(() => Math.floor(Math.random() * 16).toString(16))
@@ -20,8 +22,15 @@ const LabelsList = () => {
 
     return (
         <StyledLabelList>
-            <SearchHeader getRandomColor={getRandomColor} />
-            <SearchResults getRandomColor={getRandomColor} />
+            <SearchHeader
+                getRandomColor={getRandomColor}
+                filterText={filterText}
+                setFilterText={setFilterText}
+            />
+            <SearchResults
+                getRandomColor={getRandomColor}
+                filterText={filterText}
+            />
         </StyledLabelList>
     );
 };
