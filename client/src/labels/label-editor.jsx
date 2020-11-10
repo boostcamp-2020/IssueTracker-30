@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const StyledEditorWrapper = styled.div`
     display: flex;
@@ -138,7 +139,7 @@ const StyledCancelButton = styled.button`
     }
 `;
 
-const StyledCreateButton = styled.button`
+const StyledSaveButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,7 +173,7 @@ const LabelEditor = ({
     setIsNewAreaVisible,
     setIsEditButtonVisible,
 }) => {
-    const { name, desc, color } = contents;
+    const { ID, name, desc, color } = contents;
 
     const onNameInputChange = (e) => {
         setContents({ ...contents, name: e.currentTarget.value });
@@ -196,8 +197,63 @@ const LabelEditor = ({
         setIsEditButtonVisible ? setIsEditButtonVisible(true) : "";
     };
 
-    const onCreateLabelClick = () => {
-        alert("label 생성 버튼 클릭");
+    const onSaveLabelClick = () => {
+        if (!name || !color) {
+            alert("레이블명 또는 색상이 입력되지 않았습니다.");
+            return;
+        }
+
+        const data = {
+            labelId: ID,
+            content: name,
+            color,
+            description: desc,
+        };
+
+        const axiosOptions =
+            mode === "new"
+                ? {
+                      method: "POST",
+                      url: "http://localhost:3000/label",
+                      data,
+                      withCredentials: true,
+                  }
+                : {
+                      method: "PUT",
+                      url: "http://localhost:3000/label",
+                      data,
+                      withCredentials: true,
+                  };
+
+        const successMessage =
+            mode === "new"
+                ? `새로운 레이블 "${name}"이 추가되었습니다!`
+                : `레이블 ${name}이 수정되었습니다!`;
+
+        axios(axiosOptions)
+            .then((res) => {
+                let isSuccess = false;
+                if (res.data.message === "success") {
+                    alert(successMessage);
+                    isSuccess = true;
+                }
+                return isSuccess;
+            })
+            .then((isSuccess) => {
+                if (isSuccess) {
+                    axios({
+                        method: "GET",
+                        url: "http://localhost:3000/label",
+                        withCredentials: true,
+                    }).then((labels) => {
+                        localStorage.setItem(
+                            "labelsData",
+                            JSON.stringify(labels.data)
+                        );
+                        location.href = "/labels";
+                    });
+                }
+            });
     };
 
     return (
@@ -247,9 +303,9 @@ const LabelEditor = ({
                     <StyledCancelButton onClick={onCancelButtonClick}>
                         Cancel
                     </StyledCancelButton>
-                    <StyledCreateButton onClick={onCreateLabelClick}>
+                    <StyledSaveButton onClick={onSaveLabelClick}>
                         {mode === "new" ? "Create Label" : "Save Changes"}
-                    </StyledCreateButton>
+                    </StyledSaveButton>
                 </StyledButtons>
             </StyledButtonsWrapper>
         </StyledEditorWrapper>

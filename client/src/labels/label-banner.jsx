@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+
 import LabelEditor from "./label-editor.jsx";
 
 const StyledLabelBanner = styled.div`
@@ -104,12 +106,13 @@ const StyledLabelEditorWrapper = styled.div`
 `;
 
 const LabelBanner = ({
-    data: { color, content: name, description: desc },
+    data: { ID, color, content: name, description: desc },
     getRandomColor,
 }) => {
     const [isEditorVisible, setEditorVisible] = useState(false);
     const [isEditButtonVisible, setIsEditButtonVisible] = useState(true);
     const [contents, setContents] = useState({
+        ID,
         name,
         desc,
         color,
@@ -118,6 +121,42 @@ const LabelBanner = ({
     const onEditButtonClick = () => {
         setEditorVisible(true);
         setIsEditButtonVisible(false);
+    };
+
+    const onDeleteButtonClick = () => {
+        const isReallyDelete = confirm("정말 삭제하시겠습니까?");
+
+        if (isReallyDelete) {
+            axios({
+                method: "DELETE",
+                url: "http://localhost:3000/label",
+                data: { labelId: ID },
+                withCredentials: true,
+            })
+                .then((res) => {
+                    let isSuccess = false;
+                    if (res.data.message === "success") {
+                        alert(`레이블 "${name}"가 삭제되었습니다!`);
+                        isSuccess = true;
+                    }
+                    return isSuccess;
+                })
+                .then((isSuccess) => {
+                    if (isSuccess) {
+                        axios({
+                            method: "GET",
+                            url: "http://localhost:3000/label",
+                            withCredentials: true,
+                        }).then((labels) => {
+                            localStorage.setItem(
+                                "labelsData",
+                                JSON.stringify(labels.data)
+                            );
+                            location.href = "/labels";
+                        });
+                    }
+                });
+        }
     };
 
     return (
@@ -134,7 +173,10 @@ const LabelBanner = ({
                     >
                         Edit
                     </StyledLabelEditDeleteButton>
-                    <StyledLabelEditDeleteButton visible={true}>
+                    <StyledLabelEditDeleteButton
+                        visible={true}
+                        onClick={onDeleteButtonClick}
+                    >
                         Delete
                     </StyledLabelEditDeleteButton>
                 </StyledLabelEditDeleteDiv>
