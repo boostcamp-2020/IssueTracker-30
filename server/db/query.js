@@ -25,9 +25,15 @@ const query = {
     updateComment: `UPDATE comment SET comment=?, writingTime=? WHERE ID = ?;`,
     deleteComment: `DELETE FROM comment WHERE ID = ?`,
     getUser: `select userId, imageURL from user`,
-    getLabel: `SELECT ID, content, color FROM label`,
+    getLabel: `SELECT ID, content, color, description FROM label`,
     getMilestone: `SELECT ID, title, dueDate, description FROM milestone`,
     insertUserImage: `UPDATE user SET imageURL = ? WHERE userId = ? `,
+    insertLabel: `INSERT INTO label (content, color, description) VALUES (?,?,?);`,
+    updateLabel: `UPDATE label SET content=?, color=?, description=? WHERE ID = ?;`,
+    deleteLabel: `DELETE FROM label WHERE ID=?;`,
+    insertMilestone: `INSERT INTO milestone (title, dueDate, description) VALUES (?,?,?);`,
+    updateMilestone: `UPDATE milestone SET title=?, dueDate=?, description=? WHERE ID = ?;`,
+    deleteMilestone: `DELETE FROM milestone WHERE ID=?;`,
 }
 
 module.exports = query;

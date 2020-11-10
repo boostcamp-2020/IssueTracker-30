@@ -6,11 +6,12 @@ import DetailIssueComment from "./detail-issue-comment.jsx";
 import axios from "axios";
 
 const DetailIssueContentDiv = styled.div`
-    /* position: absolute; */
-    top: 25%;
+    position: absolute;
+    top: 28%;
     left: 20%;
-    width: 60%;
-    height: 80%;
+    width: 47%;
+    height: 40%;
+    overflow-y: scroll;
 `;
 
 const HrLine = styled.hr`
@@ -44,8 +45,7 @@ const DetailIssueCenter = (issue) => {
     }, []);
     return (
         <>
-            <DetailIssueContentDiv>
-                <HrLine></HrLine>
+            <DetailIssueContentDiv>    
                 <DetailIssueComment
                     title={issue.title}
                     id={issue.id}
