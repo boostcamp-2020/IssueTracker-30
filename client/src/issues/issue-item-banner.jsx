@@ -40,7 +40,7 @@ const StyledBannerInnerDiv = styled.div`
     flex-direction: rows;
     align-items: center;
     padding-top: 1%;
-    width: 48vw;
+    width: 920px;
 `;
 
 const StyledBannerTitle = styled.p`
@@ -97,7 +97,7 @@ const StyledAssigneeDiv = styled.div`
 
 const StyledAssignee = styled.img`
     width: 20px;
-    margin-right: 50%;
+    margin-right: 15%;
     box-shadow: 0 0 2px 0px black;
     border-radius: 3px;
 `;
