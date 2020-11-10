@@ -12,10 +12,16 @@ const StyledLabelList = styled.div`
 `;
 
 const LabelsList = () => {
+    const getRandomColor = () =>
+        `#${[...Array(6).keys()]
+            .map(() => Math.floor(Math.random() * 16).toString(16))
+            .join("")
+            .toUpperCase()}`;
+
     return (
         <StyledLabelList>
-            <SearchHeader />
-            <SearchResults />
+            <SearchHeader getRandomColor={getRandomColor} />
+            <SearchResults getRandomColor={getRandomColor} />
         </StyledLabelList>
     );
 };

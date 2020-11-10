@@ -28,7 +28,7 @@ const StyledSearchInputs = styled.div`
     width: 590px;
 `;
 
-const SearchHeader = () => {
+const SearchHeader = ({ getRandomColor }) => {
     const [isNewAreaVisible, setIsNewAreaVisible] = useState(false);
 
     return (
@@ -43,6 +43,7 @@ const SearchHeader = () => {
             <NewIssueArea
                 isNewAreaVisible={isNewAreaVisible}
                 setIsNewAreaVisible={setIsNewAreaVisible}
+                getRandomColor={getRandomColor}
             />
         </StyledHeader>
     );

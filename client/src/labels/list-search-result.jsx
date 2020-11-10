@@ -23,14 +23,18 @@ const StyledLablesList = styled.div`
     height: 100%;
 `;
 
-const ListSearchResult = (props) => {
-    if (props.numOfLabel === 0)
+const ListSearchResult = ({ labelsData, numOfLabel, getRandomColor }) => {
+    if (numOfLabel === 0)
         return <StyledNoLabelsMsg>No Labels</StyledNoLabelsMsg>;
 
     return (
         <StyledLablesList>
-            {props.labelsData.map((ele) => (
-                <LabelBanner key={ele.id} data={ele} />
+            {labelsData.map((ele) => (
+                <LabelBanner
+                    key={ele.id}
+                    data={ele}
+                    getRandomColor={getRandomColor}
+                />
             ))}
         </StyledLablesList>
     );
