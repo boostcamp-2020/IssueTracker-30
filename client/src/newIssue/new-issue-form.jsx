@@ -91,7 +91,7 @@ const newIssueForm = (props) => {
                     <IssueContent content={props.content} setContent={props.setContent} />
                 </StyledContentDiv>
                 <StyledControlDiv>
-                    <IssueControl submit={props.submit} />
+                    <IssueControl submit={props.submit} title={props.title} />
                 </StyledControlDiv>
             </StyledNewIssueSection>
             <StyledTriangleDiv />
