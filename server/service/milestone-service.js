@@ -5,6 +5,54 @@ const MilestoneService = {
     getMilestone: async (req, res) => {
         const [rows] = await connection.query(query.getMilestone);
         res.json(rows);
+    },
+
+    insertMilestone: async (req, res) => {
+        const milestone = {
+            title: req.body.title,
+            dueDate: req.body.dueDate,
+            description: req.body.description
+        }
+
+        const [rows] = await connection.query(query.insertMilestone, [milestone.title, milestone.dueDate, milestone.description]);
+
+        if (rows.affectedRows > 0) {
+            res.json({ message: "success" });
+        }
+        else {
+            res.json({ messages: "Error" });
+        }
+    },
+
+    updateMilestone: async (req, res) => {
+        const milestone = {
+            milestoneId: req.body.milestoneId,
+            title: req.body.title,
+            dueDate: req.body.dueDate,
+            description: req.body.description
+        }
+
+        const [rows] = await connection.query(query.updateMilestone, [milestone.title, milestone.dueDate, milestone.description, milestone.milestoneId]);
+        
+        if (rows.affectedRows > 0) {
+            res.json({ message: "success" });
+        }
+        else {
+            res.json({ messages: "Error" });
+        }
+    },
+
+    deleteMilestone: async (req, res) => {
+        const milestoneId = req.body.milestoneId;
+
+        const [rows] = await connection.query(query.deleteMilestone, [milestoneId]);
+
+        if( rows.affectedRows > 0) {
+            res.json({ message: "success" });
+        }
+        else {
+            res.json({ message: "Error" });
+        }
     }
 }
 

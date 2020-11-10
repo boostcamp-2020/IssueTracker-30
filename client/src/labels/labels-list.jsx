@@ -1,27 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledLabels = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
+import SearchHeader from "./labels-search-header.jsx";
+import SearchResults from "../components/search-list.jsx";
 
-const StyledHeader = styled.header`
-    display: flex;
+const StyledLabelList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `;
-
-const StyledHeaderRadio = styled.input.attrs({
-    type: "radio",
-})``;
 
 const LabelsList = () => {
-    return (
-        <StyledLabels>
-            <StyledHeader>
-                <StyledHeaderRadio />
-            </StyledHeader>
-        </StyledLabels>
-    );
+  return (
+    <StyledLabelList>
+      <SearchHeader />
+      <SearchResults />
+    </StyledLabelList>
+  );
 };
 
 export default LabelsList;
