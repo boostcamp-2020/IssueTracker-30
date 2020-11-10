@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import HeaderOne from "./header-button-one.jsx";
+import HeaderOne from "../components/label-milestone-header.jsx";
 
 const StyledHeaderButtons = styled.div`
     display: flex;
@@ -12,8 +12,8 @@ const StyledHeader = styled.header`
     display: flex;
 `;
 
-const StyledHeaderButtonLabel = HeaderOne("Label");
-const StyledHeaderButtonMiles = HeaderOne("Milestones");
+const StyledHeaderButtonLabel = HeaderOne("Label", 1);
+const StyledHeaderButtonMiles = HeaderOne("Milestones", 0);
 
 const StyledSvg = styled.svg.attrs({
     viewBox: "0 0 16 16",

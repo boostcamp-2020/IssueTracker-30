@@ -8,6 +8,9 @@ import MainSection from "./main-section.jsx";
 import Footer from "./components/footer.jsx";
 import DetailIssue from "./detailIssue/detail-issue.jsx";
 import Labels from "./labels/labels-list.jsx";
+import Milestones from "./milestones/milestones-list.jsx";
+import NewMilestone from "./milestones/new-milestone.jsx"
+import editMilestone from "./milestones/edit-milestone.jsx"
 
 const StyledRouter = styled(Router)`
     display: flex;
@@ -99,6 +102,9 @@ const App = () => {
                 </Route>
                 <Route path="/detail/:issueId" component={DetailIssue} />
                 <Route path="/labels" component={Labels} />
+                <Route path="/milestones" component={Milestones} />
+                <Route path="/newMilestone" component={NewMilestone} />
+                <Route path="/editMilestone/:milestoneId" component={editMilestone} />
                 <Route path="/">
                     <MainSection mode={mode} />
                 </Route>

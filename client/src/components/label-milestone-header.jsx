@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const StyledHeaderOne = name => styled.div`
-  background-color: ${name === "Label"
+const StyledHeaderOne = (name,color) => styled.button`
+  background-color: ${color === 1
     ? `rgb(3, 102, 214)`
     : `rgb(255,255,255)`};
-  color: ${name === "Label" ? `rgb(255, 255, 255)` : `rgb(36, 41, 46)`};
+  color: ${color === 1 ? `rgb(255, 255, 255)` : `rgb(36, 41, 46)`};
 
   display: flex;
   justify-content: center;
@@ -23,7 +23,7 @@ const StyledHeaderOne = name => styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: ${name === "Label"
+    background-color: ${color === 1
       ? `rgb(3, 102, 214)`
       : `rgb(236, 238, 240)`};
   }

@@ -26,38 +26,39 @@ const newIssue = () => {
     const [milestone, setMilestone] = useState('');
 
     const submit = () => {
-        if(confirm("이슈를 등록하시겠습니까?")){
+        if (title.length < 1) return;
+        if (confirm("이슈를 등록하시겠습니까?")) {
             const filteredLabelId = [];
 
-        labelId.forEach(element => {
-            filteredLabelId.push(Number(element.split('_')[1]))
-        });
+            labelId.forEach(element => {
+                filteredLabelId.push(Number(element.split('_')[1]))
+            });
 
-        const data = {
-            title,
-            writingTime: getDateTime(),
-            status: 1,
-            milestoneId: Number(milestone.id),
-            content,
-            labelId: filteredLabelId,
-            assignId: assignee
-        };
-        axios({
-            method: "POST",
-            url: "http://localhost:3000/issue",
-            data,
-            withCredentials: true,
-        }).then((res) => {
-            if (res.data.message === "success") {
-                alert("이슈를 등록하였습니다!");
-                location.href = "/"
-            }
-        });
+            const data = {
+                title,
+                writingTime: getDateTime(),
+                status: 1,
+                milestoneId: Number(milestone.id),
+                content,
+                labelId: filteredLabelId,
+                assignId: assignee
+            };
+            axios({
+                method: "POST",
+                url: "http://localhost:3000/issue",
+                data,
+                withCredentials: true,
+            }).then((res) => {
+                if (res.data.message === "success") {
+                    alert("이슈를 등록하였습니다!");
+                    location.href = "/"
+                }
+            });
         }
     }
     return (
         <>
-            <NewIssueForm 
+            <NewIssueForm
                 title={title}
                 setTitle={setTitle}
                 content={content}
