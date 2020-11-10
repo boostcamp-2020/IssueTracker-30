@@ -39,7 +39,7 @@ router.get("/github/callback", (req, res) => {
         }
         axios.get('https://api.github.com/user', config)
         .then((loginData) => {
-            const token = jwt.sign({ user: {id: loginData.data.login}}, process.env.secret_key, { expiresIn: 3000 });
+            const token = jwt.sign({ user: {id: `${loginData.data.login}_Github`}}, process.env.secret_key, { expiresIn: 3000 });
 
             axios({
                 method: "POST",
@@ -51,8 +51,15 @@ router.get("/github/callback", (req, res) => {
                 withCredentials: true,
             })
                 .then(() => {
-                    res.cookie('user', token, { maxAge: 3000 * 1000 });
-                    res.redirect("http://localhost:3030")
+                    axios({
+                        method: "POST",
+                        url: "http://localhost:3000/user/saveImg",
+                        data : { userId:`${loginData.data.login}_Github`, dataUrl: loginData.data.avatar_url },
+                        withCredentials: true,
+                    }).then(() => {
+                        res.cookie('user', token, { maxAge: 3000 * 1000 });
+                        res.redirect("http://localhost:3030")
+                    })
                 });
         })
         .catch(function(err) {

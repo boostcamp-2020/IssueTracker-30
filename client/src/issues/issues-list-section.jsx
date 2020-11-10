@@ -7,7 +7,10 @@ import ItemBanner from "./issue-item-banner.jsx";
 const StyledListSection = styled.section`
     width: 1200px;
     min-height: 300px;
+    max-height: 55vh;
     margin-top: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     border: 1px solid rgba(207, 216, 220, 1);
     border-radius: 7px;
 `;
@@ -187,8 +190,8 @@ const IssuesListSection = (props) => {
             filterOptions[key] = [value];
         }
     });
-    
-    if(!issueData) return <div></div>
+
+    if (!issueData) return <div></div>
 
     const numOfOpenIssue = issueData.filter((v) => v.status).length;
     const numOfClosedIssue = issueData.length - numOfOpenIssue;
@@ -359,28 +362,28 @@ const IssuesListSection = (props) => {
                         labelContent,
                         assignId,
                     }) => (
-                        <ItemBanner
-                            key={issueId}
-                            issueTitle={issueTitle}
-                            issueId={issueId}
-                            userId={userId}
-                            status={status}
-                            writingTime={writingTime}
-                            checked={checked}
-                            func={setChecked}
-                            func2={setCheckedFrom}
-                            count={showingFilteredIssueData.length}
-                            selectedFunc={setSelectedCount}
-                            excludeIssueFunc={setExcludeIssue}
-                            addIssueFunc={setAddIssue}
-                            assignId={assignId}
-                            labelInfo={{
-                                color: labelColor,
-                                content: labelContent,
-                            }}
-                            addOptionToTextInput={props.addOptionToTextInput}
-                        />
-                    )
+                            <ItemBanner
+                                key={issueId}
+                                issueTitle={issueTitle}
+                                issueId={issueId}
+                                userId={userId}
+                                status={status}
+                                writingTime={writingTime}
+                                checked={checked}
+                                func={setChecked}
+                                func2={setCheckedFrom}
+                                count={showingFilteredIssueData.length}
+                                selectedFunc={setSelectedCount}
+                                excludeIssueFunc={setExcludeIssue}
+                                addIssueFunc={setAddIssue}
+                                assignId={assignId}
+                                labelInfo={{
+                                    color: labelColor,
+                                    content: labelContent,
+                                }}
+                                addOptionToTextInput={props.addOptionToTextInput}
+                            />
+                        )
                 )}
                 <StyledNoContent noContent={noContent}>
                     <p>No result matched your search.</p>

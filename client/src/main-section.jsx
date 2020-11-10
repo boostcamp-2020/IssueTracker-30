@@ -4,7 +4,7 @@ import styled from "styled-components";
 import LoginForm from "./login-form.jsx";
 import IssueList from "./issues/list.jsx";
 import NewIssue from "./newIssue/new-issue.jsx";
-import Milestones from "./milestones/milestones.jsx";
+import Milestones from "./milestones/milestones-list.jsx";
 
 const StyledMainSection = styled.div`
     display: flex;
