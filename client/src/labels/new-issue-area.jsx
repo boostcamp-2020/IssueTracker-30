@@ -23,21 +23,21 @@ const StyledNewIssueWrapper = styled.div`
     font-size: 12px;
 `;
 
-const NewIssueArea = ({ isNewAreaVisible, setIsNewAreaVisible }) => {
-    const getRandomColor = `#${[...Array(6).keys()]
-        .map((e) => Math.floor(Math.random() * 16).toString(16))
-        .join("")}`;
-
+const NewIssueArea = ({
+    isNewAreaVisible,
+    setIsNewAreaVisible,
+    getRandomColor,
+}) => {
     const [contents, setContents] = useState({
         name: "Label Preview",
         desc: "",
-        color: getRandomColor,
+        color: getRandomColor(),
     });
-
     return (
         <StyledNewIssueWrapper isNewAreaVisible={isNewAreaVisible}>
             <LabelPreviewer contents={contents} />
             <LabelEditor
+                mode={"new"}
                 contents={contents}
                 setContents={setContents}
                 getRandomColor={getRandomColor}

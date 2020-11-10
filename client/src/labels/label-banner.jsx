@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import styled from "styled-components";
+import LabelEditor from "./label-editor.jsx";
 
 const StyledLabelBanner = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
 
     width: 100%;
-    height: 50px;
+    min-height: 50px;
+    padding: 10px 0;
     box-shadow: 0 1px 1px -1px rgb(36, 41, 46);
 
     &:hover {
@@ -21,6 +23,17 @@ const StyledLabelBanner = styled.div`
         outline: none;
     }
 `;
+
+const StyledLabelInfo = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 100%;
+    height: 50px;
+`;
+
 const StyledLabelTagDiv = styled(Link)`
     width: 250px;
 
@@ -66,6 +79,7 @@ const StyledLabelEditDeleteDiv = styled.div`
 `;
 
 const StyledLabelEditDeleteButton = styled.button`
+    display: ${(props) => (props.visible ? "block" : "none")};
     width: auto;
 
     border: none;
@@ -78,22 +92,65 @@ const StyledLabelEditDeleteButton = styled.button`
     &:hover {
         cursor: pointer;
     }
+
+    &:focus {
+        outline: none;
+    }
 `;
 
-const LabelBanner = ({ data }) => {
-    const { color, content, detail } = data;
+const StyledLabelEditorWrapper = styled.div`
+    display: ${(props) => (props.isEditorVisible ? "flex" : "none")};
+    width: 100%;
+`;
+
+const LabelBanner = ({
+    data: { color, content: name, description: desc },
+    getRandomColor,
+}) => {
+    const [isEditorVisible, setEditorVisible] = useState(false);
+    const [isEditButtonVisible, setIsEditButtonVisible] = useState(true);
+    const [contents, setContents] = useState({
+        name,
+        desc,
+        color,
+    });
+
+    const onEditButtonClick = () => {
+        setEditorVisible(true);
+        setIsEditButtonVisible(false);
+    };
+
     return (
         <StyledLabelBanner>
-            <StyledLabelTagDiv to="/">
-                <StyledLabelTag color={color}>{content}</StyledLabelTag>
-            </StyledLabelTagDiv>
-            <StyledLabelDetail>{detail || content}</StyledLabelDetail>
-            <StyledLabelEditDeleteDiv>
-                <StyledLabelEditDeleteButton>Edit</StyledLabelEditDeleteButton>
-                <StyledLabelEditDeleteButton>
-                    Delete
-                </StyledLabelEditDeleteButton>
-            </StyledLabelEditDeleteDiv>
+            <StyledLabelInfo>
+                <StyledLabelTagDiv to="/">
+                    <StyledLabelTag color={color}>{name}</StyledLabelTag>
+                </StyledLabelTagDiv>
+                <StyledLabelDetail>{desc || name}</StyledLabelDetail>
+                <StyledLabelEditDeleteDiv>
+                    <StyledLabelEditDeleteButton
+                        visible={isEditButtonVisible}
+                        onClick={onEditButtonClick}
+                    >
+                        Edit
+                    </StyledLabelEditDeleteButton>
+                    <StyledLabelEditDeleteButton visible={true}>
+                        Delete
+                    </StyledLabelEditDeleteButton>
+                </StyledLabelEditDeleteDiv>
+            </StyledLabelInfo>
+
+            <StyledLabelEditorWrapper isEditorVisible={isEditorVisible}>
+                <LabelEditor
+                    mode={"edit"}
+                    contents={contents}
+                    setContents={setContents}
+                    getRandomColor={getRandomColor}
+                    isEditorVisible={isEditorVisible}
+                    setIsNewAreaVisible={setEditorVisible}
+                    setIsEditButtonVisible={setIsEditButtonVisible}
+                />
+            </StyledLabelEditorWrapper>
         </StyledLabelBanner>
     );
 };
