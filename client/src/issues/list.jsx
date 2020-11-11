@@ -84,7 +84,7 @@ const IssueList = () => {
                 setTextInput={setTextInput}
             />
             <IssuesList
-                filterOptions={textInput}
+                textInput={textInput}
                 addOptionToTextInput={addOptionToTextInput}
             />
         </StyledListDiv>
