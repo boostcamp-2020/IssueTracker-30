@@ -37,6 +37,7 @@ const loginCheck = async () => {
 
 const App = () => {
     const [mode, setMode] = useState("main");
+    console.log("app.js");
 
     useEffect(() => {
         loginCheck().then(async (res) => {
@@ -79,6 +80,7 @@ const App = () => {
                     url: "http://localhost:3000/milestone/",
                     withCredentials: true,
                 }).then((milestones) => {
+                    console.log("then");
                     localStorage.setItem(
                         "milestonesData",
                         JSON.stringify(milestones.data)
