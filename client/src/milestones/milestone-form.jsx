@@ -7,17 +7,17 @@ const NewMilestoneDiv = styled.div`
 
 const StyledTitleInput = styled.input`
     width: 440px;
-    height: 20px;
+    height: 25px;
 `;
 
 const StyledDueDateInput = styled.input`
     width: 440px;
-    height: 20px;
+    height: 25px;
 `;
 
 const StyledDescriptionTextarea = styled.textarea`
-    width: 50%;
-    height: 200px
+    width: 35%;
+    height: 230px;
 `;
 
 export default function MilestoneForm(props) {
@@ -41,8 +41,6 @@ export default function MilestoneForm(props) {
             <StyledDueDateInput type="date" onChange={dateChangeHandler} value={props.date}></StyledDueDateInput>
             <h5 style={{ marginBlockEnd: "5px" }}>Description (optional)</h5>
             <StyledDescriptionTextarea
-                cols="30"
-                rows="10"
                 value={props.description}
                 onChange={descChangeHandler}
             ></StyledDescriptionTextarea>

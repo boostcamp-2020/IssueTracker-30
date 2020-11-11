@@ -16,9 +16,11 @@ const StyledCreateMilestoneButton = styled.button`
     float: right;
     cursor: pointer;
     outline: none;
-    margin-top: 1%;
+    margin-top: 0.5%;
     margin-right: 5%;
     background: linear-gradient(rgba(51,205,86,1) 0%, rgba(41,171,71,1) 100%);
+    border-radius: 5px;
+    height: 30px;
 `;
 
 const newMilestones = () => {
