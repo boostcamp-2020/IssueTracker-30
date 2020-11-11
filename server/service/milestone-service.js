@@ -11,11 +11,11 @@ const MilestoneService = {
         const milestone = {
             title: req.body.title,
             dueDate: req.body.dueDate,
-            description: req.body.description
+            description: req.body.description,
+            status: req.body.status
         }
 
-        const [rows] = await connection.query(query.insertMilestone,
-            [milestone.title, milestone.dueDate, milestone.description, milestone.status]);
+        const [rows] = await connection.query(query.insertMilestone, [milestone.title, milestone.dueDate, milestone.description, milestone.status]);
 
         if (rows.affectedRows > 0) {
             res.json({ message: "success" });
@@ -37,6 +37,8 @@ const MilestoneService = {
         const [rows] = await connection.query(query.updateMilestone,
             [milestone.title, milestone.dueDate, milestone.description, milestone.status, milestone.milestoneId]);
 
+        const [rows] = await connection.query(query.updateMilestone, [milestone.title, milestone.dueDate, milestone.description, milestone.status, milestone.milestoneId]);
+        
         if (rows.affectedRows > 0) {
             res.json({ message: "success" });
         }

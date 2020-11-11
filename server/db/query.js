@@ -34,6 +34,6 @@ const query = {
     insertMilestone: `INSERT INTO milestone (title, dueDate, description, status) VALUES (?,?,?,?);`,
     updateMilestone: `UPDATE milestone SET title=?, dueDate=?, description=?, status=? WHERE ID = ?;`,
     deleteMilestone: `DELETE FROM milestone WHERE ID=?;`,
-}
+};
 
 module.exports = query;

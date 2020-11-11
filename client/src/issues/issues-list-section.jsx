@@ -113,7 +113,7 @@ const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
     return copiedOptionsArr.length === 0 ? true : false;
 };
 
-const IssuesListSection = (props) => {
+const IssuesListSection = ({ textInput, addOptionToTextInput }) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(true);
     const [checkedFromChild, setCheckedFrom] = useState(false);
@@ -150,10 +150,10 @@ const IssuesListSection = (props) => {
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
             setOpenClosedRadio(1);
-            props.addOptionToTextInput("is:open");
+            addOptionToTextInput("is:open");
         } else {
             setOpenClosedRadio(0);
-            props.addOptionToTextInput("is:closed");
+            addOptionToTextInput("is:closed");
         }
     };
 
@@ -180,8 +180,10 @@ const IssuesListSection = (props) => {
         { key: 0, value: "Closed" },
     ];
 
+    if (!issueData) return <div></div>;
+
     const filterOptions = {};
-    const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
+    const filterOptionsModifier = textInput.split(" ").map((ele) => {
         let [key, value] = ele.split(":");
         if (!value) [key, value] = ["title", key];
         if (Object.keys(filterOptions).includes(key)) {
@@ -190,11 +192,6 @@ const IssuesListSection = (props) => {
             filterOptions[key] = [value];
         }
     });
-
-    if (!issueData) return <div></div>
-
-    const numOfOpenIssue = issueData.filter((v) => v.status).length;
-    const numOfClosedIssue = issueData.length - numOfOpenIssue;
 
     const filteredIssueData = issueData
         .filter((ele) =>
@@ -235,8 +232,9 @@ const IssuesListSection = (props) => {
             ? filterOptions.is[0] === "open"
                 ? ele.status === 1
                 : ele.status === 0
-            : ele
+            : ele.status === 1
     );
+
     const openNums = filteredIssueData.filter((ele) => ele.status === 1).length;
     const closedNums = filteredIssueData.filter((ele) => ele.status === 0)
         .length;
@@ -246,11 +244,12 @@ const IssuesListSection = (props) => {
     }
 
     usersData.forEach((ele) => {
+        const { userId, imageURL } = ele;
         usersLiData.push({
-            key: ele.userId,
-            value: ele.userId,
-            media: ele.userId,
-            imageUrl: ele.imageURL,
+            key: userId,
+            value: userId,
+            media: userId,
+            imageUrl: imageURL,
         });
     });
 
@@ -309,7 +308,7 @@ const IssuesListSection = (props) => {
                         <DropdownMenu
                             name={"MarkAs"}
                             dataArray={markAsData}
-                            addOptionToTextInput={props.addOptionToTextInput}
+                            addOptionToTextInput={addOptionToTextInput}
                             checkedIssue={checkedIssue}
                         />
                     )}
@@ -318,33 +317,25 @@ const IssuesListSection = (props) => {
                             <DropdownMenu
                                 name={"Author"}
                                 dataArray={usersLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                             <DropdownMenu
                                 name={"Label"}
                                 notUseTitle="Unlabeled"
                                 dataArray={labelsLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                             <DropdownMenu
                                 name={"Milestones"}
                                 notUseTitle="Issues with no milestones"
                                 dataArray={milestonesLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                             <DropdownMenu
                                 name={"Assignee"}
                                 notUseTitle="Assigned to nobody"
                                 dataArray={usersLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                         </DropdownMenuDiv>
                     )}
@@ -362,28 +353,28 @@ const IssuesListSection = (props) => {
                         labelContent,
                         assignId,
                     }) => (
-                            <ItemBanner
-                                key={issueId}
-                                issueTitle={issueTitle}
-                                issueId={issueId}
-                                userId={userId}
-                                status={status}
-                                writingTime={writingTime}
-                                checked={checked}
-                                func={setChecked}
-                                func2={setCheckedFrom}
-                                count={showingFilteredIssueData.length}
-                                selectedFunc={setSelectedCount}
-                                excludeIssueFunc={setExcludeIssue}
-                                addIssueFunc={setAddIssue}
-                                assignId={assignId}
-                                labelInfo={{
-                                    color: labelColor,
-                                    content: labelContent,
-                                }}
-                                addOptionToTextInput={props.addOptionToTextInput}
-                            />
-                        )
+                        <ItemBanner
+                            key={issueId}
+                            issueTitle={issueTitle}
+                            issueId={issueId}
+                            userId={userId}
+                            status={status}
+                            writingTime={writingTime}
+                            checked={checked}
+                            func={setChecked}
+                            func2={setCheckedFrom}
+                            count={showingFilteredIssueData.length}
+                            selectedFunc={setSelectedCount}
+                            excludeIssueFunc={setExcludeIssue}
+                            addIssueFunc={setAddIssue}
+                            assignId={assignId}
+                            labelInfo={{
+                                color: labelColor,
+                                content: labelContent,
+                            }}
+                            addOptionToTextInput={addOptionToTextInput}
+                        />
+                    )
                 )}
                 <StyledNoContent noContent={noContent}>
                     <p>No result matched your search.</p>

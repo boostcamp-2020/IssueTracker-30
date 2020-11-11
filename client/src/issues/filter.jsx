@@ -72,6 +72,7 @@ const StyledFilterContent = styled.li`
 
     &:hover {
         background-color: #f6f8fa;
+        cursor: pointer;
     }
 `;
 
@@ -84,17 +85,15 @@ const StyledFilterFooter = styled.li`
     }
 `;
 
-const Filter = (props) => {
+const Filter = ({
+    setTextInput,
+    getTextInput,
+    setFilterTextRemoverVisibility,
+}) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const setTextInput = props.setTextInput;
-    const getTextInput = props.getTextInput;
-    const setFilterTextRemoverVisibility = props.setFilterTextRemoverVisibility;
 
     const onFilterSelectedChange = (e) => {
-        if (e.target) {
-            //TODO
-        }
-        setTextInput(e.target.getAttribute("value"));
+        setTextInput(e.currentTarget.getAttribute("value"));
         setModalVisible(!modalVisible);
     };
 
@@ -105,18 +104,6 @@ const Filter = (props) => {
 
         setTextInput(value);
         setFilterTextRemoverVisibility(value.length === 0 ? false : true);
-    };
-
-    const onFilterKeyPress = (e) => {
-        const {
-            target: { value },
-            key,
-        } = e;
-
-        if (key === "Enter") {
-            // TODO fetching for search
-            alert(`입력값: ${value}`);
-        }
     };
 
     const onFilterClick = () => {
@@ -193,7 +180,6 @@ const Filter = (props) => {
             <StyledFilterTextInput
                 value={getTextInput()}
                 onChange={onFilterTextChange}
-                onKeyPress={onFilterKeyPress}
             />
         </StyledFilterDiv>
     );

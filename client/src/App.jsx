@@ -103,8 +103,8 @@ const App = () => {
                 <Route path="/detail/:issueId" component={DetailIssue} />
                 <Route path="/labels" component={Labels} />
                 <Route path="/milestones" component={Milestones} />
-                <Route path="/newMilestone" component={NewMilestone} />
-                <Route path="/editMilestone/:milestoneId" component={editMilestone} />
+                <Route path="/milestone/new" component={NewMilestone} />
+                <Route path="/milestone/edit/:milestoneId" component={editMilestone} />
                 <Route path="/">
                     <MainSection mode={mode} />
                 </Route>
