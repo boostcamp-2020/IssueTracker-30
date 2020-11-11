@@ -9,7 +9,7 @@ const StyledListSection = styled.section`
     min-height: 300px;
     max-height: 55vh;
     margin-top: 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     border: 1px solid rgba(207, 216, 220, 1);
     border-radius: 7px;

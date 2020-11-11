@@ -19,6 +19,7 @@ const detailIssue = ({ match }) => {
     const issueData = JSON.parse(localStorage.getItem("issueData"));
     const issue = issueData.find(v => v.issueId === Number(issueId));
     const [status, setStatus] = useState(issue.status);
+    const [commentNum, setCommentNum] = useState(0);
     issue.label = issue.labelId.map((id, ind) => {
         return { id: id, content: issue.labelContent[ind] };
     });
@@ -33,6 +34,7 @@ const detailIssue = ({ match }) => {
                     status={status}
                     userId={issue.userId}
                     writingTime={issue.writingTime}
+                    commentNum={commentNum}
                 />
                 <DetailIssueContent
                     title={issue.issueTitle}
@@ -45,6 +47,7 @@ const detailIssue = ({ match }) => {
                     label={issue.label}
                     assign={issue.assignId}
                     milestone={milestone}
+                    setCommentNum={setCommentNum}
                 />
             </StyledMainSection>
         </>

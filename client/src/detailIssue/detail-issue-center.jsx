@@ -11,7 +11,7 @@ const DetailIssueContentDiv = styled.div`
     left: 20%;
     width: 47%;
     height: 40%;
-    overflow-y: scroll;
+    overflow-y: auto;
 `;
 
 const HrLine = styled.hr`
@@ -40,6 +40,7 @@ const DetailIssueCenter = (issue) => {
             },
             withCredentials: true,
         }).then((res) => {
+            issue.setCommentNum(res.data.length)
             setComment(res.data);
         });
     }, []);
