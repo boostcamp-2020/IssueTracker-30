@@ -122,7 +122,7 @@ const detailIssueForm = props => {
                     <IssueContent setComment={setComment} comment={comment} />
                 </StyledContentDiv>
                 <StyledControlDiv>
-                    <IssueControl clickComment={clickCommentHandler} issueId={props.issueId} status={props.status} setStatus={props.setStatus}/>
+                    <IssueControl comment={comment} clickComment={clickCommentHandler} issueId={props.issueId} status={props.status} setStatus={props.setStatus}/>
                 </StyledControlDiv>
             </StyledNewIssueSection>
             <StyledTriangleDiv />

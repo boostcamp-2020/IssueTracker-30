@@ -17,7 +17,12 @@ const StyledSubmitButton = styled.button`
     color: white;
     border: 1px solid #33b04f;
     border-radius: 6px;
-    background: linear-gradient(rgba(51,205,86,1) 0%, rgba(41,171,71,1) 100%);
+    background-color: #33b04f;
+
+    :disabled {
+        border: 1px solid gray;
+        background-color: gray;
+    }
 `
 
 const detailIssueControl = props => {
@@ -46,7 +51,7 @@ const detailIssueControl = props => {
     return (
         <>
             <StyledCancelButton onClick={openCloseClickHandler}>{props.status ? 'ⓘ Close issue' : 'ⓘ Reopen issue'}</StyledCancelButton>
-            <StyledSubmitButton onClick={props.clickComment}>Update Comment</StyledSubmitButton>
+            <StyledSubmitButton onClick={props.clickComment} disabled={props.comment.length === 0? true : false}>Update Comment</StyledSubmitButton>
         </>
     );
 };
