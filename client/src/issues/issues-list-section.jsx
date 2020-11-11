@@ -180,6 +180,8 @@ const IssuesListSection = ({ textInput, addOptionToTextInput }) => {
         { key: 0, value: "Closed" },
     ];
 
+    if (!issueData) return <div></div>;
+
     const filterOptions = {};
     const filterOptionsModifier = textInput.split(" ").map((ele) => {
         let [key, value] = ele.split(":");
@@ -242,11 +244,12 @@ const IssuesListSection = ({ textInput, addOptionToTextInput }) => {
     }
 
     usersData.forEach((ele) => {
+        const { userId, imageURL } = ele;
         usersLiData.push({
-            key: ele.userId,
-            value: ele.userId,
-            media: ele.userId,
-            imageUrl: ele.imageURL,
+            key: userId,
+            value: userId,
+            media: userId,
+            imageUrl: imageURL,
         });
     });
 
