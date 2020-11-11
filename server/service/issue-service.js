@@ -53,7 +53,7 @@ const IssueService = {
 
 
         if (rows1.affectedRows > 0) {
-            res.json({ message: "success" });
+            res.json({ issueId: rows1.insertId, message: "success" });
         }
         else {
             res.json({ messages: "Error" });

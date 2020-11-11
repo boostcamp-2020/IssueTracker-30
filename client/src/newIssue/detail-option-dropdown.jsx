@@ -37,7 +37,20 @@ const StyledMenuUl = styled.ul`
 `;
 
 const StyledYourSelf = styled.li`
+    display: ${props => props.name === "Assignee" ? "flex" : "none" };
+    border-top: 1px solid lightgray;
+    padding: 3% 0%;
+    text-align: center;
+    justify-content: end;
+    align-items: center;
 
+    &:hover {
+        background-color: #eceff1;
+    }
+
+    p {
+        margin: 0 0 0 5%;
+    }
 `;
 
 const StyledMenuLi = styled.li`
@@ -105,7 +118,8 @@ const DropDownMenu = (props) => {
     if (props.name === "Assignee") {
         props.dataArray.forEach(element => {
             if (element.key === localStorage.getItem('userId')) {
-                console.log(element.key)
+                myData.key=element.key;
+                myData.id=`Assignee_${element.key}`
             }
         });
     }
@@ -114,13 +128,18 @@ const DropDownMenu = (props) => {
     return (
         <StyledDropDownMenu dropDown={props.dropDown}>
             <StyledMenuUl>
-                <StyledYourSelf>Assign yourself</StyledYourSelf>
+                <StyledYourSelf
+                    name={props.name}
+                    id={myData.id}
+                    key={myData.key}
+                    onClick={props.handleClick}
+                ><p>Assign yourself</p></StyledYourSelf>
                 {props.dataArray.map((element) => (
                     <>
                         <StyledMenuLi
                             id={props.name + "_" + element.key}
                             key={element.key}
-                            onClick={props.hadleClick}
+                            onClick={props.handleClick}
                         >
                             <StyledImage
                                 mediaType={props.name}

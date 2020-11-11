@@ -81,7 +81,6 @@ const newIssueContent = (props) => {
                 withCredentials: true,
             }).then((res) => {
                 if (res.data.message === "success") {
-                    console.log(props.content)
                     props.setContent(props.content + `![](https://kr.object.ncloudstorage.com/ssh1997test/${fileName})`)
                 }
             });
