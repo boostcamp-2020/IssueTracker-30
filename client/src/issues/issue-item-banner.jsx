@@ -92,7 +92,7 @@ const StyledBannerAuthor = styled.div`
 const StyledAssigneeDiv = styled.div`
     display: flex;
     padding-top: 1.5%;
-    width: 4vw%;
+    width: 4vw;
 `;
 
 const StyledAssignee = styled.img`
@@ -103,7 +103,6 @@ const StyledAssignee = styled.img`
 `;
 
 let count = 0;
-let total;
 
 const IssueTitle = (props) => {
     const [checked, setChecked] = useState(false);
@@ -132,7 +131,6 @@ const IssueTitle = (props) => {
 
     const setCheckFunc = () => {
         if (checked) {
-            //취소를 누르면
             props.excludeIssueFunc(props.issueId);
             props.func2(false);
             count--;
@@ -163,14 +161,7 @@ const IssueTitle = (props) => {
         assigneeUrl.push(usersData.filter((data) => data.userId === ele));
     });
 
-    const onIssueBannerClick = (e) => {
-        e.preventDefault();
-        // TODO: 상세페이지 api?
-        window.location.href = `http://localhost:3000/issue/detail/${props.issueId}`;
-    };
-
     const onAuthorClick = () => {
-        // TODO
         props.addOptionToTextInput(`author:${props.userId}`);
     };
 
@@ -190,12 +181,14 @@ const IssueTitle = (props) => {
             <StyledBannerTextDiv>
                 <StyledBannerTop>
                     <StyledBannerInnerDiv>
-                        <Link to={`detail/${props.issueId}`} style={{ textDecoration: 'none', color: 'black' }}>
-                            <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
+                        <Link
+                            to={`detail/${props.issueId}`}
+                            style={{ textDecoration: "none", color: "black" }}
+                        >
+                            <StyledBannerTitle>
+                                {props.issueTitle}
+                            </StyledBannerTitle>
                         </Link>
-                        {/* <StyledBannerTitle onClick={onIssueBannerClick}>
-                            {props.issueTitle}
-                        </StyledBannerTitle> */}
                         {labelData.map((element) => (
                             <StyledBannerLabel
                                 key={element.content}

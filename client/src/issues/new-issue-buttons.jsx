@@ -7,7 +7,7 @@ const StyledButton = styled.button`
     border: none;
     box-shadow: 0 0 2px 0 grey;
     border-radius: 5px;
-    background-color: rgba(76,175,80,1);
+    background-color: rgba(76, 175, 80, 1);
     color: white;
     font-weight: bold;
 

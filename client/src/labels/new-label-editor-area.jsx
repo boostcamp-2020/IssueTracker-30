@@ -4,7 +4,7 @@ import styled from "styled-components";
 import LabelPreviewer from "./label-previewer.jsx";
 import LabelEditor from "./label-editor.jsx";
 
-const StyledNewIssueWrapper = styled.div`
+const StyledNewLabelWrapper = styled.div`
     display: ${(props) => (props.isNewAreaVisible ? "flex" : "none")};
     flex-direction: column;
     justify-content: space-around;
@@ -34,7 +34,7 @@ const NewIssueArea = ({
         color: getRandomColor(),
     });
     return (
-        <StyledNewIssueWrapper isNewAreaVisible={isNewAreaVisible}>
+        <StyledNewLabelWrapper isNewAreaVisible={isNewAreaVisible}>
             <LabelPreviewer contents={contents} />
             <LabelEditor
                 mode={"new"}
@@ -44,7 +44,7 @@ const NewIssueArea = ({
                 isEditorVisible={isNewAreaVisible}
                 setIsNewAreaVisible={setIsNewAreaVisible}
             />
-        </StyledNewIssueWrapper>
+        </StyledNewLabelWrapper>
     );
 };
 

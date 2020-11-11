@@ -4,7 +4,7 @@ import styled from "styled-components";
 import HeaderButtons from "./header-buttons.jsx";
 import HeaderSearchInput from "./header-search-input.jsx";
 import HeaderNewButton from "./header-new-button.jsx";
-import NewIssueArea from "./new-issue-area.jsx";
+import NewIssueArea from "./new-label-editor-area.jsx";
 
 const StyledHeader = styled.div`
     display: flex;
