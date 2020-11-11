@@ -68,6 +68,7 @@ const StyledMilestoneDiv = styled.div`
 `;
 
 const StyledProgressBar = styled.progress`
+    width:100%;
     display: ${(props) => (props.data ? "block" : "none")};
 `;
 
@@ -186,7 +187,7 @@ const detailOption = (props) => {
                 temp.forEach((label) => {
                     data.push(label.id);
                     contentArr.push(label.content);
-                }); 
+                });
                 axiosFunc({
                     mode: 6,
                     issueId: props.issueId,
@@ -196,7 +197,7 @@ const detailOption = (props) => {
                 break;
             }
             case "Milestone":
-                if(props.data.id === +e.target.getAttribute("id").split("_")[1]){
+                if (props.data.id === +e.target.getAttribute("id").split("_")[1]) {
                     axiosFunc({
                         mode: 3,
                         issueId: props.issueId,
