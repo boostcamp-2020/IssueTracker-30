@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -8,12 +8,12 @@ import LabelEditor from "./label-editor.jsx";
 const StyledLabelBanner = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 
-    width: 900px;
-    min-height: 50px;
-    padding: 10px 0;
+    width: 100%;
+    height: max-content;
+    padding: 5px;
     box-shadow: 0 1px 1px -1px rgb(36, 41, 46);
 
     &:hover {
