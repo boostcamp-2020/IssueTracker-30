@@ -22,7 +22,7 @@ const StyledTriangleDiv = styled.div`
     position: absolute;
     margin-top: 1%;
     left: 8%;
-    background-color: aliceblue;
+    background-color: ${props => props.bgColor};
     width: 13px;
     height: 13px;
     border-left: 1px solid #dbdde2;
@@ -54,7 +54,7 @@ const StyledTitleDiv = styled.div`
     height: 20%;
     border-bottom: 1px solid #dbdde2;
     padding: 1%;
-    background-color: aliceblue;
+    background-color: ${props => props.bgColor};
 `
 
 const StyledWriteTag = styled.button`
@@ -98,6 +98,38 @@ const StyledEditCancelBtn = styled.button`
 
 const StyledEditUpdateBtn = styled.button`
 `;
+
+const getDateString = (originTime) => {
+    if (originTime === undefined) {
+        return ''
+    }
+    
+    const originDate = new Date(originTime);
+    const nowDate = new Date();
+
+    let origin = originDate.getFullYear();
+    let now = nowDate.getFullYear();
+
+    if (origin !== now) {
+        return `${now - origin} years ago`
+    } else {
+        origin = originDate.getMonth() + 1;
+        now = nowDate.getMonth() + 1;
+
+        if (origin !== now) {
+            return `${now - origin} months ago`
+        } else {
+            origin = originDate.getDate();
+            now = nowDate.getDate();
+
+            if (origin !== now) {
+                return `${now - origin} days ago`
+            } else {
+                return 'today'
+            }
+        }
+    }
+}
 
 const detailIssueComment = (props) => {
     const [mode, setMode] = useState('default');
@@ -161,8 +193,8 @@ const detailIssueComment = (props) => {
                 <StyledImgDiv src={imageURL}/>
                 {mode === 'default' &&
                     <StyledNewIssueSection >
-                        <StyledTitleDiv>
-                            {props.userId}
+                        <StyledTitleDiv bgColor={props.userId === localStorage.getItem('userId')? "aliceblue" : "#f7f8fa"}>
+                            {props.userId} commented {getDateString(props.commentWritingTime)}
                             {props.userId === localStorage.getItem('userId') ? <StyledEditBtn onClick={editCancelBtnClickHandler}>Edit</StyledEditBtn> : ''}
                         </StyledTitleDiv>
                         <StyledContentDiv>
@@ -182,7 +214,7 @@ const detailIssueComment = (props) => {
                             <StyledEditUpdateBtn onClick={editUpdateHandler}>Update comment</StyledEditUpdateBtn>
                         </StyledEditSectionFooter>
                     </StyledNewIssueSection>}
-                <StyledTriangleDiv />
+                <StyledTriangleDiv bgColor={props.userId === localStorage.getItem('userId')? "aliceblue" : "#f7f8fa"}/>
             </StyledNewIssueForm>
             {/* <DetailIssueFrom></DetailIssueFrom> */}
         </>

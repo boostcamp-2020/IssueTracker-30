@@ -34,15 +34,20 @@ const newIssue = () => {
                 filteredLabelId.push(Number(element.split('_')[1]))
             });
 
+            const writingTime = getDateTime();
+
+            const milestoneId = Number(milestone.id);
+
             const data = {
                 title,
-                writingTime: getDateTime(),
+                writingTime,
                 status: 1,
-                milestoneId: Number(milestone.id),
+                milestoneId,
                 content,
                 labelId: filteredLabelId,
                 assignId: assignee
             };
+            console.log(data)
             axios({
                 method: "POST",
                 url: "http://localhost:3000/issue",
@@ -51,7 +56,51 @@ const newIssue = () => {
             }).then((res) => {
                 if (res.data.message === "success") {
                     alert("이슈를 등록하였습니다!");
-                    location.href = "/"
+                    const issueData = JSON.parse(localStorage.getItem("issueData"));
+
+                    const labelData = JSON.parse(localStorage.getItem("labelsData"));
+
+                    const milestoneData = JSON.parse(localStorage.getItem("milestonesData"))
+
+                    const labelColor = [];
+                    const labelContent = [];
+
+                    filteredLabelId.forEach(element => {
+                        labelData.forEach(label => {
+                            if (element === Number(label.ID)) {
+                                labelColor.push(label.color)
+                                labelContent.push(label.content)
+                            }
+                        });
+                    });
+
+                    let milestoneTitle;
+
+                    milestoneData.forEach(element => {
+                        console.log(element)
+                        if (Number(element.ID) === milestoneId) {
+                            milestoneTitle = element.title
+                        }
+                    });
+
+                    issueData.push({
+                        assignId: Array.from(assignee),
+                        content,
+                        issueId: res.data.issueId,
+                        title,
+                        labelColor,
+                        labelContent,
+                        labelId: filteredLabelId,
+                        milestoneId,
+                        milestoneTitle,
+                        status: 1,
+                        userId: localStorage.getItem('userId'),
+                        writingTime,
+                    })
+
+                    localStorage.setItem("issueData", JSON.stringify(issueData))
+
+                    window.location.href = `http://localhost:3030/detail/${res.data.issueId}`
                 }
             });
         }

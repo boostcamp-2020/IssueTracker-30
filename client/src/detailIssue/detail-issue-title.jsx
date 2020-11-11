@@ -122,7 +122,7 @@ const DetailIssueTitle = (issue) => {
         <StyledDetailIssueTitle>
             {!editableMode &&
                 <StyledTitleDiv>
-                    <StyledTitle>{title} #{issue.id}</StyledTitle>
+                    <StyledTitle>{title === undefined ? issue.title : title} #{issue.id}</StyledTitle>
                     <StyledEditButton onClick={editCancelBtnClickHandler}>Edit</StyledEditButton>
                 </StyledTitleDiv>
             }
@@ -137,7 +137,7 @@ const DetailIssueTitle = (issue) => {
                 <StyledButton>{issue.status ? 'ⓘ Open' : 'ⓘ Closed'}</StyledButton>
                 <StyledSubTitle>
                     {issue.userId}
-                    {issue.status ? ' opened' : ' closed'} this issue {updatedTimeBefore} days ago
+                    {issue.status ? ' opened' : ' closed'} this issue {updatedTimeBefore} days ago, {issue.commentNum} comments
                 </StyledSubTitle>
             </TempDiv>
         </StyledDetailIssueTitle>

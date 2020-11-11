@@ -32,6 +32,11 @@ const StyledOptionDesDiv = styled.div`
     flex-direction: column;
 `;
 
+const StyledOptionMessage = styled.div`
+    display: ${props => props.data.size === 0 || props.data.length === 0 ? "block" : "none"};
+    margin-top: 11%;
+`
+
 const StyledOptionDesInnerDiv = styled.div`
     display: flex;
     margin: 0.5% 0%;
@@ -104,7 +109,7 @@ const detailOption = (props) => {
             break;
     }
 
-    const hadleClick = async (e) => {
+    const handleClick = async (e) => {
         const axiosFunc = (data, localStorageData) => {
             axios({
                 method: "PUT",
@@ -132,13 +137,21 @@ const detailOption = (props) => {
         switch (props.name) {
             case "Assignee": {
                 const temp = new Set();
+
                 for (let item of props.data) {
                     temp.add(item);
                 }
-                if (temp.has(e.target.innerText)) {
-                    temp.delete(e.target.innerText);
+                
+                let assignee = e.target.innerText;
+
+                if (assignee === "Assign yourself") {
+                    assignee = localStorage.getItem("userId");
+                }
+
+                if (temp.has(assignee)) {
+                    temp.delete(assignee);
                 } else {
-                    temp.add(e.target.innerText);
+                    temp.add(assignee);
                 }
                 const data = [];
                 temp.forEach((assingId) => {
@@ -266,10 +279,11 @@ const detailOption = (props) => {
                     name={props.name}
                     dataArray={liData}
                     defaultClick={setDropDown}
-                    hadleClick={hadleClick}
+                    handleClick={handleClick}
                 ></DetailDropdown>
             </StyledOptionDiv>
             <StyledOptionDesDiv>
+                <StyledOptionMessage data={props.data}>{props.message}</StyledOptionMessage>
                 {urlData.map((ele) => (
                     <StyledOptionDesInnerDiv>
                         <StyledOptionImg src={ele.imageURL} />
