@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -100,7 +100,10 @@ const StyledEditColorRefreshButton = styled.button`
     }
 `;
 
-const StyledEditColorRefreshSvg = styled.svg``;
+const StyledEditColorRefreshSvg = styled.svg`
+    width: 25px;
+    height: 25px;
+`;
 
 const StyledEditColorInput = styled.input`
     width: 60px;
@@ -164,7 +167,8 @@ const StyledSaveButton = styled.button`
     justify-content: center;
     align-items: center;
 
-    background-color: rgb(46, 164, 79);
+    background-color: ${(props) =>
+        props.isDisabled ? "rgb(130, 130, 130)" : "rgb(46, 164, 79)"};
     color: rgb(255, 255, 255);
     font-size: 13px;
 
@@ -177,7 +181,7 @@ const StyledSaveButton = styled.button`
     box-shadow: 0 0 2px 0 rgba(43, 145, 73, 0.8);
 
     &:hover {
-        cursor: pointer;
+        cursor: ${(props) => (props.isDisabled ? "not-allowed" : "pointer")};
     }
 
     &:focus {
@@ -194,6 +198,7 @@ const LabelEditor = ({
     setIsNewAreaVisible,
     setIsEditButtonVisible,
 }) => {
+    const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
     const { ID, name, desc, color } = contents;
 
     const onNameInputChange = (e) => {
@@ -218,8 +223,16 @@ const LabelEditor = ({
         setIsEditButtonVisible ? setIsEditButtonVisible(true) : "";
     };
 
+    useEffect(() => {
+        if (name !== "" && name !== "Label Preview" && name.length !== 0) {
+            setIsSaveButtonDisabled(false);
+            return;
+        }
+        setIsSaveButtonDisabled(true);
+    }, [name]);
+
     const onSaveLabelClick = () => {
-        if (!name || !color) {
+        if (!name || name === "Label Preview" || !color) {
             alert("레이블명 또는 색상이 입력되지 않았습니다.");
             return;
         }
@@ -301,8 +314,6 @@ const LabelEditor = ({
                         <StyledEditColorRefreshSvg
                             viewBox="0 0 16 16"
                             version="1.1"
-                            width="15"
-                            height="15"
                             aria-hidden="true"
                             onClick={onColorRefreshClick}
                         >
@@ -324,7 +335,10 @@ const LabelEditor = ({
                     <StyledCancelButton onClick={onCancelButtonClick}>
                         Cancel
                     </StyledCancelButton>
-                    <StyledSaveButton onClick={onSaveLabelClick}>
+                    <StyledSaveButton
+                        onClick={onSaveLabelClick}
+                        isDisabled={isSaveButtonDisabled}
+                    >
                         {mode === "new" ? "Create Label" : "Save Changes"}
                     </StyledSaveButton>
                 </StyledButtons>
