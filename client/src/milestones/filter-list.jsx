@@ -25,7 +25,6 @@ const FilterList = () => {
     const milestonesOpenData = [];
     const milestonesCloseData = [];
 
-    console.log(milestonesData);
     if(milestonesData) {
         milestonesData.forEach(element => {
             if(element.status === 1) {
@@ -49,11 +48,10 @@ const FilterList = () => {
         console.log("eee");
     }, [curStatus]);
 
-    console.log("ddd ",curData);
-
     return (
         <StyledList>
             <ListInfoBar
+                setCurStatus={setCurStatus}
                 numOfOpenMilestone={numOfOpenMilestone}
                 numOfCloseMilestone={numOfCloseMilestone}>
             </ListInfoBar>

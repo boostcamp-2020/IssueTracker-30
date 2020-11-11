@@ -9,6 +9,8 @@ import Footer from "./components/footer.jsx";
 import DetailIssue from "./detailIssue/detail-issue.jsx";
 import Labels from "./labels/labels-list.jsx";
 import Milestones from "./milestones/milestones-list.jsx";
+import NewMilestone from "./milestones/new-milestone.jsx"
+import editMilestone from "./milestones/edit-milestone.jsx"
 
 const StyledRouter = styled(Router)`
     display: flex;
@@ -37,7 +39,6 @@ const loginCheck = async () => {
 
 const App = () => {
     const [mode, setMode] = useState("main");
-    console.log("app.js");
 
     useEffect(() => {
         loginCheck().then(async (res) => {
@@ -80,7 +81,6 @@ const App = () => {
                     url: "http://localhost:3000/milestone/",
                     withCredentials: true,
                 }).then((milestones) => {
-                    console.log("then");
                     localStorage.setItem(
                         "milestonesData",
                         JSON.stringify(milestones.data)
@@ -103,6 +103,8 @@ const App = () => {
                 <Route path="/detail/:issueId" component={DetailIssue} />
                 <Route path="/labels" component={Labels} />
                 <Route path="/milestones" component={Milestones} />
+                <Route path="/milestone/new" component={NewMilestone} />
+                <Route path="/milestone/edit/:milestoneId" component={editMilestone} />
                 <Route path="/">
                     <MainSection mode={mode} />
                 </Route>

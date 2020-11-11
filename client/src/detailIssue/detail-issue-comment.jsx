@@ -7,21 +7,22 @@ const StyledNewIssueForm = styled.div`
     /* position: absolute; */
     display: flex;
     background-color: white;
-    width: 78%;
-    height: 50%;
+    width: 100%;
+    height: 34%;
 `
 
-const StyledImgDiv = styled.div`
-    background-color: teal;
+const StyledImgDiv = styled.img`
     width:50px;
     height:50px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
 `
 
 const StyledTriangleDiv = styled.div`
     position: absolute;
-    left: 9%;
-    top: 3%;
-    background-color: white;
+    margin-top: 1%;
+    left: 8%;
+    background-color: aliceblue;
     width: 13px;
     height: 13px;
     border-left: 1px solid #dbdde2;
@@ -34,9 +35,10 @@ const StyledNewIssueSection = styled.div`
     /* position: absolute; */
     right: 0%;
     width: 90%;
-    height: 30%;
+    height: 85%;
+    margin-left: 3%;
     border: 1px solid #dbdde2;
-    border-radius: 3px;
+    border-radius: 6px;
 `
 const StyledInputSection = styled.textarea`
     background-color: white;
@@ -49,8 +51,10 @@ const StyledInputSection = styled.textarea`
 `
 
 const StyledTitleDiv = styled.div`
-    height: 25%;
+    height: 20%;
     border-bottom: 1px solid #dbdde2;
+    padding: 1%;
+    background-color: aliceblue;
 `
 
 const StyledWriteTag = styled.button`
@@ -69,6 +73,7 @@ const StyledWriteTag = styled.button`
 
 const StyledContentDiv = styled.div`
     height: 30%;
+    padding: 1%;
 `
 
 const StyledControlDiv = styled.div`
@@ -80,6 +85,9 @@ const StyledControlDiv = styled.div`
 
 const StyledEditBtn = styled.button`
     float: right;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 `;
 
 const StyledEditSectionFooter = styled.div`
@@ -95,6 +103,14 @@ const detailIssueComment = (props) => {
     const [mode, setMode] = useState('default');
     const [content, setContent] = useState(props.content);
     const [comment, setComment] = useState(props.comment);
+    const userData = JSON.parse(localStorage.getItem("usersData"));
+
+    let imageURL;
+    userData.forEach(element => {
+        if(element.userId === props.userId){
+            imageURL = element.imageURL;
+        }
+    });
 
     const editCancelBtnClickHandler = () => {
         const temp = mode === 'default' ? 'edit' : 'default';
@@ -142,7 +158,7 @@ const detailIssueComment = (props) => {
     return (
         <>
             <StyledNewIssueForm>
-                <StyledImgDiv />
+                <StyledImgDiv src={imageURL}/>
                 {mode === 'default' &&
                     <StyledNewIssueSection >
                         <StyledTitleDiv>

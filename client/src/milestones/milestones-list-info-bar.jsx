@@ -23,12 +23,28 @@ const StyledInfoNums = styled.div`
   }
 `;
 
+const StyledOpenButton = styled.button``;
+
+const StyledCloseButton = styled.button``;
+
 const ListInfoBar = props => {
+  const openButtonEvent = () => {
+    props.setCurStatus("Open")
+  }
+
+  const closeButtonEvent = () => {
+    props.setCurStatus("Close")
+  }
+
   return (
     <StyledInfoBar>
       <StyledInfoNums>
-        {props.numOfOpenMilestone} Open {" "}
-        {props.numOfCloseMilestone} Close
+        <StyledOpenButton onClick={openButtonEvent}>
+          {props.numOfOpenMilestone} Open
+        </StyledOpenButton>
+        <StyledCloseButton onClick={closeButtonEvent}>
+          {props.numOfCloseMilestone} Close
+        </StyledCloseButton>
       </StyledInfoNums>
     </StyledInfoBar>
   );

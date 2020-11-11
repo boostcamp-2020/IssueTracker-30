@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const StyledDetailIssueTitle = styled.div`
-    /* position: absolute; */
+    position: absolute;
     top: 10%;
     left: 20%;
     width: 60%;
@@ -28,7 +28,7 @@ const StyledTitleInput = styled.input.attrs({
     type: "text",
 })`
     width: 1000px;
-    height: 25px;
+    font-size: 2em;
 `;
 
 const StyledButton = styled.button`

@@ -5,25 +5,26 @@ import IssueContent from "./detail-issue-content.jsx"
 import IssueControl from "./detail-issue-control.jsx"
 
 const StyledNewIssueForm = styled.div`
-    /* position: absolute; */
+    position: absolute;
     left: 20%;
+    top: 70%;
     display: flex;
-    background-color: white;
-    width: 47%;
-    height: 50%;
+    width: 46%;
+    height: 20%;
 `
 
-const StyledImgDiv = styled.div`
-    background-color: teal;
+const StyledImgDiv = styled.img`
     width:50px;
     height:50px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
 `
 
 const StyledTriangleDiv = styled.div`
     position: absolute;
-    left: 9%;
-    top: 3%;
-    background-color: white;
+    left: 8%;
+    top: 6%;
+    background-color: #f7f8fa;
     width: 13px;
     height: 13px;
     border-left: 1px solid #dbdde2;
@@ -33,17 +34,18 @@ const StyledTriangleDiv = styled.div`
 
 const StyledNewIssueSection = styled.div`
     background-color: white;
-    /* position: absolute; */
     right: 0%;
     width: 90%;
     height: 90%;
     border: 1px solid #dbdde2;
-    border-radius: 3px;
+    border-radius: 6px;
+    margin-left: 3.2%;
 `
 
 const StyledTitleDiv = styled.div`
-    height: 25%;
+    height: 20%;
     border-bottom: 1px solid #dbdde2;
+    background-color: #f7f8fa;
 `
 
 const StyledWriteTag = styled.button`
@@ -100,9 +102,19 @@ const detailIssueForm = props => {
             props.setAllComment([...props.allComment, newComment]);
         });
     }
+
+    const userData = JSON.parse(localStorage.getItem("usersData"));
+
+    let imageURL;
+    userData.forEach(element => {
+        if(element.userId === localStorage.getItem("userId")){
+            imageURL = element.imageURL;
+        }
+    });
+
     return (
         <StyledNewIssueForm>
-            <StyledImgDiv />
+            <StyledImgDiv src={imageURL} />
             <StyledNewIssueSection >
                 <StyledTitleDiv>
                 </StyledTitleDiv>

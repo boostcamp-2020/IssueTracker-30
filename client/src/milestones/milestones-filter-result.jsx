@@ -30,12 +30,13 @@ const MilestonesFilterResult = props => {
 
   return (
     <StyledMilestonesList>
-      {props.milestonesData.map((ele, idx) => (
+      {props.milestonesData.map((ele) => (
         <MilestoneBanner
             ID={ele.ID}
             title={ele.title}
             dueDate={ele.dueDate}
-            description={ele.description} />
+            description={ele.description}
+            status={ele.status} />
       ))}
     </StyledMilestonesList>
   );

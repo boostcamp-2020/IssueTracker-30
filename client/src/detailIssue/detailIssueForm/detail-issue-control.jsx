@@ -6,15 +6,15 @@ import axios from "axios";
 const StyledCancelButton = styled.button`
     background: white;
     border: none;
-    margin-bottom: 15%;
-    font-size: 18px;
+    margin-top: 2%;
+    margin-left: -5%;
+    font-size: 15px;
 `
 
 const StyledSubmitButton = styled.button`
     right: 2%;
-    font-size: 18px;
+    font-size: 15px;
     height: 8%;
-    margin-bottom: 1%;
     color: white;
     border: 1px solid #33b04f;
     border-radius: 6px;
@@ -47,7 +47,9 @@ const detailIssueControl = props => {
     return (
         <>
             <StyledCancelButton onClick={openCloseClickHandler}>{props.status ? 'ⓘ Close issue' : 'ⓘ Reopen issue'}</StyledCancelButton>
-            <StyledSubmitButton onClick={props.clickComment}>Update Comment</StyledSubmitButton>
+            <Link to="/signup">
+                <StyledSubmitButton onClick={props.clickComment}>Update Comment</StyledSubmitButton>
+            </Link>
         </>
     );
 };

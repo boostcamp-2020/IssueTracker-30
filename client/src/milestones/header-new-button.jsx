@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledLink = styled(Link)`
+const StyledButtonLink = styled(Link)`
   text-decoration: none;
 `;
 
@@ -32,11 +32,9 @@ const StyledNewButton = styled.button`
 
 const NewButton = () => {
   return (
-    <Router>
-      <StyledLink to="/milestones/new">
-        <StyledNewButton>New Milestone</StyledNewButton>
-      </StyledLink>
-    </Router>
+    <StyledButtonLink to="/milestone/new">
+      <StyledNewButton>New Milestone</StyledNewButton>
+    </StyledButtonLink>
   );
 };
 
