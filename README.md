@@ -12,7 +12,7 @@
 
 ### 시스템 구성도
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/48575504/97673993-143d1800-1ad0-11eb-824c-b9a5a6d7ab53.png">
+  <img src="https://user-images.githubusercontent.com/48575504/98822173-d5b24080-2473-11eb-93cd-ad28c758d9a7.png">
 </p>
 
 ## 페이지 구성
