@@ -92,7 +92,7 @@ const StyledBannerAuthor = styled.div`
 const StyledAssigneeDiv = styled.div`
     display: flex;
     padding-top: 1.5%;
-    width: 4vw%;
+    width: 4vw;
 `;
 
 const StyledAssignee = styled.img`
