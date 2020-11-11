@@ -33,9 +33,6 @@ const MilestoneService = {
             description: req.body.description,
             status: req.body.status
         }
-        console.log(milestone);
-        const [rows] = await connection.query(query.updateMilestone,
-            [milestone.title, milestone.dueDate, milestone.description, milestone.status, milestone.milestoneId]);
 
         const [rows] = await connection.query(query.updateMilestone, [milestone.title, milestone.dueDate, milestone.description, milestone.status, milestone.milestoneId]);
         
@@ -52,7 +49,7 @@ const MilestoneService = {
 
         const [rows] = await connection.query(query.deleteMilestone, [milestoneId]);
 
-        if (rows.affectedRows > 0) {
+        if( rows.affectedRows > 0) {
             res.json({ message: "success" });
         }
         else {
