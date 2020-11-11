@@ -94,7 +94,7 @@ const detailIssueForm = props => {
         }).then(res => {
             const newComment = {
                 ID: res.data.insertId,
-                commentUserId: props.userId,
+                commentUserId: localStorage.getItem("userId"),
                 commentWritingTime: getDatetime(new Date()),
                 comment: comment
             }

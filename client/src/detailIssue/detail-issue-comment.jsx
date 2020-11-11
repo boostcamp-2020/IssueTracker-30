@@ -42,9 +42,9 @@ const StyledNewIssueSection = styled.div`
 `
 const StyledInputSection = styled.textarea`
     background-color: white;
-    /* position: absolute; */
-    right: 0%;
-    width: 90%;
+    resize: none;
+    width: 97%;
+    margin: 1%;
     height: 30%;
     border: 1px solid #dbdde2;
     border-radius: 3px;
@@ -91,19 +91,27 @@ const StyledEditBtn = styled.button`
 `;
 
 const StyledEditSectionFooter = styled.div`
+    margin-top: -1.5%;
+    text-align: right;
 `;
 
 const StyledEditCancelBtn = styled.button`
+    border: none;
+    background-color: transparent;
 `;
 
 const StyledEditUpdateBtn = styled.button`
+    font-size: 13px;
+    color: white;
+    border: 1px solid #33b04f;
+    border-radius: 6px;
+    background-color: #33b04f
 `;
 
 const getDateString = (originTime) => {
     if (originTime === undefined) {
         return ''
     }
-    
     const originDate = new Date(originTime);
     const nowDate = new Date();
 
@@ -203,7 +211,7 @@ const detailIssueComment = (props) => {
                     </StyledNewIssueSection>}
                 {mode === 'edit' &&
                     <StyledNewIssueSection >
-                        <StyledTitleDiv>
+                        <StyledTitleDiv bgColor={props.userId === localStorage.getItem('userId')? "aliceblue" : "#f7f8fa"}>
                             Write
                     </StyledTitleDiv>
                         <StyledInputSection onChange={textareaChangeHandler}>

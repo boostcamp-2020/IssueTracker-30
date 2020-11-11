@@ -82,7 +82,7 @@ const DetailIssueCenter = (issue) => {
                 setAssignee={setAssignee}
                 label={label}
                 setLabel={setLabel}
-                milestone={milestone}
+                milestone={milestone.id === null ? '' : milestone}
                 setMilestone={setMilestone}
             />
         </>
