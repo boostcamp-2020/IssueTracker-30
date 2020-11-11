@@ -32,6 +32,11 @@ const StyledOptionDesDiv = styled.div`
     flex-direction: column;
 `;
 
+const StyledOptionMessage = styled.div`
+    display: ${props => props.data.size === 0 || props.data.length === 0 ? "block" : "none"};
+    margin-top: 11%;
+`
+
 const StyledOptionDesInnerDiv = styled.div`
     display: flex;
     margin: 0.5% 0%;
@@ -270,6 +275,7 @@ const detailOption = (props) => {
                 ></DetailDropdown>
             </StyledOptionDiv>
             <StyledOptionDesDiv>
+                <StyledOptionMessage data={props.data}>{props.message}</StyledOptionMessage>
                 {urlData.map((ele) => (
                     <StyledOptionDesInnerDiv>
                         <StyledOptionImg src={ele.imageURL} />

@@ -32,8 +32,12 @@ const StyledMenuUl = styled.ul`
     margin: 0;
     padding: 0%;
     font-size: 14px;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 137px;
+`;
+
+const StyledYourSelf = styled.li`
+
 `;
 
 const StyledMenuLi = styled.li`
@@ -96,9 +100,21 @@ const DropDownMenu = (props) => {
         mediaSection = false;
     }
 
+    const myData = {};
+
+    if (props.name === "Assignee") {
+        props.dataArray.forEach(element => {
+            if (element.key === localStorage.getItem('userId')) {
+                console.log(element.key)
+            }
+        });
+    }
+    
+
     return (
         <StyledDropDownMenu dropDown={props.dropDown}>
             <StyledMenuUl>
+                <StyledYourSelf>Assign yourself</StyledYourSelf>
                 {props.dataArray.map((element) => (
                     <>
                         <StyledMenuLi

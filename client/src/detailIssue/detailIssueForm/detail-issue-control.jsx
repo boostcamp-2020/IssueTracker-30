@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 const StyledCancelButton = styled.button`
@@ -47,9 +46,7 @@ const detailIssueControl = props => {
     return (
         <>
             <StyledCancelButton onClick={openCloseClickHandler}>{props.status ? 'ⓘ Close issue' : 'ⓘ Reopen issue'}</StyledCancelButton>
-            <Link to="/signup">
-                <StyledSubmitButton onClick={props.clickComment}>Update Comment</StyledSubmitButton>
-            </Link>
+            <StyledSubmitButton onClick={props.clickComment}>Update Comment</StyledSubmitButton>
         </>
     );
 };

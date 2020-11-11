@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -43,8 +43,26 @@ const StyledLabel = styled.label.attrs({
     padding: 1%;
 `
 
+const StyledNumCheck = styled.p`
+    position: absolute;
+    top: 65%;
+    right: 1%;
+    width: 32px;
+    height: 32px;
+`
+
 const newIssueContent = (props) => {
+    const t = setTimeout(() => {
+        const target = document.getElementById('newIssueCheck');
+
+        target.innerText = document.getElementById('newIssueContent').value.length;
+
+        setTimeout(() => {
+            target.innerText = "";
+        }, 2000)
+    }, 2000);
     const handleChange = (e) => {
+        clearTimeout(t);
         props.setContent(e.target.value);
     }
 
@@ -75,8 +93,9 @@ const newIssueContent = (props) => {
     }
     return (
         <>
-            <StyledNewIssueContent value={props.content} onChange={handleChange}/>
+            <StyledNewIssueContent id="newIssueContent" value={props.content} onChange={handleChange}/>
             <StyledNewIssueAttach id="attachFile" onChange={fileInput}/>
+            <StyledNumCheck id="newIssueCheck"></StyledNumCheck>
             <StyledLabel>Attach files by selecting here</StyledLabel>
         </>
     );

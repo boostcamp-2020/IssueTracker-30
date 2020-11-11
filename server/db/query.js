@@ -1,5 +1,5 @@
 const query = {
-    getIssue: `select I.ID as issueId, I.userId, I.title as issueTitle, I.content, writingTime, status, milestoneId, M.title as milestoneTitle
+    getIssue: `select I.ID as issueId, I.userId, I.title as issueTitle, I.content, writingTime, I.status, milestoneId, M.title as milestoneTitle
     from issue I left join milestone M on M.ID = I.milestoneId;`,
     getUserId: `select userId from user where userId=?;`,
     getlabelIssue: `SELECT issueId, labelId, content, color FROM labelIssueRelation LI, label L WHERE LI.labelId = L.ID;`,
