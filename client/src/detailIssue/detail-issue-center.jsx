@@ -40,6 +40,7 @@ const DetailIssueCenter = (issue) => {
             },
             withCredentials: true,
         }).then((res) => {
+            issue.setCommentNum(res.data.length)
             setComment(res.data);
         });
     }, []);
