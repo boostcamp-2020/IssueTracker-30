@@ -80,7 +80,7 @@ const MilestoneBanner = props => {
     const editStatus = props.status === 1 ? 0 : 1;
     const editStatusString = editStatus === 1 ? "Open" : "Close";
 
-    const dueDate = props.dueDate === null ? 'No due date' : 'Due by ' + props.dueDate.split('T')[0];
+    const dueDate = !props.dueDate ? 'No due date' : 'Due by ' + props.dueDate.split('T')[0];
 
     const issueData = JSON.parse(localStorage.getItem("issueData"));
     const issue = issueData.filter((ele) => ele.milestoneId === props.ID);

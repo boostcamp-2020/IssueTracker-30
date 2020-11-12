@@ -20,7 +20,8 @@ const StyledMilestonesList = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: 100%;
+  max-height: 600px;
+  overflow: auto;
 `;
 
 const MilestonesFilterResult = props => {
