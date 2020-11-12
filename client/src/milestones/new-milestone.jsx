@@ -29,13 +29,15 @@ const newMilestones = () => {
     const [description, setDescription] = useState('');
 
     const createMilestoneClickHandler = () => {
+        const dueDate = date === '' ? null : date;
         axios({
             method: "POST",
             url: "http://localhost:3000/milestone",
             data: {
                 title: title,
-                dueDate: date,
+                dueDate: dueDate,
                 description: description,
+                status: 1
             },
             withCredentials: true,
         }).then((res) => {
@@ -43,6 +45,7 @@ const newMilestones = () => {
             setTitle('');
             setDate('');
             setDescription('');
+            location.href = "/milestones"
         });
     }
     return (
