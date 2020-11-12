@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
+import host from "../../config.js";
 import HeaderOne from "../components/label-milestone-header.jsx";
 import NewMilestoneForm from "./milestone-form.jsx";
 
@@ -32,7 +34,7 @@ const newMilestones = () => {
         const dueDate = date === '' ? null : date;
         axios({
             method: "POST",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 title: title,
                 dueDate: dueDate,

@@ -10,7 +10,7 @@ router.get("/github", (req, res) => {
     const url = 'https://github.com/login/oauth/authorize?';
     const query = qs.stringify({
         client_id: process.env.client_id,
-        redirect_uri: 'http://localhost:3000/oAuth/github/callback',
+        redirect_uri: `http://${process.env.deploy_host}:3000/oAuth/github/callback`,
         state: 'qweuqwoieuqoiweu',
         scope: 'user:email',
     });
@@ -24,7 +24,7 @@ router.get("/github/callback", (req, res) => {
         client_id: process.env.client_id,
         client_secret: process.env.client_secret,
         code: req.query.code,
-        redirect_uri: 'http://localhost:3000/oAuth/github/callback',
+        redirect_uri: `http://${process.env.deploy_host}:3000/oAuth/github/callback`,
         state: req.query.state,
     })
 
@@ -43,7 +43,7 @@ router.get("/github/callback", (req, res) => {
 
             axios({
                 method: "POST",
-                url: "http://localhost:3000/user/signUp",
+                url: `http://${process.env.deploy_host}:3000/user/signUp`,
                 data: {
                     userId : `${loginData.data.login}_Github`,
                     userPw1 : 'Github',
@@ -53,12 +53,12 @@ router.get("/github/callback", (req, res) => {
                 .then(() => {
                     axios({
                         method: "POST",
-                        url: "http://localhost:3000/user/saveImg",
+                        url: `http://${process.env.deploy_host}:3000/user/saveImg`,
                         data : { userId:`${loginData.data.login}_Github`, dataUrl: loginData.data.avatar_url },
                         withCredentials: true,
                     }).then(() => {
                         res.cookie('user', token, { maxAge: 3000 * 1000 });
-                        res.redirect("http://localhost:3030")
+                        res.redirect(`http://${process.env.deploy_host}:3030`)
                     })
                 });
         })

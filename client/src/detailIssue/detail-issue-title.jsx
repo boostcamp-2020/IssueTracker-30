@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
+import host from "../../config.js";
+
 const StyledDetailIssueTitle = styled.div`
     position: absolute;
     top: 10%;
@@ -100,7 +102,7 @@ const DetailIssueTitle = (issue) => {
     const changeTitle = async (evt) => {
         await axios({
             method: 'put',
-            url: 'http://localhost:3000/issue',
+            url: `http://${host}:3000/issue`,
             data: {
                 mode: 1,
                 issueId: issue.id,

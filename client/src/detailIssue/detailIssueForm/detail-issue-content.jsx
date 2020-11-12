@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import axios from "axios";
 
+import host from "../../../config.js"
+
 const StyledNewIssueContent = styled.textarea.attrs({
     placeholder: "Leave a comment",
 })`
@@ -73,7 +75,7 @@ const detailIssueContent = props => {
         reader.addEventListener("load", () => {
             axios({
                 method: "POST",
-                url: "http://localhost:3000/s3test",
+                url: `http://${host}:3000/s3test`,
                 data: {
                     fileName,
                     data: reader.result

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import DetailDropdown from "./detail-option-dropdown.jsx";
 
+import host from "../../config.js";
+
 const StyledOption = styled.div`
     border-bottom: 1px solid lightgray;
     margin-bottom: 10%;
@@ -114,7 +116,7 @@ const detailOption = (props) => {
         const axiosFunc = (data, localStorageData) => {
             axios({
                 method: "PUT",
-                url: "http://localhost:3000/issue",
+                url: `http://${host}:3000/issue`,
                 data: data,
                 withCredentials: true,
             }).then(res => {

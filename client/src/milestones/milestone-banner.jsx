@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
+import host from "../../config.js";
 
 const StyledMilestoneBanner = styled.div`
   display: flex;
@@ -95,7 +96,7 @@ const MilestoneBanner = props => {
     const statusMilestoneClickHandler = () => {
         axios({
             method: "PUT",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: props.ID,
                 title: props.title,
@@ -113,7 +114,7 @@ const MilestoneBanner = props => {
     const deleteMilestoneClickHandler = () => {
         axios({
             method: "DELETE",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: props.ID,
             },

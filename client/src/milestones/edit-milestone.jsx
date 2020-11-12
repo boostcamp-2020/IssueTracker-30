@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
+
+import host from "../../config.js"
 import HeaderOne from "../components/label-milestone-header.jsx";
 import NewMilestoneForm from "./milestone-form.jsx";
 import HeaderButtons from "./header-buttons.jsx";
@@ -57,7 +59,7 @@ const EditMilestones = ({ match, history }) => {
 
         axios({
             method: "PUT",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: milestoneId,
                 title: title,
@@ -89,7 +91,7 @@ const EditMilestones = ({ match, history }) => {
 
         axios({
             method: "PUT",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: milestoneId,
                 title: title,

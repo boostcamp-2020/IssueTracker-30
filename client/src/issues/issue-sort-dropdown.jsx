@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
+import host from "../../config.js"
+
 const StyledDropDownMenu = styled.div`
     width: 150px;
 
@@ -124,7 +126,7 @@ const DropDownMenu = (props) => {
             props.checkedIssue.forEach((v) => {
                 axiosFuncArr.push(
                     axios.put(
-                        "http://localhost:3000/issue",
+                        `http://${host}:3000/issue`,
                         {
                             mode: 4,
                             issueId: v,
