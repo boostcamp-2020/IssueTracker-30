@@ -8,6 +8,8 @@
 
 ## 프로젝트 소개
 
+### 배포주소: http://issuetracker30.kro.kr
+
 ### Github Issue 관리 툴 클론 프로젝트
 
 ### 시스템 구성도
