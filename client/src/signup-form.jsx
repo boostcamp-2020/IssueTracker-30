@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import styled from "styled-components";
 import axios from "axios";
 
+import host from "../config.js"
 import createImage from "./createImage.js";
 
 const StyledSignUpForm = styled.div`
@@ -137,7 +138,7 @@ const SignUpForm = ({ history }) => {
             };
             axios({
                 method: "POST",
-                url: "http://localhost:3000/user/signUp",
+                url: `http://${host}:3000/user/signUp`,
                 data,
                 withCredentials: true,
             })
@@ -145,7 +146,7 @@ const SignUpForm = ({ history }) => {
                     if (res.data.message === 'success') {
                         axios({
                             method: "POST",
-                            url: "http://localhost:3000/user/saveImg",
+                            url: `http://${host}:3000/user/saveImg`,
                             data : { userId, dataUrl: createImage() },
                             withCredentials: true,
                         }).then(() => {

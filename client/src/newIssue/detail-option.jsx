@@ -3,6 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import DetailDropdown from "./detail-option-dropdown.jsx";
 
+import host from "../../config.js";
+
 const StyledOption = styled.div`
     border-bottom: 1px solid lightgray;
     margin-bottom: 10%;
@@ -82,7 +84,7 @@ const detailOption = (props) => {
     switch (props.name) {
         case "Assignee":
             const usersData = JSON.parse(localStorage.getItem("usersData"));
-            usersData.forEach((ele) => {
+            usersData?.forEach((ele) => {
                 liData.push({
                     key: ele.userId,
                     value: ele.userId,
@@ -92,7 +94,7 @@ const detailOption = (props) => {
             break;
         case "Label":
             const labelsData = JSON.parse(localStorage.getItem("labelsData"));
-            labelsData.forEach((ele) => {
+            labelsData?.forEach((ele) => {
                 liData.push({
                     key: ele.ID,
                     value: ele.content,
@@ -104,7 +106,7 @@ const detailOption = (props) => {
             const milestonesData = JSON.parse(
                 localStorage.getItem("milestonesData")
             );
-            milestonesData.forEach((ele) => {
+            milestonesData?.forEach((ele) => {
                 liData.push({ key: ele.ID, value: ele.title });
             });
             break;
@@ -114,7 +116,7 @@ const detailOption = (props) => {
         const axiosFunc = (data, localStorageData) => {
             axios({
                 method: "PUT",
-                url: "http://localhost:3000/issue",
+                url: `http://${host}:3000/issue`,
                 data: data,
                 withCredentials: true,
             }).then(res => {

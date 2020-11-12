@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
+import host from "../../config.js";
 
 const StyledMilestoneBanner = styled.div`
   display: flex;
@@ -80,9 +81,8 @@ const MilestoneBanner = props => {
     const editStatus = props.status === 1 ? 0 : 1;
     const editStatusString = editStatus === 1 ? "Open" : "Close";
 
-    let dueDate = props.dueDate;
-    dueDate = dueDate.replace('T', ' ');
-    dueDate = dueDate.split(' ')[0];
+    const date = !props.dueDate ? null : props.dueDate.split('T')[0];
+    const dueDate = !date ? 'No due date' : 'Due by ' + date;
 
     const issueData = JSON.parse(localStorage.getItem("issueData"));
     const issue = issueData.filter((ele) => ele.milestoneId === props.ID);
@@ -96,11 +96,11 @@ const MilestoneBanner = props => {
     const statusMilestoneClickHandler = () => {
         axios({
             method: "PUT",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: props.ID,
                 title: props.title,
-                dueDate: dueDate,
+                dueDate: date,
                 description: props.description,
                 status: editStatus
             },
@@ -114,7 +114,7 @@ const MilestoneBanner = props => {
     const deleteMilestoneClickHandler = () => {
         axios({
             method: "DELETE",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: props.ID,
             },
@@ -131,7 +131,7 @@ const MilestoneBanner = props => {
                 <StyledMilestoneTitle>
                     {props.title}
                 </StyledMilestoneTitle>
-                Due by {dueDate}{" "}
+                {dueDate}
                 <span>
                     {props.description}
                 </span>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
+
+import host from "../../config.js"
 import HeaderOne from "../components/label-milestone-header.jsx";
 import NewMilestoneForm from "./milestone-form.jsx";
 import HeaderButtons from "./header-buttons.jsx";
@@ -45,21 +47,23 @@ const StyledHeaderButtonMargin = styled.div`
 
 const EditMilestones = ({ match, history }) => {
     const milestoneId = +match.params.milestoneId;
+    if (!localStorage.milestonesData) return <></>;
     const milestonesData = JSON.parse(localStorage.milestonesData);
-    console.log(milestonesData);
     const currentMilestone = milestonesData.find(milestone => milestone.ID === milestoneId);
     const [title, setTitle] = useState(currentMilestone.title);
-    const [dueDate, setDueDate] = useState(currentMilestone.dueDate.substring(0, 10));
+    const [dueDate, setDueDate] = useState(currentMilestone.dueDate?.substring(0, 10));
     const [description, setDescription] = useState(currentMilestone.description);
     const [status, setStatus] = useState(currentMilestone.status);
     const saveChangeClickHandler = () => {
+        const date = dueDate === '' ? null : dueDate;
+
         axios({
             method: "PUT",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: milestoneId,
                 title: title,
-                dueDate: dueDate,
+                dueDate: date,
                 description: description,
                 status: status
             },
@@ -67,12 +71,12 @@ const EditMilestones = ({ match, history }) => {
         }).then((res) => {
             alert('마일스톤이 수정되었습니다.');
             setTitle(title);
-            setDueDate(dueDate);
+            setDueDate(date);
             setDescription(description);
             const tempLocalStorage = JSON.parse(localStorage.milestonesData);
             const index = tempLocalStorage.findIndex(v => v.ID === milestoneId);
             tempLocalStorage[index].title = title;
-            tempLocalStorage[index].dueDate = dueDate;
+            tempLocalStorage[index].dueDate = date;
             tempLocalStorage[index].description = description;
             localStorage.setItem(
                 "milestonesData",
@@ -83,13 +87,15 @@ const EditMilestones = ({ match, history }) => {
     }
 
     const closeReopenMilestoneHandler = () => {
+        const date = dueDate === '' ? null : dueDate;
+
         axios({
             method: "PUT",
-            url: "http://localhost:3000/milestone",
+            url: `http://${host}:3000/milestone`,
             data: {
                 milestoneId: milestoneId,
                 title: title,
-                dueDate: dueDate,
+                dueDate: date,
                 description: description,
                 status: status === 1 ? 0 : 1
             },
