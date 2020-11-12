@@ -17,6 +17,7 @@ const StyledMainSection = styled.div`
 const detailIssue = ({ match }) => {
     const issueId = match.params.issueId;
     const issueData = JSON.parse(localStorage.getItem("issueData"));
+    if (!issueData) return <></>;
     const issue = issueData.find(v => v.issueId === Number(issueId));
     const [status, setStatus] = useState(issue.status);
     const [commentNum, setCommentNum] = useState(0);

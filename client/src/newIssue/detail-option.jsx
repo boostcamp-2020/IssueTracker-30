@@ -82,7 +82,7 @@ const detailOption = (props) => {
     switch (props.name) {
         case "Assignee":
             const usersData = JSON.parse(localStorage.getItem("usersData"));
-            usersData.forEach((ele) => {
+            usersData?.forEach((ele) => {
                 liData.push({
                     key: ele.userId,
                     value: ele.userId,
@@ -92,7 +92,7 @@ const detailOption = (props) => {
             break;
         case "Label":
             const labelsData = JSON.parse(localStorage.getItem("labelsData"));
-            labelsData.forEach((ele) => {
+            labelsData?.forEach((ele) => {
                 liData.push({
                     key: ele.ID,
                     value: ele.content,
@@ -104,7 +104,7 @@ const detailOption = (props) => {
             const milestonesData = JSON.parse(
                 localStorage.getItem("milestonesData")
             );
-            milestonesData.forEach((ele) => {
+            milestonesData?.forEach((ele) => {
                 liData.push({ key: ele.ID, value: ele.title });
             });
             break;
