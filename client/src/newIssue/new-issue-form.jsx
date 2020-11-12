@@ -76,7 +76,7 @@ const StyledControlDiv = styled.div`
 const newIssueForm = (props) => {
     const userId = localStorage.getItem('userId');
     const usersData = JSON.parse(localStorage.getItem("usersData"));
-
+    if (!usersData) return <></>;
     const userData = usersData.filter((data) => data.userId === userId);
 
     return (
