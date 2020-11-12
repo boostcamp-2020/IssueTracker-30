@@ -107,7 +107,7 @@ const StyledEditUpdateBtn = styled.button`
     color: white;
     border: 1px solid #33b04f;
     border-radius: 6px;
-    background-color: #33b04f
+    background-color: #33b04f;
 `;
 
 const getDateString = (originTime) => {

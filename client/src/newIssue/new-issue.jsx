@@ -48,7 +48,6 @@ const newIssue = () => {
                 labelId: filteredLabelId,
                 assignId: assignee
             };
-            console.log(data)
             axios({
                 method: "POST",
                 url: `http://${host}:3000/issue`,
@@ -78,7 +77,6 @@ const newIssue = () => {
                     let milestoneTitle;
 
                     milestoneData.forEach(element => {
-                        console.log(element)
                         if (Number(element.ID) === milestoneId) {
                             milestoneTitle = element.title
                         }
