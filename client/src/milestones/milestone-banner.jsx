@@ -6,12 +6,75 @@ import styled from "styled-components";
 
 const StyledMilestoneBanner = styled.div`
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(200, 200, 200);
+  padding: 15px;
 `;
 
-const StyledStatusButton = styled.button``;
+const StyledMilestoneInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
 
-const StyledDeleteButton = styled.button``;
+const StyledMilestoneRight = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+`;
+
+const StyledMilestoneTitle = styled.div`
+    font-size: 20pt;
+`;
+
+const StyledProgress = styled.progress`
+    width: 350px;
+    height: 30px;
+`;
+
+const StyledProgressText = styled.div``;
+
+const StyledButtons = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+const StyledEditButton = styled.button`
+    text-decoration: none;
+    color: blue;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+`;
+
+const StyledStatusButton = styled.button`
+    border: none;
+    outline: none;
+    background: none;
+    color: blue;
+    cursor: pointer;
+    padding: 0;
+    padding-left: 15px;
+`;
+
+const StyledDeleteButton = styled.button`
+    border: none;
+    outline: none;
+    background: none;
+    color: red;
+    cursor: pointer;
+    padding: 0;
+    padding-left: 15px;
+`;
+
+const StyledSvg = styled.svg.attrs({
+    viewBox: "0 0 16 16",
+    version: "1.1",
+    width: "16",
+    height: "16",
+    ariaHidden: "true",
+});
 
 const MilestoneBanner = props => {
     const editStatus = props.status === 1 ? 0 : 1;
@@ -19,7 +82,16 @@ const MilestoneBanner = props => {
 
     let dueDate = props.dueDate;
     dueDate = dueDate.replace('T', ' ');
-    dueDate = dueDate.split('.')[0];
+    dueDate = dueDate.split(' ')[0];
+
+    const issueData = JSON.parse(localStorage.getItem("issueData"));
+    const issue = issueData.filter((ele) => ele.milestoneId === props.ID);
+    const maxIssue = issue.length;
+    const closeIssue = issue.filter((ele) => ele.status === 0).length;
+    const openIssue = maxIssue - closeIssue;
+    const per = maxIssue === 0 ? 0 : Math.round(closeIssue / maxIssue * 100);
+
+
 
     const statusMilestoneClickHandler = () => {
         axios({
@@ -55,16 +127,39 @@ const MilestoneBanner = props => {
 
     return (
         <StyledMilestoneBanner>
-            {props.ID}{" "}{props.title}{" "}{props.dueDate}{" "}{props.description}
-            <Link to={`/milestone/edit/${props.ID}`}>
-                edit
-            </Link>
-            <StyledStatusButton onClick={statusMilestoneClickHandler}>
-                {editStatusString}
-            </StyledStatusButton>
-            <StyledDeleteButton onClick={deleteMilestoneClickHandler}>
-                delete
-            </StyledDeleteButton>
+            <StyledMilestoneInfo>
+                <StyledMilestoneTitle>
+                    {props.title}
+                </StyledMilestoneTitle>
+                Due by {dueDate}{" "}
+                <span>
+                    {props.description}
+                </span>
+            </StyledMilestoneInfo>
+            <StyledMilestoneRight>
+                <StyledProgress
+                    value={closeIssue}
+                    max={maxIssue}
+                >
+                </StyledProgress>
+                <StyledProgressText>
+                    {per}% complete {"     "}{openIssue} open {closeIssue} closed
+
+                </StyledProgressText>
+                <StyledButtons>
+                    <Link to={`/milestone/edit/${props.ID}`}>
+                        <StyledEditButton>
+                            Edit
+                    </StyledEditButton>
+                    </Link>
+                    <StyledStatusButton onClick={statusMilestoneClickHandler}>
+                        {editStatusString}
+                    </StyledStatusButton>
+                    <StyledDeleteButton onClick={deleteMilestoneClickHandler}>
+                        Delete
+                    </StyledDeleteButton>
+                </StyledButtons>
+            </StyledMilestoneRight>
         </StyledMilestoneBanner>
 
     );

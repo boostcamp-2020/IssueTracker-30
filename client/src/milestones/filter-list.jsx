@@ -6,8 +6,6 @@ import FilteredList from "./milestones-filter-result.jsx";
 
 const StyledList = styled.div`
   width: 900px;
-  min-height: 300px;
-
   margin-top: 20px;
 
   border: 0;
@@ -45,12 +43,12 @@ const FilterList = () => {
     useEffect(() => {
         curStatus === "Open" ? setCurCount(numOfOpenMilestone) : setCurCount(numOfCloseMilestone);
         curData = curStatus === "Open" ? milestonesOpenData : milestonesCloseData;
-        console.log("eee");
     }, [curStatus]);
 
     return (
         <StyledList>
             <ListInfoBar
+                curStatus={curStatus}
                 setCurStatus={setCurStatus}
                 numOfOpenMilestone={numOfOpenMilestone}
                 numOfCloseMilestone={numOfCloseMilestone}>
