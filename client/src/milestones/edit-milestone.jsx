@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import HeaderOne from "../components/label-milestone-header.jsx";
 import NewMilestoneForm from "./milestone-form.jsx";
+import HeaderButtons from "./header-buttons.jsx";
 
 const StyledHeaderButtonLabel = HeaderOne("Label", 0);
 const StyledHeaderButtonMiles = HeaderOne("Milestones", 1);
@@ -36,6 +37,10 @@ const StyledSaveChangesButton = styled.button`
     height: 30px;
     cursor: pointer;
     outline: none;
+`;
+
+const StyledHeaderButtonMargin = styled.div`
+    margin-top: 2em;
 `;
 
 const EditMilestones = ({ match, history }) => {
@@ -104,6 +109,11 @@ const EditMilestones = ({ match, history }) => {
     return (
         <>
             <div style={{ display: "flex", flexDirection: "column", marginLeft: "3%" }}>
+                <StyledHeaderButtonMargin>
+                    <HeaderButtons />
+                    <hr style={{ marginTop: "2.25em", marginLeft: "0px", width: "95%", borderTop: "0.5pt solid rgb(237, 237, 237)" }}></hr>
+                </StyledHeaderButtonMargin>
+                
                 <NewMilestoneForm
                     title={title}
                     setTitle={setTitle}
@@ -112,7 +122,7 @@ const EditMilestones = ({ match, history }) => {
                     description={description}
                     setDescription={setDescription}
                 ></NewMilestoneForm>
-                <hr style={{ marginLeft: "0px", width: "95%" }}></hr>
+                <hr style={{ marginLeft: "0px", width: "95%", borderTop: "0.5pt solid rgb(237, 237, 237)" }}></hr>
                 <div style={{ marginTop: "0.5%", marginRight: "4.5%" }} >
                     <StyledSaveChangesButton onClick={saveChangeClickHandler}>Save changes</StyledSaveChangesButton>
                     <StyledCloseMilestoneButton onClick={closeReopenMilestoneHandler}>

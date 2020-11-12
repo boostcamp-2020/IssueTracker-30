@@ -24,7 +24,6 @@ const StyledMilestonesList = styled.div`
 `;
 
 const MilestonesFilterResult = props => {
-    console.log(props);
   if (props.numOfMilestone === 0)
     return <StyledNoMilestonesMsg>No Milestones</StyledNoMilestonesMsg>;
 
