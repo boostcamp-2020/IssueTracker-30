@@ -45,8 +45,8 @@ const StyledHeaderButtonMargin = styled.div`
 
 const EditMilestones = ({ match, history }) => {
     const milestoneId = +match.params.milestoneId;
+    if (!localStorage.milestonesData) return <></>;
     const milestonesData = JSON.parse(localStorage.milestonesData);
-    console.log(milestonesData);
     const currentMilestone = milestonesData.find(milestone => milestone.ID === milestoneId);
     const [title, setTitle] = useState(currentMilestone.title);
     const [dueDate, setDueDate] = useState(currentMilestone.dueDate?.substring(0, 10));
