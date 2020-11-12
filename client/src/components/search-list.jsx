@@ -19,8 +19,6 @@ const StyledList = styled.div`
     font-size: 12px;
 `;
 
-const labelsData = JSON.parse(localStorage.getItem("labelsData"));
-
 const compareDataWithFilter = (dataText, filterTextLine) => {
     if (filterTextLine === "") return true;
     const splittedText = filterTextLine.split(" ");
@@ -32,6 +30,7 @@ const compareDataWithFilter = (dataText, filterTextLine) => {
 };
 
 const SearchList = ({ getRandomColor, filterText }) => {
+    const labelsData = JSON.parse(localStorage.getItem("labelsData"));
     const filteredData = labelsData?.filter(
         (ele) =>
             compareDataWithFilter(ele.content, filterText) ||
