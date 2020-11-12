@@ -226,7 +226,7 @@ const LabelEditor = ({
 
     useEffect(() => {
         nameInputRef.current.focus();
-    });
+    }, [isEditorVisible]);
 
     useEffect(() => {
         if (name !== "" && name !== "Label Preview" && name.length !== 0) {
