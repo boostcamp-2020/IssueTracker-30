@@ -12,8 +12,8 @@ const StyledHeaderOne = (name, color) => styled.button`
     height: 32px;
     border: 0;
     border-radius: ${name === "Label" ? `5px 0 0 5px` : `0 5px 5px 0`};
-    box-shadow: 0 0 2px 0
-        ${name === "Label" ? `rgb(3, 102, 214)` : `rgb(36, 41, 46)`};
+    box-shadow: 0 0 2px 0 rgb(36, 41, 46);
+       
 
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
         sans-serif, Apple Color Emoji, Segoe UI Emoji;
