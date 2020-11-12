@@ -3,6 +3,7 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
+import host from "../config.js";
 import NavBar from "./components/nav-bar.jsx";
 import MainSection from "./main-section.jsx";
 import Footer from "./components/footer.jsx";
@@ -21,7 +22,7 @@ const loginCheck = async () => {
     if (document.cookie.split("=")[0] === "user") {
         const mode = await axios({
             method: "POST",
-            url: "http://localhost:3000/user/signIn/auth",
+            url: `http://${host}:3000/user/signIn/auth`,
             withCredentials: true,
         }).then((res) => {
             localStorage.setItem('userId', res.data.userId);
@@ -45,7 +46,7 @@ const App = () => {
             if (res === "main") {
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/issue/",
+                    url: `http://${host}:3000/issue/`,
                     withCredentials: true,
                 }).then((issueData) => {
                     localStorage.setItem(
@@ -56,7 +57,7 @@ const App = () => {
 
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/user/",
+                    url: `http://${host}:3000/user/`,
                     withCredentials: true,
                 }).then((users) => {
                     localStorage.setItem(
@@ -67,7 +68,7 @@ const App = () => {
 
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/label/",
+                    url: `http://${host}:3000/label/`,
                     withCredentials: true,
                 }).then((labels) => {
                     localStorage.setItem(
@@ -78,7 +79,7 @@ const App = () => {
 
                 await axios({
                     method: "GET",
-                    url: "http://localhost:3000/milestone/",
+                    url: `http://${host}:3000/milestone/`,
                     withCredentials: true,
                 }).then((milestones) => {
                     localStorage.setItem(

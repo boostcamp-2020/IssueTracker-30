@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+
+import host from "../../../config.js"
 import IssueContent from "./detail-issue-content.jsx"
 import IssueControl from "./detail-issue-control.jsx"
 
@@ -84,7 +86,7 @@ const detailIssueForm = props => {
     const clickCommentHandler = () => {
         axios({
             method: "POST",
-            url: "http://localhost:3000/comment/insertComment",
+            url: `http://${host}:3000/comment/insertComment`,
             data: {
                 issueId: props.issueId,
                 writingTime: getDatetime(new Date()),

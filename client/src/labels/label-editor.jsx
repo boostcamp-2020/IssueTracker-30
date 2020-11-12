@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
+import host from "../../config.js"
+
 const StyledEditorWrapper = styled.div`
     display: ${(props) => (props.isEditorVisible ? "flex" : "none")};
     flex-direction: row;
@@ -253,13 +255,13 @@ const LabelEditor = ({
             mode === "new"
                 ? {
                       method: "POST",
-                      url: "http://localhost:3000/label",
+                      url: `http://${host}:3000/label`,
                       data,
                       withCredentials: true,
                   }
                 : {
                       method: "PUT",
-                      url: "http://localhost:3000/label",
+                      url: `http://${host}:3000/label`,
                       data,
                       withCredentials: true,
                   };
@@ -282,7 +284,7 @@ const LabelEditor = ({
                 if (isSuccess) {
                     axios({
                         method: "GET",
-                        url: "http://localhost:3000/label",
+                        url: `http://${host}:3000/label`,
                         withCredentials: true,
                     }).then((labels) => {
                         localStorage.setItem(

@@ -2,6 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import axios from "axios";
 
+import host from "../../config.js"
+
 const StyledNavBar = styled.div`
     display: flex;
     justify-content: center;
@@ -55,7 +57,7 @@ const NavBar = ({ mode }) => {
         localStorage.clear();
         axios({
             method: "GET",
-            url: "http://localhost:3000/user/signOut",
+            url: `http://${host}:3000/user/signOut`,
             withCredentials: true,
         }).then((res) => {
             const date = new Date();

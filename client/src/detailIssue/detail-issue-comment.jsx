@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+
+import host from "../../config.js"
 // import DetailIssueFrom from "./detailIssueForm/detail-issue-form.jsx";
 
 const StyledNewIssueForm = styled.div`
@@ -186,7 +188,7 @@ const detailIssueComment = (props) => {
         }
         axios({
             method: "PUT",
-            url: content ? "http://localhost:3000/issue" : "http://localhost:3000/comment",
+            url: content ? `http://${host}:3000/issue` : `http://${host}:3000/comment`,
             data,
             withCredentials: true,
         }).then((res) => {

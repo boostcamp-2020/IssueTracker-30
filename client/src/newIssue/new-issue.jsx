@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import host from "../../config.js";
 import NewIssueForm from "./new-issue-form.jsx";
 import IssueOption from "./issue-option.jsx";
 
@@ -50,7 +51,7 @@ const newIssue = () => {
             console.log(data)
             axios({
                 method: "POST",
-                url: "http://localhost:3000/issue",
+                url: `http://${host}:3000/issue`,
                 data,
                 withCredentials: true,
             }).then((res) => {
@@ -100,7 +101,7 @@ const newIssue = () => {
 
                     localStorage.setItem("issueData", JSON.stringify(issueData))
 
-                    window.location.href = `http://localhost:3030/detail/${res.data.issueId}`
+                    window.location.href = `http://${host}:3030/detail/${res.data.issueId}`
                 }
             });
         }

@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 
+import host from "../../../config.js"
+
 const StyledCancelButton = styled.button`
     background: white;
     border: none;
@@ -29,7 +31,7 @@ const detailIssueControl = props => {
     const openCloseClickHandler = () => {
         axios({
             method: "PUT",
-            url: "http://localhost:3000/issue",
+            url: `http://${host}:3000/issue`,
             data: {
                 mode: 4,
                 issueId: props.issueId,

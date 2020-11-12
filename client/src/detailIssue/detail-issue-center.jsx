@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import host from "../../config.js";
+
 import IssueOption from "../newIssue/issue-option.jsx";
 import DetailIssueForm from "./detailIssueForm/detail-issue-form.jsx";
 import DetailIssueComment from "./detail-issue-comment.jsx";
@@ -34,7 +36,7 @@ const DetailIssueCenter = (issue) => {
     useEffect(() => {
         axios({
             method: "POST",
-            url: "http://localhost:3000/comment/getComment",
+            url: `http://${host}:3000/comment/getComment`,
             data: {
                 issueId: issue.id,
             },

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom";
+
+import host from "../config.js";
 import SignUpModal from "./signup-modal.jsx";
 import axios from "axios";
 
@@ -131,7 +133,7 @@ const LoginForm = () => {
         };
         axios({
             method: "POST",
-            url: "http://localhost:3000/user/signIn",
+            url: `http://${host}:3000/user/signIn`,
             data,
             withCredentials: true,
         }).then((res) => {
@@ -148,7 +150,7 @@ const LoginForm = () => {
     const githubLogin = () => {
         axios({
             method: "GET",
-            url: "http://localhost:3000/oAuth/github",
+            url: `http://${host}:3000/oAuth/github`,
         }).then((res) => {
             window.location.href = res.data;
         });

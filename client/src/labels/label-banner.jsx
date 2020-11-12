@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
+import host from "../../config.js"
 import LabelEditor from "./label-editor.jsx";
 
 const StyledLabelBanner = styled.div`
@@ -38,8 +39,12 @@ const StyledLabelInfo = styled.div`
 
 const StyledLabelTagDiv = styled(Link)`
     width: 250px;
-
+    
     text-decoration: none;
+
+    &:hover {
+        cursor: default;
+    }
 `;
 
 const StyledLabelTag = styled.div`
@@ -56,10 +61,6 @@ const StyledLabelTag = styled.div`
     background-color: ${(props) => props.color};
     color: rgb(255, 255, 255);
     font-weight: 400;
-
-    &:hover {
-        cursor: pointer;
-    }
 `;
 
 const StyledLabelDetail = styled.div`
@@ -124,7 +125,7 @@ const LabelBanner = ({
         if (isReallyDelete) {
             axios({
                 method: "DELETE",
-                url: "http://localhost:3000/label",
+                url: `http://${host}:3000/label`,
                 data: { labelId: ID },
                 withCredentials: true,
             })
@@ -140,7 +141,7 @@ const LabelBanner = ({
                     if (isSuccess) {
                         axios({
                             method: "GET",
-                            url: "http://localhost:3000/label",
+                            url: `http://${host}:3000/label`,
                             withCredentials: true,
                         }).then((labels) => {
                             localStorage.setItem(
@@ -157,7 +158,7 @@ const LabelBanner = ({
     return (
         <StyledLabelBanner>
             <StyledLabelInfo>
-                <StyledLabelTagDiv to="/">
+                <StyledLabelTagDiv>
                     <StyledLabelTag color={color}>{name}</StyledLabelTag>
                 </StyledLabelTagDiv>
                 <StyledLabelDetail>{desc || name}</StyledLabelDetail>
