@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -200,6 +200,7 @@ const LabelEditor = ({
 }) => {
     const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
     const { ID, name, desc, color } = contents;
+    const nameInputRef = useRef();
 
     const onNameInputChange = (e) => {
         setContents({ ...contents, name: e.currentTarget.value });
@@ -222,6 +223,10 @@ const LabelEditor = ({
         setIsNewAreaVisible(false);
         setIsEditButtonVisible ? setIsEditButtonVisible(true) : "";
     };
+
+    useEffect(() => {
+        nameInputRef.current.focus();
+    }, [isEditorVisible]);
 
     useEffect(() => {
         if (name !== "" && name !== "Label Preview" && name.length !== 0) {
@@ -297,6 +302,7 @@ const LabelEditor = ({
                 <StyledEditNameInput
                     value={name === "Label Preview" ? "" : name}
                     onChange={onNameInputChange}
+                    ref={nameInputRef}
                 />
             </StyledEditName>
             <StyledEditDesc>
