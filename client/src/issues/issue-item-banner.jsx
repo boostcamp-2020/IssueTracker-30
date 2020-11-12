@@ -31,12 +31,16 @@ const StyledBannerOpenClosedIcon = styled.i``;
 
 const StyledBannerTextDiv = styled.div``;
 
+const StyledBannerTop = styled.div`
+    display: flex;
+`;
+
 const StyledBannerInnerDiv = styled.div`
     display: flex;
     flex-direction: rows;
     align-items: center;
     padding-top: 1%;
-    width: 600px;
+    width: 920px;
 `;
 
 const StyledBannerTitle = styled.p`
@@ -86,23 +90,19 @@ const StyledBannerAuthor = styled.div`
 `;
 
 const StyledAssigneeDiv = styled.div`
-    position: absolute;
     display: flex;
     padding-top: 1.5%;
-    width: 10%;
-    justify-content: flex-end;
-    right: 13.5%;
+    width: 4vw;
 `;
 
 const StyledAssignee = styled.img`
     width: 20px;
-    margin-left: 8%;
+    margin-right: 15%;
     box-shadow: 0 0 2px 0px black;
     border-radius: 3px;
 `;
 
 let count = 0;
-let total;
 
 const IssueTitle = (props) => {
     const [checked, setChecked] = useState(false);
@@ -131,7 +131,6 @@ const IssueTitle = (props) => {
 
     const setCheckFunc = () => {
         if (checked) {
-            //취소를 누르면
             props.excludeIssueFunc(props.issueId);
             props.func2(false);
             count--;
@@ -162,14 +161,7 @@ const IssueTitle = (props) => {
         assigneeUrl.push(usersData.filter((data) => data.userId === ele));
     });
 
-    const onIssueBannerClick = (e) => {
-        e.preventDefault();
-        // TODO: 상세페이지 api?
-        window.location.href = `/issue/detail/${props.issueId}`;
-    };
-
     const onAuthorClick = () => {
-        // TODO
         props.addOptionToTextInput(`author:${props.userId}`);
     };
 
@@ -187,22 +179,25 @@ const IssueTitle = (props) => {
             </StyledBannerOpenClosedDiv>
 
             <StyledBannerTextDiv>
-                
-                <StyledBannerInnerDiv>
-                    <Link to={`detail/${props.issueId}`} style={{ textDecoration: 'none', color: 'black' }}>
-                        <StyledBannerTitle>{props.issueTitle}</StyledBannerTitle>
-                    </Link>
-                    {/* <StyledBannerTitle onClick={onIssueBannerClick}>
-                        {props.issueTitle}
-                    </StyledBannerTitle> */}
-                    {labelData.map((element) => (
-                        <StyledBannerLabel
-                            key={element.content}
-                            color={element.color}
+                <StyledBannerTop>
+                    <StyledBannerInnerDiv>
+                        <Link
+                            to={`detail/${props.issueId}`}
+                            style={{ textDecoration: "none", color: "black" }}
                         >
-                            <p>{element.content}</p>
-                        </StyledBannerLabel>
-                    ))}
+                            <StyledBannerTitle>
+                                {props.issueTitle}
+                            </StyledBannerTitle>
+                        </Link>
+                        {labelData.map((element) => (
+                            <StyledBannerLabel
+                                key={element.content}
+                                color={element.color}
+                            >
+                                <p>{element.content}</p>
+                            </StyledBannerLabel>
+                        ))}
+                    </StyledBannerInnerDiv>
                     <StyledAssigneeDiv>
                         {assigneeUrl.map((element) => (
                             <StyledAssignee
@@ -211,7 +206,7 @@ const IssueTitle = (props) => {
                             ></StyledAssignee>
                         ))}
                     </StyledAssigneeDiv>
-                </StyledBannerInnerDiv>
+                </StyledBannerTop>
                 <StyledBannerInfo>
                     #{props.issueId} {openOrClosed} {updatedTimeBefore} days ago
                     by{"  "}

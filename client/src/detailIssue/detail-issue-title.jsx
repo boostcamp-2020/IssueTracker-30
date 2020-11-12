@@ -28,7 +28,7 @@ const StyledTitleInput = styled.input.attrs({
     type: "text",
 })`
     width: 1000px;
-    height: 25px;
+    font-size: 2em;
 `;
 
 const StyledButton = styled.button`
@@ -86,10 +86,8 @@ const DetailIssueTitle = (issue) => {
     const [editableMode, setEditableMode] = useState(false);
     const [title, setTitle] = useState(issue.title);
     const editCancelBtnClickHandler = () => {
-        console.log(editableMode);
         setEditableMode(!editableMode);
     }
-
     const timeNow = Date.now();
     const updatedTimeBefore = new Date(
         timeNow - new Date(issue.writingTime),
@@ -110,7 +108,6 @@ const DetailIssueTitle = (issue) => {
             },
             withCredentials: true
         }).then(result => {
-            console.log(result);
             const tempLocalStorage = JSON.parse(localStorage.issueData);
             tempLocalStorage[tempLocalStorage.findIndex(v => v.issueId === issue.id)].issueTitle = title;
             localStorage.setItem(
@@ -125,7 +122,7 @@ const DetailIssueTitle = (issue) => {
         <StyledDetailIssueTitle>
             {!editableMode &&
                 <StyledTitleDiv>
-                    <StyledTitle>{title} #{issue.id}</StyledTitle>
+                    <StyledTitle>{title === undefined ? issue.title : title} #{issue.id}</StyledTitle>
                     <StyledEditButton onClick={editCancelBtnClickHandler}>Edit</StyledEditButton>
                 </StyledTitleDiv>
             }
@@ -140,7 +137,7 @@ const DetailIssueTitle = (issue) => {
                 <StyledButton>{issue.status ? 'ⓘ Open' : 'ⓘ Closed'}</StyledButton>
                 <StyledSubTitle>
                     {issue.userId}
-                    {issue.status ? ' opened' : ' closed'} this issue {updatedTimeBefore} days ago
+                    {issue.status ? ' opened' : ' closed'} this issue {updatedTimeBefore} days ago, {issue.commentNum} comments
                 </StyledSubTitle>
             </TempDiv>
         </StyledDetailIssueTitle>

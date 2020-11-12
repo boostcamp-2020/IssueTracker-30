@@ -19,7 +19,7 @@ const IssueService = {
         const [rows2] = await connection.query(query.insertIssueCommentRelation, [comment.issueId, rows1.insertId]);
 
         if (rows1.affectedRows > 0 && rows2.affectedRows > 0) {
-            res.json({ message: "success" });
+            res.json({ message: "success", insertId: rows1.insertId });
         }
 
         else {

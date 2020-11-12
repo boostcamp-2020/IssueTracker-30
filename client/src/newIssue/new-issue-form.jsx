@@ -5,10 +5,7 @@ import IssueTitle from "./new-issue-title.jsx";
 import IssueContent from "./new-issue-content.jsx"
 import IssueControl from "./new-issue-control.jsx"
 
-const StyledNewIssueForm = styled.div.attrs({
-    action: "http://localhost:3000/user/test",
-    method: "POST"
-})`
+const StyledNewIssueForm = styled.div`
     position: absolute;
     left: 20%;
     display: flex;
@@ -94,7 +91,7 @@ const newIssueForm = (props) => {
                     <IssueContent content={props.content} setContent={props.setContent} />
                 </StyledContentDiv>
                 <StyledControlDiv>
-                    <IssueControl submit={props.submit} />
+                    <IssueControl submit={props.submit} title={props.title} />
                 </StyledControlDiv>
             </StyledNewIssueSection>
             <StyledTriangleDiv />

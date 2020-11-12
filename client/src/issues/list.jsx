@@ -33,24 +33,33 @@ const IssueList = () => {
     const getTextInput = () => textInput;
     const addOptionToTextInput = (option) => {
         const isRegex = /is:\w+/g;
-        const authorRegex = /author:[\w@]+/g;
-        const assigneeRegex = /assignee:[\w@]+/g;
+        const authorRegex = /author:[\S@]+($|\s*)/g;
+        const assigneeRegex = /assignee:[\S@]+($|\s*)/g;
+        const type = option.split(":")[0];
+        const typeRegex = new RegExp(`\\s{0,1}${type}:\\S+`, "g");
+        const typeNotUseRegex = new RegExp(`\\s{0,1}${type}:notUse`);
+        const optionTrimRegex = new RegExp(`\\s{0,1}${option}($|\\s)`, "g");
 
         setIsFilterTextRemoverVisible(true);
 
         let theText = "";
+
         if (isRegex.test(option)) {
             theText = `${textInput.replace(isRegex, "").trim()} ${option}`;
-        } else if (textInput.includes(option)) {
-            theText = textInput.replace(option, "");
+        } else if (optionTrimRegex.test(textInput)) {
+            theText = textInput.replace(optionTrimRegex, " ").trim();
         } else if (authorRegex.test(option)) {
             theText = `${textInput.replace(authorRegex, "").trim()} ${option}`;
         } else if (assigneeRegex.test(option)) {
             theText = `${textInput
                 .replace(assigneeRegex, "")
                 .trim()} ${option}`;
+        } else if (typeNotUseRegex.test(option)) {
+            theText = `${textInput.replace(typeRegex, "").trim()} ${option}`;
         } else {
-            theText = `${textInput.trim()} ${option}`;
+            theText = `${textInput
+                .replace(typeNotUseRegex, "")
+                .trim()} ${option}`;
         }
 
         setTextInput(theText.trim());
@@ -75,7 +84,7 @@ const IssueList = () => {
                 setTextInput={setTextInput}
             />
             <IssuesList
-                filterOptions={textInput}
+                textInput={textInput}
                 addOptionToTextInput={addOptionToTextInput}
             />
         </StyledListDiv>

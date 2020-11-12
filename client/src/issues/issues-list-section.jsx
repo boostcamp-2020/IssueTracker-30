@@ -6,9 +6,11 @@ import ItemBanner from "./issue-item-banner.jsx";
 
 const StyledListSection = styled.section`
     width: 1200px;
-    ${"" /* height: 700px; */}
     min-height: 300px;
+    max-height: 55vh;
     margin-top: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
     border: 1px solid rgba(207, 216, 220, 1);
     border-radius: 7px;
 `;
@@ -111,7 +113,7 @@ const isOptionsInIssue = (optionsArr, issueAttrsArr) => {
     return copiedOptionsArr.length === 0 ? true : false;
 };
 
-const IssuesListSection = (props) => {
+const IssuesListSection = ({ textInput, addOptionToTextInput }) => {
     const [openClosedRadio, setOpenClosedRadio] = useState(1);
     const [checked, setChecked] = useState(true);
     const [checkedFromChild, setCheckedFrom] = useState(false);
@@ -128,9 +130,6 @@ const IssuesListSection = (props) => {
     const [addIssue, setAddIssue] = useState(0);
     const [excludeIssue, setExcludeIssue] = useState(0);
 
-    const numOfOpenIssue = issueData.filter((v) => v.status).length;
-    const numOfClosedIssue = issueData.length - numOfOpenIssue;
-
     let noContent = true;
 
     useEffect(() => {
@@ -139,7 +138,6 @@ const IssuesListSection = (props) => {
 
     useEffect(() => {
         setCheckedIssue([...checkedIssue, addIssue]);
-        console.log(checkedIssue);
     }, [addIssue]);
 
     useEffect(() => {
@@ -147,37 +145,26 @@ const IssuesListSection = (props) => {
         const idx = tempCheckedIssue.indexOf(excludeIssue);
         if (idx > -1) tempCheckedIssue.splice(idx, 1);
         setCheckedIssue(tempCheckedIssue);
-        console.log(checkedIssue);
     }, [excludeIssue]);
 
     const onOpenClosedRadioChange = (e) => {
         if (e.target.id === "open") {
             setOpenClosedRadio(1);
-            props.addOptionToTextInput("is:open");
+            addOptionToTextInput("is:open");
         } else {
             setOpenClosedRadio(0);
-            props.addOptionToTextInput("is:closed");
+            addOptionToTextInput("is:closed");
         }
     };
-
-    // useEffect(() => {
-    //     if (checked) {
-    //         const allIssue = issueData.map(v => v.issueId);
-    //         setCheckedIssue(allIssue);
-    //     } else {
-    //         setCheckedIssue([]);
-    //     }
-    //     console.log(checkedIssue);
-    // }, [checked]);
 
     const checkClick = () => {
         checked
             ? setSelectedCount(0)
-            : setSelectedCount(filteredIssueData.length);
+            : setSelectedCount(showingFilteredIssueData.length);
         setChecked(!checked);
         setCheckedFrom(!checked);
         if (!checked) {
-            const allIssue = issueData.map(v => v.issueId);
+            const allIssue = issueData.map((v) => v.issueId);
             setCheckedIssue(allIssue);
         } else {
             setCheckedIssue([]);
@@ -193,8 +180,10 @@ const IssuesListSection = (props) => {
         { key: 0, value: "Closed" },
     ];
 
+    if (!issueData) return <div></div>;
+
     const filterOptions = {};
-    const filterOptionsModifier = props.filterOptions.split(" ").map((ele) => {
+    const filterOptionsModifier = textInput.split(" ").map((ele) => {
         let [key, value] = ele.split(":");
         if (!value) [key, value] = ["title", key];
         if (Object.keys(filterOptions).includes(key)) {
@@ -205,14 +194,6 @@ const IssuesListSection = (props) => {
     });
 
     const filteredIssueData = issueData
-        .filter((ele) => ele.status === openClosedRadio)
-        .filter((ele) =>
-            filterOptions.is
-                ? filterOptions.is[0] === "open"
-                    ? ele.status === 1
-                    : ele.status === 0
-                : ele
-        )
         .filter((ele) =>
             filterOptions.author
                 ? filterOptions.author.includes(ele.userId)
@@ -246,16 +227,29 @@ const IssuesListSection = (props) => {
         )
         .sort((a, b) => parseInt(b.issueId) - parseInt(a.issueId));
 
-    if (filteredIssueData.length === 0) {
+    const showingFilteredIssueData = filteredIssueData.filter((ele) =>
+        filterOptions.is
+            ? filterOptions.is[0] === "open"
+                ? ele.status === 1
+                : ele.status === 0
+            : ele.status === 1
+    );
+
+    const openNums = filteredIssueData.filter((ele) => ele.status === 1).length;
+    const closedNums = filteredIssueData.filter((ele) => ele.status === 0)
+        .length;
+
+    if (showingFilteredIssueData.length === 0) {
         noContent = false;
     }
 
     usersData.forEach((ele) => {
+        const { userId, imageURL } = ele;
         usersLiData.push({
-            key: ele.userId,
-            value: ele.userId,
-            media: ele.userId,
-            imageUrl: ele.imageURL,
+            key: userId,
+            value: userId,
+            media: userId,
+            imageUrl: imageURL,
         });
     });
 
@@ -291,7 +285,7 @@ const IssuesListSection = (props) => {
                                 htmlFor="open"
                                 openClosedRadio={openClosedRadio}
                             >
-                                ⓘ {numOfOpenIssue} Open
+                                ⓘ {openNums} Open
                             </StyledListSortOpenClosedCheckBoxLabel>
                             <StyledListSortOpenClosedCheckBox
                                 onChange={onOpenClosedRadioChange}
@@ -301,7 +295,7 @@ const IssuesListSection = (props) => {
                                 htmlFor="closed"
                                 openClosedRadio={openClosedRadio}
                             >
-                                ✔ {numOfClosedIssue} Closed
+                                ✔ {closedNums} Closed
                             </StyledListSortOpenClosedCheckBoxLabel>
                         </DefaultDiv>
                     )}
@@ -314,7 +308,7 @@ const IssuesListSection = (props) => {
                         <DropdownMenu
                             name={"MarkAs"}
                             dataArray={markAsData}
-                            addOptionToTextInput={props.addOptionToTextInput}
+                            addOptionToTextInput={addOptionToTextInput}
                             checkedIssue={checkedIssue}
                         />
                     )}
@@ -323,40 +317,32 @@ const IssuesListSection = (props) => {
                             <DropdownMenu
                                 name={"Author"}
                                 dataArray={usersLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                             <DropdownMenu
                                 name={"Label"}
                                 notUseTitle="Unlabeled"
                                 dataArray={labelsLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                             <DropdownMenu
                                 name={"Milestones"}
                                 notUseTitle="Issues with no milestones"
                                 dataArray={milestonesLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                             <DropdownMenu
                                 name={"Assignee"}
                                 notUseTitle="Assigned to nobody"
                                 dataArray={usersLiData}
-                                addOptionToTextInput={
-                                    props.addOptionToTextInput
-                                }
+                                addOptionToTextInput={addOptionToTextInput}
                             />
                         </DropdownMenuDiv>
                     )}
                 </StyledListSortOptions>
             </StyledListSortMenu>
             <StyledSortedList>
-                {filteredIssueData.map(
+                {showingFilteredIssueData.map(
                     ({
                         issueId,
                         userId,
@@ -377,7 +363,7 @@ const IssuesListSection = (props) => {
                             checked={checked}
                             func={setChecked}
                             func2={setCheckedFrom}
-                            count={filteredIssueData.length}
+                            count={showingFilteredIssueData.length}
                             selectedFunc={setSelectedCount}
                             excludeIssueFunc={setExcludeIssue}
                             addIssueFunc={setAddIssue}
@@ -386,7 +372,7 @@ const IssuesListSection = (props) => {
                                 color: labelColor,
                                 content: labelContent,
                             }}
-                            addOptionToTextInput={props.addOptionToTextInput}
+                            addOptionToTextInput={addOptionToTextInput}
                         />
                     )
                 )}

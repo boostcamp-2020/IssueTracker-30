@@ -4,6 +4,7 @@ import styled from "styled-components";
 import LoginForm from "./login-form.jsx";
 import IssueList from "./issues/list.jsx";
 import NewIssue from "./newIssue/new-issue.jsx";
+import Milestones from "./milestones/milestones-list.jsx";
 
 const StyledMainSection = styled.div`
     display: flex;
@@ -33,6 +34,7 @@ const MainSection = ({ mode }) => {
             );
 
         case "main":
+        case "mainForMarkAs":
             return (
                 <StyledMainSection loginColor='white'>
                     <IssueList />
@@ -43,6 +45,13 @@ const MainSection = ({ mode }) => {
             return (
                 <StyledMainSection loginColor='white'>
                     <NewIssue />
+                </StyledMainSection>
+            );
+
+        case "milestones":
+            return (
+                <StyledMainSection loginColor='white'>
+                    <Milestones />
                 </StyledMainSection>
             );
     }

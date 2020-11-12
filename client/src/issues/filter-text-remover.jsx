@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const StyledRemoverDiv = styled.div`
@@ -35,12 +35,7 @@ const StyledRemoverMessage = styled.p`
     margin: 0;
 `;
 
-// setVisible={setIsFilterTextRemoverVisible}
-const FilterTextRemover = (props) => {
-    const isVisible = props.isVisible;
-    const setVisible = props.setVisible;
-    const setTextInput = props.setTextInput;
-
+const FilterTextRemover = ({ isVisible, setVisible, setTextInput }) => {
     const onMessageClick = () => {
         setVisible(false);
         setTextInput("");

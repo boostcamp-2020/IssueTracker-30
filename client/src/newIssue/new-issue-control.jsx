@@ -16,9 +16,11 @@ const StyledSubmitButton = styled.button`
     height: 8%;
     margin-bottom: 1%;
     color: white;
-    border: 1px solid #33b04f;
+    border: 1px solid #33b04f; 
     border-radius: 6px;
-    background: linear-gradient(rgba(51,205,86,1) 0%, rgba(41,171,71,1) 100%);
+
+    background: ${props => props.title.length <= 0 ? 'grey' : 'linear-gradient(rgba(51,205,86,1) 0%, rgba(41,171,71,1) 100%)' }; 
+    cursor: pointer;
 `
 
 const newIssueControl = (props) => {
@@ -27,7 +29,7 @@ const newIssueControl = (props) => {
             <Link to="/">
                 <StyledCancelButton>Cancel</StyledCancelButton>
             </Link>
-            <StyledSubmitButton onClick={props.submit}>Submit new issue</StyledSubmitButton>
+            <StyledSubmitButton title={props.title} onClick={props.submit}>Submit new issue</StyledSubmitButton>
         </>
     );
 };
