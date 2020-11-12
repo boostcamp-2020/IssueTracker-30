@@ -145,7 +145,7 @@ const detailOption = (props) => {
                     temp.add(item);
                 }
                 
-                let assignee = e.target.innerText;
+                let assignee = e.currentTarget.innerText;
 
                 if (assignee === "Assign yourself") {
                     assignee = localStorage.getItem("userId");
@@ -174,14 +174,14 @@ const detailOption = (props) => {
                     temp.add({ id: item.id, content: item.content });
                 }
                 const tempArr = [...temp];
-                const tempInd = tempArr.findIndex((label) => label.id === +(e.target.getAttribute("id").split("_")[1]));
+                const tempInd = tempArr.findIndex((label) => label.id === +(e.currentTarget.getAttribute("id").split("_")[1]));
                 if (tempInd > -1) {
                     tempArr.splice(tempInd, 1);
                     temp = new Set(tempArr);
                 } else {
                     temp.add({
-                        id: Number(e.target.getAttribute("id").split("_")[1]),
-                        content: e.target.innerText,
+                        id: Number(e.currentTarget.getAttribute("id").split("_")[1]),
+                        content: e.currentTarget.innerText,
                     });
                 }
                 const data = [];
@@ -199,7 +199,7 @@ const detailOption = (props) => {
                 break;
             }
             case "Milestone":
-                if (props.data.id === +e.target.getAttribute("id").split("_")[1]) {
+                if (props.data.id === +e.currentTarget.getAttribute("id").split("_")[1]) {
                     axiosFunc({
                         mode: 3,
                         issueId: props.issueId,
@@ -214,11 +214,11 @@ const detailOption = (props) => {
                 axiosFunc({
                     mode: 3,
                     issueId: props.issueId,
-                    milestoneId: +e.target.getAttribute("id").split("_")[1],
-                }, { id: +e.target.getAttribute("id").split("_")[1], title: e.target.innerText })
+                    milestoneId: +e.currentTarget.getAttribute("id").split("_")[1],
+                }, { id: +e.currentTarget.getAttribute("id").split("_")[1], title: e.currentTarget.innerText })
                 props.setData({
-                    id: e.target.getAttribute("id").split("_")[1],
-                    value: e.target.innerText,
+                    id: e.currentTarget.getAttribute("id").split("_")[1],
+                    value: e.currentTarget.innerText,
                 });
                 break;
         }
