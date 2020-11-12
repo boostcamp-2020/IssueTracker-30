@@ -93,6 +93,17 @@ const App = () => {
         });
     });
 
+    if (mode === 'login') {
+        return (
+            <StyledRouter>
+                <NavBar mode={mode} />
+                <Route path="/">
+                    <MainSection mode={mode} />
+                </Route>
+                <Footer />
+            </StyledRouter>
+        )
+    }
     return (
         <StyledRouter>
             <NavBar mode={mode} />
