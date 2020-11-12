@@ -15,18 +15,7 @@
   <img src="https://user-images.githubusercontent.com/48575504/98822173-d5b24080-2473-11eb-93cd-ad28c758d9a7.png">
 </p>
 
-## 페이지 구성
-### 로그인 페이지
-![main](https://user-images.githubusercontent.com/48575504/97555685-bf3fca00-1a1b-11eb-9b82-489ab3978854.PNG)
-
-### 회원 가입
-![signup](https://user-images.githubusercontent.com/48575504/97555692-c1098d80-1a1b-11eb-8b42-24e16032cea5.PNG)
-
-### 메인 페이지
-![issue](https://user-images.githubusercontent.com/48575504/98094641-e6d7dc00-1ecc-11eb-8aed-40bb8aa23388.PNG)
-
-### 이슈 생성 페이지
-![new issue](https://user-images.githubusercontent.com/48575504/98094647-e8a19f80-1ecc-11eb-9c9f-ba038175883f.PNG)
+## [페이지 구성](https://github.com/boostcamp-2020/IssueTracker-30/wiki/%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B5%AC%EC%84%B1%EB%8F%84)
 
 <br />
 
@@ -76,8 +65,7 @@ npm start
 
 <br />
 
-## 인터페이스 정의서
-### https://docs.google.com/spreadsheets/d/1pl2vvTmJSDuonQS76f9BkLfjo0SOLZIdGAeG17SMBck/edit#gid=1017584322
+## [인터페이스 정의서](https://docs.google.com/spreadsheets/d/1pl2vvTmJSDuonQS76f9BkLfjo0SOLZIdGAeG17SMBck/edit#gid=1017584322)
 
 <br />
 
