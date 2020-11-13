@@ -76,4 +76,4 @@ npm start
 ### [1주차 피어세션](https://github.com/boostcamp-2020/IssueTracker-30/wiki/1%EC%A3%BC%EC%B0%A8-%ED%94%BC%EC%96%B4%EC%84%B8%EC%85%98)
 ### [2주차 피어세션](https://github.com/boostcamp-2020/IssueTracker-30/wiki/2%EC%A3%BC%EC%B0%A8-%ED%94%BC%EC%96%B4%EC%84%B8%EC%85%98)
 ### [3주차 피어세션-1](https://github.com/boostcamp-2020/IssueTracker-30/wiki/3%EC%A3%BC%EC%B0%A8-(%EC%8A%B9%ED%98%84,-%EB%8F%99%ED%9B%88))
-### [3주차 피어세션-1](https://github.com/boostcamp-2020/IssueTracker-30/wiki/3%EC%A3%BC%EC%B0%A8-%ED%94%BC%EC%96%B4%EC%84%B8%EC%85%98(J123-%EC%9C%84%EC%A0%95%ED%9B%88,-J138-%EC%9D%B4%EB%AF%BC%ED%99%98))
+### [3주차 피어세션-2](https://github.com/boostcamp-2020/IssueTracker-30/wiki/3%EC%A3%BC%EC%B0%A8-%ED%94%BC%EC%96%B4%EC%84%B8%EC%85%98(J123-%EC%9C%84%EC%A0%95%ED%9B%88,-J138-%EC%9D%B4%EB%AF%BC%ED%99%98))
