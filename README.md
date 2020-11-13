@@ -1,4 +1,11 @@
+# IssueTracker-30
 ## 프로젝트 소개 😎
+
+### boostcamp Group Project - IssueTracker / Group 30 👍 <br>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/48575504/97677729-130ee980-1ad6-11eb-95b4-8b211d41dabf.png">
+</p>
 
 ### Github Issue 관리 툴 클론 프로젝트
 
